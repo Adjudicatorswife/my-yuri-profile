@@ -3,28 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Yuri World - Mobile Profile</title>
+  <title>Yuri World - Personal Mobile Profile</title>
   
+  <!-- FontAwesome Icons & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Rozha+One&display=swap" rel="stylesheet" />
 
   <style>
+    /* Dynamic Theme Variables */
     :root {
       --bg-gradient: linear-gradient(135deg, #1d0a2b 0%, #3a114d 50%, #12051e 100%);
-      --card-bg: rgba(35, 15, 48, 0.82);
-      --card-border: rgba(220, 150, 255, 0.35);
+      --card-bg: rgba(35, 15, 48, 0.78);
+      --card-border: rgba(220, 150, 255, 0.28);
       --primary-color: #d880ff;
       --accent-color: #ff80c0;
       --text-main: #ffffff;
       --text-sub: #d0b8e0;
-      --glow-color: rgba(216, 128, 255, 0.5);
+      --glow-color: rgba(216, 128, 255, 0.45);
       --font-body: 'Plus Jakarta Sans', sans-serif;
     }
 
     [data-theme="eimiko"] {
       --bg-gradient: linear-gradient(135deg, #18082e 0%, #3d145c 50%, #120426 100%);
-      --card-bg: rgba(32, 14, 50, 0.85);
-      --card-border: rgba(215, 130, 255, 0.35);
+      --card-bg: rgba(32, 14, 50, 0.82);
+      --card-border: rgba(215, 130, 255, 0.3);
       --primary-color: #cd73f7;
       --accent-color: #ff75a5;
       --glow-color: rgba(205, 115, 247, 0.5);
@@ -32,8 +34,8 @@
 
     [data-theme="kiamei"] {
       --bg-gradient: linear-gradient(135deg, #06182e 0%, #10345e 50%, #040d18 100%);
-      --card-bg: rgba(10, 32, 60, 0.88);
-      --card-border: rgba(80, 210, 255, 0.4);
+      --card-bg: rgba(10, 32, 60, 0.85);
+      --card-border: rgba(80, 210, 255, 0.35);
       --primary-color: #00e5ff;
       --accent-color: #ff33a8;
       --glow-color: rgba(0, 229, 255, 0.5);
@@ -42,7 +44,7 @@
     [data-theme="sanbina"] {
       --bg-gradient: linear-gradient(135deg, #120b18 0%, #2a1830 50%, #0a050d 100%);
       --card-bg: rgba(25, 16, 32, 0.88);
-      --card-border: rgba(205, 175, 215, 0.35);
+      --card-border: rgba(205, 175, 215, 0.28);
       --primary-color: #d4b5e8;
       --accent-color: #e85d8d;
       --glow-color: rgba(212, 181, 232, 0.4);
@@ -50,185 +52,355 @@
 
     [data-theme="augostino"] {
       --bg-gradient: linear-gradient(135deg, #1f180a 0%, #453610 50%, #120e04 100%);
-      --card-bg: rgba(38, 30, 14, 0.88);
-      --card-border: rgba(255, 215, 100, 0.4);
+      --card-bg: rgba(38, 30, 14, 0.85);
+      --card-border: rgba(255, 215, 100, 0.35);
       --primary-color: #ffd700;
       --accent-color: #ff9100;
-      --glow-color: rgba(255, 215, 0, 0.5);
+      --glow-color: rgba(255, 215, 0, 0.45);
     }
 
     [data-theme="bellevivian"] {
       --bg-gradient: linear-gradient(135deg, #1e071a 0%, #4d0d33 50%, #10020f 100%);
-      --card-bg: rgba(40, 12, 32, 0.88);
-      --card-border: rgba(255, 100, 185, 0.4);
+      --card-bg: rgba(40, 12, 32, 0.85);
+      --card-border: rgba(255, 100, 185, 0.35);
       --primary-color: #ff3b96;
       --accent-color: #a000ff;
       --glow-color: rgba(255, 59, 150, 0.5);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); -webkit-tap-highlight-color: transparent; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-body);
+      -webkit-tap-highlight-color: transparent;
+    }
 
     body {
       background: #08030c;
       color: var(--text-main);
-      display: flex; justify-content: center; align-items: flex-start;
-      min-height: 100vh; overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
+    /* Ambient Canvas */
     #particle-canvas {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 1;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 1;
     }
 
     .mobile-container {
-      width: 100%; max-width: 440px; min-height: 100vh;
+      width: 100%;
+      max-width: 440px;
+      min-height: 100vh;
       background: var(--bg-gradient);
-      position: relative; z-index: 2; overflow-y: auto;
+      position: relative;
+      z-index: 2;
+      overflow-y: auto;
       box-shadow: 0 0 50px rgba(0,0,0,0.9);
-      padding-bottom: 40px; transition: background 0.4s ease;
+      padding-bottom: 40px;
+      transition: background 0.4s ease;
     }
 
+    /* Banner Box */
     .banner-container {
-      width: 100%; height: 220px; position: relative; overflow: hidden; background-color: #1a1a2e;
+      width: 100%;
+      height: 210px;
+      position: relative;
+      overflow: hidden;
+      background-color: #1a1a2e;
     }
 
-    .banner-img { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: all 0.3s ease; }
+    .banner-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: all 0.3s ease;
+    }
+
     .banner-overlay {
-      position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(8,3,12,0.95) 100%);
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(8,3,12,0.92) 100%);
     }
 
-    .top-controls { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; z-index: 15; }
-    .control-btn {
-      background: rgba(0, 0, 0, 0.65); border: 1px solid var(--primary-color);
-      color: var(--primary-color); width: 38px; height: 38px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      backdrop-filter: blur(8px); cursor: pointer; font-size: 0.95rem; transition: transform 0.2s ease;
+    /* Controls Bar */
+    .top-controls {
+      position: absolute;
+      top: 12px; right: 12px;
+      display: flex; gap: 8px;
+      z-index: 15;
     }
+
+    .control-btn {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--primary-color);
+      color: var(--primary-color);
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      backdrop-filter: blur(8px);
+      cursor: pointer; font-size: 0.9rem;
+      transition: transform 0.2s ease;
+    }
+
     .control-btn:active { transform: scale(0.9); }
     .control-btn.active { background: var(--primary-color); color: #000; }
 
+    /* Theme Chips Bar */
     .theme-bar {
-      position: absolute; top: 12px; left: 12px; right: 100px;
-      display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; z-index: 10; scrollbar-width: none;
+      position: absolute;
+      top: 12px; left: 12px; right: 95px;
+      display: flex; gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      z-index: 10;
+      scrollbar-width: none;
     }
     .theme-bar::-webkit-scrollbar { display: none; }
 
     .theme-chip {
-      background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.22);
-      color: #fff; padding: 6px 12px; border-radius: 20px; font-size: 0.72rem;
-      font-weight: 700; white-space: nowrap; backdrop-filter: blur(8px); cursor: pointer; transition: all 0.2s ease;
+      background: rgba(0,0,0,0.55);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      white-space: nowrap;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
 
     .theme-chip.active {
-      background: var(--primary-color); color: #000; border-color: var(--primary-color);
+      background: var(--primary-color);
+      color: #000;
+      border-color: var(--primary-color);
       box-shadow: 0 0 12px var(--glow-color);
     }
 
-    .profile-content { padding: 0 20px; margin-top: -65px; position: relative; z-index: 5; }
-    .avatar-wrapper { position: relative; width: 110px; height: 110px; margin: 0 auto 12px auto; }
+    /* Content Layout */
+    .profile-content {
+      padding: 0 20px;
+      margin-top: -65px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .avatar-wrapper {
+      position: relative;
+      width: 110px; height: 110px;
+      margin: 0 auto 12px auto;
+    }
+
     .avatar-img {
-      width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
-      border: 3.5px solid var(--primary-color); box-shadow: 0 0 25px var(--glow-color);
-      background: #202030; transition: border-color 0.3s ease;
+      width: 100%; height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3.5px solid var(--primary-color);
+      box-shadow: 0 0 25px var(--glow-color);
+      background: #202030;
+      transition: border-color 0.3s ease;
     }
 
     .verified-badge {
-      position: absolute; bottom: 4px; right: 4px; background: var(--accent-color);
-      color: #fff; width: 26px; height: 26px; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center; font-size: 0.8rem; border: 2px solid #08030c;
+      position: absolute;
+      bottom: 4px; right: 4px;
+      background: var(--accent-color);
+      color: #fff;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      border: 2px solid #08030c;
     }
 
     .user-header { text-align: center; margin-bottom: 18px; }
-    .user-name { font-size: 1.55rem; font-weight: 800; color: var(--text-main); text-shadow: 0 0 14px var(--glow-color); }
-    .user-handle { font-size: 0.85rem; color: var(--primary-color); margin-top: 3px; font-weight: 600; }
 
-    .pill-container { display: flex; justify-content: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-    .pill {
-      background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border);
-      padding: 5px 12px; border-radius: 15px; font-size: 0.75rem; color: var(--text-sub);
-      display: flex; align-items: center; gap: 5px; backdrop-filter: blur(5px);
+    .user-name {
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--text-main);
+      text-shadow: 0 0 14px var(--glow-color);
+      line-height: 1.2;
     }
+
+    .user-handle {
+      font-size: 0.85rem;
+      color: var(--primary-color);
+      margin-top: 3px; font-weight: 600;
+    }
+
+    .pill-container {
+      display: flex; justify-content: center;
+      gap: 8px; margin-top: 12px; flex-wrap: wrap;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      padding: 5px 12px;
+      border-radius: 15px;
+      font-size: 0.75rem;
+      color: var(--text-sub);
+      display: flex; align-items: center; gap: 5px;
+      backdrop-filter: blur(5px);
+    }
+
     .pill i { color: var(--primary-color); }
 
+    /* Cards */
     .glass-card {
-      background: var(--card-bg); border: 1px solid var(--card-border);
-      border-radius: 20px; padding: 16px; margin-bottom: 16px;
-      backdrop-filter: blur(12px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     }
 
     .card-title {
-      font-size: 0.82rem; text-transform: uppercase; letter-spacing: 1px;
-      color: var(--primary-color); font-weight: 800; margin-bottom: 10px;
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--primary-color);
+      font-weight: 800;
+      margin-bottom: 10px;
       display: flex; align-items: center; gap: 6px;
     }
 
-    .bio-text { font-size: 0.9rem; line-height: 1.5; color: var(--text-main); white-space: pre-line; }
+    .bio-text {
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-main);
+      white-space: pre-line;
+    }
 
     .ship-quote-box {
-      background: rgba(0, 0, 0, 0.45); border-left: 3px solid var(--accent-color);
-      padding: 10px 12px; border-radius: 0 10px 10px 0; margin-top: 12px;
-      font-style: italic; font-size: 0.82rem; color: var(--text-sub);
+      background: rgba(0, 0, 0, 0.4);
+      border-left: 3px solid var(--accent-color);
+      padding: 10px 12px;
+      border-radius: 0 10px 10px 0;
+      margin-top: 12px;
+      font-style: italic;
+      font-size: 0.82rem;
+      color: var(--text-sub);
     }
 
+    /* Social Buttons */
     .social-grid { display: flex; flex-direction: column; gap: 10px; }
+
     .social-btn {
       display: flex; align-items: center; justify-content: space-between;
-      background: rgba(255, 255, 255, 0.05); border: 1px solid var(--card-border);
-      padding: 13px 16px; border-radius: 14px; color: #fff; text-decoration: none;
-      font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      padding: 13px 16px;
+      border-radius: 14px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600; font-size: 0.9rem;
+      transition: all 0.2s ease;
     }
-    .social-btn:active { transform: scale(0.98); background: var(--primary-color); color: #000; }
+
+    .social-btn:active {
+      transform: scale(0.98);
+      background: var(--primary-color);
+      color: #000;
+    }
+
     .social-left { display: flex; align-items: center; gap: 12px; }
     .social-left i { font-size: 1.25rem; color: var(--primary-color); }
+    .social-btn:active .social-left i { color: #000; }
 
+    /* Admin Button */
     .edit-btn-float {
-      display: none; width: 100%; background: var(--primary-color); color: #000;
-      border: none; padding: 12px; border-radius: 14px; font-weight: 800;
-      cursor: pointer; margin-bottom: 16px; box-shadow: 0 0 15px var(--glow-color);
+      display: none; width: 100%;
+      background: var(--primary-color);
+      color: #000; border: none;
+      padding: 12px; border-radius: 14px;
+      font-weight: 800; cursor: pointer;
+      margin-bottom: 16px;
+      box-shadow: 0 0 15px var(--glow-color);
     }
 
+    /* Modal Form */
     .modal {
-      display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.88); z-index: 100; justify-content: center;
-      align-items: center; padding: 20px; backdrop-filter: blur(10px);
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 100;
+      justify-content: center; align-items: center;
+      padding: 20px;
+      backdrop-filter: blur(10px);
     }
 
     .modal-content {
-      background: #180b26; border: 1px solid var(--primary-color);
-      width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto;
-      border-radius: 20px; padding: 20px; color: #fff;
+      background: #180b26;
+      border: 1px solid var(--primary-color);
+      width: 100%; max-width: 400px;
+      max-height: 85vh; overflow-y: auto;
+      border-radius: 20px; padding: 20px;
+      color: #fff;
     }
 
-    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .modal-header {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-bottom: 15px;
+    }
+
     .modal-title { font-weight: 800; color: var(--primary-color); }
     .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 0.75rem; color: var(--text-sub); margin-bottom: 4px; }
-    .form-group input, .form-group textarea {
-      width: 100%; background: rgba(255,255,255,0.08); border: 1px solid var(--card-border);
-      border-radius: 10px; padding: 9px 12px; color: #fff; font-size: 0.85rem; outline: none;
+    .form-group label {
+      display: block; font-size: 0.75rem;
+      color: var(--text-sub); margin-bottom: 4px;
     }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid var(--card-border);
+      border-radius: 10px; padding: 9px 12px;
+      color: #fff; font-size: 0.85rem; outline: none;
+    }
+
     .form-group input[type="file"] { padding: 5px; }
 
     .save-btn {
-      width: 100%; background: var(--primary-color); color: #000;
-      border: none; padding: 12px; border-radius: 12px; font-weight: 800; margin-top: 10px; cursor: pointer;
+      width: 100%; background: var(--primary-color);
+      color: #000; border: none; padding: 12px;
+      border-radius: 12px; font-weight: 800;
+      margin-top: 10px; cursor: pointer;
     }
 
-    .footer-text { text-align: center; font-size: 0.72rem; color: var(--text-sub); opacity: 0.7; margin-top: 10px; }
+    .footer-text {
+      text-align: center; font-size: 0.72rem;
+      color: var(--text-sub); opacity: 0.7; margin-top: 10px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- Falling Sakura & Glow Canvas -->
+  <!-- Ambient Particles -->
   <canvas id="particle-canvas"></canvas>
 
+  <!-- Background Music Element -->
   <audio id="bgm-audio" loop>
     <source id="bgm-source" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=ambient-lofi-112181.mp3" type="audio/mpeg" />
   </audio>
 
   <div class="mobile-container">
     
+    <!-- Ship Theme Selector Chips -->
     <div class="theme-bar">
       <div class="theme-chip active" onclick="switchTheme('eimiko')">🌸 EiMiko</div>
       <div class="theme-chip" onclick="switchTheme('kiamei')">⚡ KiaMei</div>
@@ -237,6 +409,7 @@
       <div class="theme-chip" onclick="switchTheme('bellevivian')">🎮 BelleVivian</div>
     </div>
 
+    <!-- Controls Bar -->
     <div class="top-controls">
       <button class="control-btn" id="music-btn" onclick="toggleMusic()" title="Background Music">
         <i class="fa-solid fa-music"></i>
@@ -246,18 +419,22 @@
       </button>
     </div>
 
+    <!-- Header Background Banner Image -->
     <div class="banner-container">
-      <img id="display-banner" class="banner-img" src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop" alt="Header" />
+      <img id="display-banner" class="banner-img" src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop" alt="Background Header" />
       <div class="banner-overlay"></div>
     </div>
 
+    <!-- Profile Content Body -->
     <div class="profile-content">
 
+      <!-- Avatar -->
       <div class="avatar-wrapper">
-        <img id="display-avatar" class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop" alt="Avatar" />
+        <img id="display-avatar" class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop" alt="Profile Picture" />
         <div class="verified-badge"><i class="fa-solid fa-heart"></i></div>
       </div>
 
+      <!-- Header Info -->
       <div class="user-header">
         <h1 class="user-name" id="display-name">Yuri Collector</h1>
         <div class="user-handle" id="display-handle">@yuri_enjoyer</div>
@@ -269,46 +446,63 @@
         </div>
       </div>
 
+      <!-- Edit Trigger Button -->
       <button class="edit-btn-float" id="edit-mode-btn" onclick="openEditModal()">
-        <i class="fa-solid fa-pen-to-square"></i> Edit Profile for Active Theme
+        <i class="fa-solid fa-pen-to-square"></i> Edit Profile for Current Theme
       </button>
 
+      <!-- Bio Glass Box -->
       <div class="glass-card">
         <div class="card-title"><i class="fa-solid fa-quote-left"></i> About Me</div>
         <div class="bio-text" id="display-bio">
-          Mabuhay! Welcome sa aking Yuri-themed profile page. Love listening to good music and admiring sapphic couples!
+          Mabuhay! Welcome sa aking Yuri-themed profile page. Love listening to good music and admiring sapphic couples! Feel free to visit my social accounts below.
         </div>
         <div class="ship-quote-box" id="display-quote">
-          "Eternity may be vast, but moments with you are timeless." — EiMiko
+          "Eternity may be vast, but moments with you are timeless." — Raiden Shogun & Yae Miko
         </div>
       </div>
 
+      <!-- Social Links -->
       <div class="glass-card">
         <div class="card-title"><i class="fa-solid fa-share-nodes"></i> Connect With Me</div>
         <div class="social-grid">
+
           <a href="https://facebook.com" target="_blank" id="link-facebook" class="social-btn">
             <div class="social-left"><i class="fa-brands fa-facebook"></i> <span>Facebook</span></div>
             <i class="fa-solid fa-chevron-right"></i>
           </a>
+
           <a href="https://instagram.com" target="_blank" id="link-instagram" class="social-btn">
             <div class="social-left"><i class="fa-brands fa-instagram"></i> <span>Instagram</span></div>
             <i class="fa-solid fa-chevron-right"></i>
           </a>
+
           <a href="https://tiktok.com" target="_blank" id="link-tiktok" class="social-btn">
             <div class="social-left"><i class="fa-brands fa-tiktok"></i> <span>TikTok</span></div>
             <i class="fa-solid fa-chevron-right"></i>
           </a>
+
           <a href="https://twitter.com" target="_blank" id="link-x" class="social-btn">
             <div class="social-left"><i class="fa-brands fa-x-twitter"></i> <span>X (Twitter)</span></div>
             <i class="fa-solid fa-chevron-right"></i>
           </a>
+
+          <a href="https://discord.com" target="_blank" id="link-discord" class="social-btn">
+            <div class="social-left"><i class="fa-brands fa-discord"></i> <span>Discord</span></div>
+            <i class="fa-solid fa-chevron-right"></i>
+          </a>
+
         </div>
       </div>
 
-      <div class="footer-text">Designed with Yuri Themes • 2026</div>
+      <div class="footer-text">
+        Designed with Yuri Themes • 2026
+      </div>
+
     </div>
   </div>
 
+  <!-- Edit Modal -->
   <div class="modal" id="editModal">
     <div class="modal-content">
       <div class="modal-header">
@@ -316,31 +510,68 @@
         <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="closeEditModal()"></i>
       </div>
 
+      <!-- Gallery Picker Avatar -->
       <div class="form-group">
         <label><i class="fa-solid fa-image"></i> Profile Picture (For Active Theme)</label>
         <input type="file" id="input-avatar-file" accept="image/*" onchange="previewGalleryImage(this, 'display-avatar', 'avatar')" />
       </div>
 
+      <!-- Gallery Picker Banner -->
       <div class="form-group">
-        <label><i class="fa-solid fa-panorama"></i> Cover Banner (For Active Theme)</label>
+        <label><i class="fa-solid fa-panorama"></i> Background Header Image (For Active Theme)</label>
         <input type="file" id="input-banner-file" accept="image/*" onchange="previewGalleryImage(this, 'display-banner', 'banner')" />
       </div>
 
+      <!-- Audio Music Picker -->
       <div class="form-group">
-        <label><i class="fa-solid fa-music"></i> Background Music (Upload MP3)</label>
+        <label><i class="fa-solid fa-music"></i> Background Music (From Phone Files)</label>
         <input type="file" id="input-audio-file" accept="audio/*" onchange="updateBackgroundAudio(this)" />
       </div>
 
-      <div class="form-group"><label>Name</label><input type="text" id="input-name" /></div>
-      <div class="form-group"><label>Username</label><input type="text" id="input-handle" /></div>
-      <div class="form-group"><label>Age</label><input type="text" id="input-age" /></div>
-      <div class="form-group"><label>Location</label><input type="text" id="input-location" /></div>
-      <div class="form-group"><label>Bio</label><textarea id="input-bio" rows="3"></textarea></div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="input-name" placeholder="Your Name" />
+      </div>
 
-      <div class="form-group"><label>Facebook Link</label><input type="url" id="input-facebook" /></div>
-      <div class="form-group"><label>Instagram Link</label><input type="url" id="input-instagram" /></div>
-      <div class="form-group"><label>TikTok Link</label><input type="url" id="input-tiktok" /></div>
-      <div class="form-group"><label>X Link</label><input type="url" id="input-x" /></div>
+      <div class="form-group">
+        <label>Username / Handle</label>
+        <input type="text" id="input-handle" placeholder="@username" />
+      </div>
+
+      <div class="form-group">
+        <label>Age</label>
+        <input type="text" id="input-age" placeholder="20 Y/O" />
+      </div>
+
+      <div class="form-group">
+        <label>Location</label>
+        <input type="text" id="input-location" placeholder="Philippines" />
+      </div>
+
+      <div class="form-group">
+        <label>Bio</label>
+        <textarea id="input-bio" rows="3" placeholder="Tell something about yourself..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Facebook Link</label>
+        <input type="url" id="input-facebook" placeholder="https://facebook.com/yourprofile" />
+      </div>
+
+      <div class="form-group">
+        <label>Instagram Link</label>
+        <input type="url" id="input-instagram" placeholder="https://instagram.com/yourprofile" />
+      </div>
+
+      <div class="form-group">
+        <label>TikTok Link</label>
+        <input type="url" id="input-tiktok" placeholder="https://tiktok.com/@yourprofile" />
+      </div>
+
+      <div class="form-group">
+        <label>X (Twitter) Link</label>
+        <input type="url" id="input-x" placeholder="https://x.com/yourprofile" />
+      </div>
 
       <button class="save-btn" onclick="saveProfileData()">Save All Changes</button>
     </div>
@@ -351,73 +582,97 @@
     let isAdmin = false;
     let isMusicPlaying = false;
     
-    // PALITAN MO ANG PASSWORD SA BABA:
-    const ADMIN_PIN = "aquayena99";
+    // PALITAN MO ANG PASSWORD SA BABA KUNG GUSTO MO NG IBANG PASSCODE:
+    const ADMIN_PIN = "1234";
 
+    // Default Theme Images
     const defaultData = {
       eimiko: {
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop",
-        quote: '"Eternity may be vast, but moments with you are timeless." — EiMiko'
+        quote: '"Eternity may be vast, but moments with you are timeless." — EiMiko (Raiden Shogun x Yae Miko)'
       },
       kiamei: {
         avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop",
-        quote: '"I will save you, no matter how many times it takes." — KiaMei'
+        quote: '"I will save you, no matter how many times it takes." — KiaMei (Kiana x Mei)'
       },
       sanbina: {
         avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop",
-        quote: '"A melody woven in silk and clockwork gears." — SanBina'
+        quote: '"A melody woven in silk and clockwork gears." — SanBina (Sandrone x Columbina)'
       },
       augostino: {
         avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1464802686167-b939a6910659?w=800&auto=format&fit=crop",
-        quote: '"Starbound destinies linked by radiant light." — AugUino'
+        quote: '"Starbound destinies linked by radiant light." — AugUino (Augusta x Uino)'
       },
       bellevivian: {
         avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&auto=format&fit=crop",
-        quote: '"Neon pulses in tune with our heartbeat." — BelleVivian'
+        quote: '"Neon pulses in tune with our heartbeat." — BelleVivian ft. Jane Doe'
       }
     };
 
-    window.onload = function() { loadThemeData(currentTheme); };
+    // Load saved preferences on startup
+    window.onload = function() {
+      loadThemeData(currentTheme);
+    };
 
+    // Switch Ship Theme
     function switchTheme(themeName) {
       currentTheme = themeName;
       document.body.setAttribute('data-theme', themeName);
-      document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('active'));
+      
+      const chips = document.querySelectorAll('.theme-chip');
+      chips.forEach(chip => chip.classList.remove('active'));
       event.target.classList.add('active');
+
       loadThemeData(themeName);
     }
 
     function loadThemeData(theme) {
-      document.getElementById('display-avatar').src = localStorage.getItem(`avatar_${theme}`) || defaultData[theme].avatar;
-      document.getElementById('display-banner').src = localStorage.getItem(`banner_${theme}`) || defaultData[theme].banner;
-      document.getElementById('display-name').innerText = localStorage.getItem('profile_name') || "Yuri Collector";
-      document.getElementById('display-handle').innerText = localStorage.getItem('profile_handle') || "@yuri_enjoyer";
-      document.getElementById('display-age').innerText = localStorage.getItem('profile_age') || "20 Y/O";
-      document.getElementById('display-location').innerText = localStorage.getItem('profile_loc') || "Philippines";
-      document.getElementById('display-bio').innerText = localStorage.getItem('profile_bio') || "Mabuhay! Welcome sa aking Yuri profile.";
+      const savedAvatar = localStorage.getItem(`avatar_${theme}`) || defaultData[theme].avatar;
+      const savedBanner = localStorage.getItem(`banner_${theme}`) || defaultData[theme].banner;
+      const savedName = localStorage.getItem('profile_name') || "Yuri Collector";
+      const savedHandle = localStorage.getItem('profile_handle') || "@yuri_enjoyer";
+      const savedAge = localStorage.getItem('profile_age') || "20 Y/O";
+      const savedLocation = localStorage.getItem('profile_loc') || "Philippines";
+      const savedBio = localStorage.getItem('profile_bio') || "Mabuhay! Welcome sa aking Yuri-themed profile page.";
+
+      document.getElementById('display-avatar').src = savedAvatar;
+      document.getElementById('display-banner').src = savedBanner;
+      document.getElementById('display-name').innerText = savedName;
+      document.getElementById('display-handle').innerText = savedHandle;
+      document.getElementById('display-age').innerText = savedAge;
+      document.getElementById('display-location').innerText = savedLocation;
+      document.getElementById('display-bio').innerText = savedBio;
       document.getElementById('display-quote').innerText = defaultData[theme].quote;
 
+      // Load links
       document.getElementById('link-facebook').href = localStorage.getItem('link_fb') || "https://facebook.com";
       document.getElementById('link-instagram').href = localStorage.getItem('link_ig') || "https://instagram.com";
       document.getElementById('link-tiktok').href = localStorage.getItem('link_tt') || "https://tiktok.com";
       document.getElementById('link-x').href = localStorage.getItem('link_x') || "https://twitter.com";
     }
 
+    // Toggle Music Play/Pause
     function toggleMusic() {
       const audio = document.getElementById('bgm-audio');
       const btn = document.getElementById('music-btn');
       if (isMusicPlaying) {
-        audio.pause(); isMusicPlaying = false; btn.classList.remove('active');
+        audio.pause();
+        isMusicPlaying = false;
+        btn.classList.remove('active');
       } else {
-        audio.play().then(() => { isMusicPlaying = true; btn.classList.add('active'); }).catch(e => console.log(e));
+        audio.play().then(() => {
+          isMusicPlaying = true;
+          btn.classList.add('active');
+        }).catch(e => console.log("Audio block:", e));
       }
     }
 
+    // Passcode Admin Protection
     function toggleAdminPrompt() {
       if (!isAdmin) {
         let pin = prompt("Enter Admin Passcode to enable Edit Mode:");
@@ -426,7 +681,9 @@
           document.getElementById('admin-icon').className = "fa-solid fa-lock-open";
           document.getElementById('edit-mode-btn').style.display = "block";
           alert("Admin Mode Unlocked!");
-        } else if (pin !== null) { alert("Maling Passcode!"); }
+        } else if (pin !== null) {
+          alert("Maling Passcode!");
+        }
       } else {
         isAdmin = false;
         document.getElementById('admin-icon').className = "fa-solid fa-lock";
@@ -435,6 +692,7 @@
       }
     }
 
+    // Modal Control
     function openEditModal() {
       document.getElementById('input-name').value = document.getElementById('display-name').innerText;
       document.getElementById('input-handle').value = document.getElementById('display-handle').innerText;
@@ -450,8 +708,11 @@
       document.getElementById('editModal').style.display = 'flex';
     }
 
-    function closeEditModal() { document.getElementById('editModal').style.display = 'none'; }
+    function closeEditModal() {
+      document.getElementById('editModal').style.display = 'none';
+    }
 
+    // Convert Selected Image File & Save Per Theme
     function previewGalleryImage(input, targetElementId, type) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
@@ -464,73 +725,89 @@
       }
     }
 
+    // Change Music from File Manager
     function updateBackgroundAudio(input) {
       if (input.files && input.files[0]) {
+        const file = input.files[0];
+        const audioURL = URL.createObjectURL(file);
         const audio = document.getElementById('bgm-audio');
-        document.getElementById('bgm-source').src = URL.createObjectURL(input.files[0]);
+        const source = document.getElementById('bgm-source');
+
+        source.src = audioURL;
         audio.load();
         if (isMusicPlaying) audio.play();
-        alert("Bagong BGM music loaded!");
+        alert("Bagong kanta ang na-load!");
       }
     }
 
+    // Save All Edits Permanently
     function saveProfileData() {
-      localStorage.setItem('profile_name', document.getElementById('input-name').value || "Your Name");
-      localStorage.setItem('profile_handle', document.getElementById('input-handle').value || "@handle");
-      localStorage.setItem('profile_age', document.getElementById('input-age').value || "N/A");
-      localStorage.setItem('profile_loc', document.getElementById('input-location').value || "PH");
-      localStorage.setItem('profile_bio', document.getElementById('input-bio').value || "");
+      const name = document.getElementById('input-name').value || "Your Name";
+      const handle = document.getElementById('input-handle').value || "@handle";
+      const age = document.getElementById('input-age').value || "N/A";
+      const loc = document.getElementById('input-location').value || "PH";
+      const bio = document.getElementById('input-bio').value || "";
 
-      localStorage.setItem('link_fb', document.getElementById('input-facebook').value || "#");
-      localStorage.setItem('link_ig', document.getElementById('input-instagram').value || "#");
-      localStorage.setItem('link_tt', document.getElementById('input-tiktok').value || "#");
-      localStorage.setItem('link_x', document.getElementById('input-x').value || "#");
+      const fb = document.getElementById('input-facebook').value || "#";
+      const ig = document.getElementById('input-instagram').value || "#";
+      const tt = document.getElementById('input-tiktok').value || "#";
+      const x = document.getElementById('input-x').value || "#";
+
+      localStorage.setItem('profile_name', name);
+      localStorage.setItem('profile_handle', handle);
+      localStorage.setItem('profile_age', age);
+      localStorage.setItem('profile_loc', loc);
+      localStorage.setItem('profile_bio', bio);
+
+      localStorage.setItem('link_fb', fb);
+      localStorage.setItem('link_ig', ig);
+      localStorage.setItem('link_tt', tt);
+      localStorage.setItem('link_x', x);
 
       loadThemeData(currentTheme);
       closeEditModal();
-      alert("Nai-save nang permanente sa iyong phone!");
+      alert("Permanenteng nai-save ang lahat sa phone mo!");
     }
 
-    /* Falling Petals Particles Canvas Animation */
+    /* Ambient Particle Effect */
     const canvas = document.getElementById('particle-canvas');
     const ctx = canvas.getContext('2d');
     let particles = [];
 
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    class PetalParticle {
+    class Particle {
       constructor() { this.reset(); }
       reset() {
         this.x = Math.random() * canvas.width;
-        this.y = -10;
-        this.size = Math.random() * 4 + 2;
-        this.speedX = (Math.random() - 0.5) * 1.2;
-        this.speedY = Math.random() * 1.2 + 0.6;
-        this.opacity = Math.random() * 0.7 + 0.2;
-        this.angle = Math.random() * Math.PI * 2;
-        this.spin = (Math.random() - 0.5) * 0.03;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.8;
+        this.speedY = Math.random() * 0.8 + 0.3;
+        this.opacity = Math.random() * 0.6 + 0.2;
       }
       update() {
         this.x += this.speedX;
         this.y += this.speedY;
-        this.angle += this.spin;
-        if (this.y > canvas.height) this.reset();
+        if (this.y > canvas.height || this.x < 0 || this.x > canvas.width) {
+          this.y = -10;
+          this.x = Math.random() * canvas.width;
+        }
       }
       draw() {
-        ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.angle);
-        ctx.fillStyle = `rgba(255, 180, 230, ${this.opacity})`;
+        ctx.fillStyle = `rgba(216, 128, 255, ${this.opacity})`;
         ctx.beginPath();
-        ctx.ellipse(0, 0, this.size, this.size * 1.8, 0, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
         ctx.fill();
-        ctx.restore();
       }
     }
 
-    for (let i = 0; i < 45; i++) particles.push(new PetalParticle());
+    for (let i = 0; i < 40; i++) particles.push(new Particle());
 
     function animateParticles() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
