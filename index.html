@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="tl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Yuri Ship Theme Mobile Profile</title>
+
+    <!-- External Libraries & Fonts -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Cinzel:wght@600;800&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/canvas-confetti/1.6.0/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        cinzel: ['Cinzel', 'serif'],
+                        orbitron: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        float: 'float 4s ease-in-out infinite',
+                        pulseGlow: 'pulseGlow 2.5s ease-in-out infinite',
+                        heartBeat: 'heartBeat 1.5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        pulseGlow: {
+                            '0%, 100%': { opacity: '0.6', transform: 'scale(1)' },
+                            '50%': { opacity: '1', transform: 'scale(1.04)' },
+                        },
+                        heartBeat: {
+                            '0%, 100%': { transform: 'scale(1)' },
+                            '50%': { transform: 'scale(1.2)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+        }
+
+        /* Glassmorphism Classes */
+        .glass-card {
+            background: var(--card-bg, rgba(18, 18, 28, 0.65));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--card-border, rgba(255, 255, 255, 0.15));
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .glass-pill {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        /* Dynamic Yuri Ship Theme Definitions */
+        .theme-eimiko {
+            --bg-gradient: linear-gradient(135deg, #18092b 0%, #3a114d 50%, #581640 100%);
+            --card-bg: rgba(27, 12, 46, 0.7);
+            --accent-primary: #c084fc;
+            --accent-secondary: #f472b6;
+            --card-border: rgba(216, 180, 254, 0.3);
+            --glow-color: rgba(192, 132, 252, 0.5);
+            --font-family: 'Cinzel', serif;
+        }
+
+        .theme-kiamei {
+            --bg-gradient: linear-gradient(135deg, #060c21 0%, #121945 50%, #2f124a 100%);
+            --card-bg: rgba(13, 20, 51, 0.75);
+            --accent-primary: #38bdf8;
+            --accent-secondary: #a855f7;
+            --card-border: rgba(56, 189, 248, 0.35);
+            --glow-color: rgba(168, 85, 247, 0.5);
+            --font-family: 'Orbitron', sans-serif;
+        }
+
+        .theme-sanbina {
+            --bg-gradient: linear-gradient(135deg, #111420 0%, #201a2c 50%, #352338 100%);
+            --card-bg: rgba(23, 20, 33, 0.8);
+            --accent-primary: #fb7185;
+            --accent-secondary: #f43f5e;
+            --card-border: rgba(251, 113, 133, 0.3);
+            --glow-color: rgba(244, 63, 94, 0.4);
+            --font-family: 'Cinzel', serif;
+        }
+
+        .theme-auguino {
+            --bg-gradient: linear-gradient(135deg, #1c1711 0%, #3d2d18 50%, #4a3821 100%);
+            --card-bg: rgba(36, 27, 18, 0.75);
+            --accent-primary: #fbbf24;
+            --accent-secondary: #f59e0b;
+            --card-border: rgba(251, 191, 36, 0.35);
+            --glow-color: rgba(245, 158, 11, 0.5);
+            --font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        .theme-bellevivian {
+            --bg-gradient: linear-gradient(135deg, #09090b 0%, #1a1226 50%, #2a0b22 100%);
+            --card-bg: rgba(24, 15, 31, 0.8);
+            --accent-primary: #f43f5e;
+            --accent-secondary: #06b6d4;
+            --card-border: rgba(244, 63, 94, 0.35);
+            --glow-color: rgba(6, 182, 212, 0.5);
+            --font-family: 'Orbitron', sans-serif;
+        }
+
+        .themed-bg {
+            background: var(--bg-gradient);
+            transition: background 0.8s ease;
+        }
+
+        .themed-text-accent {
+            color: var(--accent-primary);
+            transition: color 0.5s ease;
+        }
+
+        .themed-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            box-shadow: 0 4px 20px var(--glow-color);
+            transition: all 0.3s ease;
+        }
+
+        .themed-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Mobile Viewport Container */
+        .mobile-screen-container {
+            max-width: 440px;
+            height: 100vh;
+            max-height: 920px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+        }
+
+        #particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex items-center justify-center p-0 sm:p-4 font-sans antialiased selection:bg-pink-500 selection:text-white">
+
+    <!-- Main Device Viewport Wrapper -->
+    <div id="appContainer" class="mobile-screen-container w-full relative rounded-none sm:rounded-[40px] overflow-hidden border-0 sm:border-4 border-slate-800 themed-bg theme-eimiko flex flex-col transition-all duration-700 shadow-2xl">
+        
+        <!-- Animated Background Canvas -->
+        <canvas id="particle-canvas"></canvas>
+
+        <!-- Hidden Audio BGM Player -->
+        <audio id="bgmAudio" loop preload="auto">
+            <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
+        </audio>
+
+        <!-- Top Header Controls & BGM Bar -->
+        <header class="relative z-20 px-5 pt-4 pb-3 flex justify-between items-center bg-black/30 backdrop-blur-lg border-b border-white/10">
+            <!-- Active Ship Badge -->
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-heart text-pink-400 text-xs animate-pulse"></i>
+                <span id="currentShipTag" class="text-xs font-bold tracking-wider uppercase text-pink-200">EiMiko Theme</span>
+            </div>
+
+            <!-- Header Action Controls -->
+            <div class="flex items-center gap-2">
+                <!-- BGM Audio Toggle Button -->
+                <button id="bgmToggleBtn" onclick="toggleAudio()" title="Play/Pause Background Music" class="px-2.5 py-1.5 rounded-full glass-pill hover:bg-white/20 transition-all text-xs text-pink-200 flex items-center gap-1.5">
+                    <i id="bgmIcon" class="fa-solid fa-music text-pink-300"></i>
+                    <span id="bgmStatusText" class="text-[10px] font-bold">BGM</span>
+                </button>
+
+                <!-- Ship Quote Dialogue Button -->
+                <button id="quoteBtn" title="Ship Quote" class="p-2 rounded-full glass-pill hover:bg-white/20 transition-all text-xs text-purple-200">
+                    <i class="fa-solid fa-comment-dots"></i>
+                </button>
+
+                <!-- Admin Lock / Unlock Toggle Button -->
+                <button id="adminToggleBtn" onclick="toggleAdminMode()" title="Admin Lock/Unlock" class="p-2 rounded-full glass-pill hover:bg-white/20 transition-all text-xs text-amber-300">
+                    <i id="adminLockIcon" class="fa-solid fa-lock"></i>
+                </button>
+            </div>
+        </header>
+
+        <!-- Theme Switcher Navigation Bar -->
+        <div class="relative z-20 bg-black/40 backdrop-blur-md px-3 py-2.5 overflow-x-auto flex gap-2 no-scrollbar border-b border-white/10">
+            <button onclick="switchTheme('eimiko')" class="theme-tab-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 bg-purple-900/60 text-purple-200 border border-purple-400/40 hover:scale-105 transition-all ring-2 ring-white scale-105" data-theme="eimiko">
+                <span>🌸 EiMiko</span>
+            </button>
+            <button onclick="switchTheme('kiamei')" class="theme-tab-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 bg-cyan-900/40 text-cyan-200 border border-cyan-400/30 hover:scale-105 transition-all" data-theme="kiamei">
+                <span>⚡ KiaMei</span>
+            </button>
+            <button onclick="switchTheme('sanbina')" class="theme-tab-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 bg-rose-950/50 text-rose-200 border border-rose-500/30 hover:scale-105 transition-all" data-theme="sanbina">
+                <span>🕊️ SanBina</span>
+            </button>
+            <button onclick="switchTheme('auguino')" class="theme-tab-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 bg-amber-950/50 text-amber-200 border border-amber-500/30 hover:scale-105 transition-all" data-theme="auguino">
+                <span>✨ AugUino</span>
+            </button>
+            <button onclick="switchTheme('bellevivian')" class="theme-tab-btn flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5 bg-emerald-950/50 text-emerald-200 border border-emerald-500/30 hover:scale-105 transition-all" data-theme="bellevivian">
+                <span>🎧 BelleVivian</span>
+            </button>
+        </div>
+
+        <main class="relative z-10 flex-1 overflow-y-auto px-4 py-4 space-y-4">
+
+            <!-- Profile Header Card (Banner & Profile Pic) -->
+            <div class="relative rounded-3xl overflow-hidden glass-card transition-all duration-500 group">
+                
+                <!-- Dynamic Header Banner Image (Galleria Adjustable) -->
+                <div class="h-36 relative overflow-hidden bg-slate-900">
+                    <img id="bannerImg" src="https://images.unsplash.com/photo-1528164344705-47542687990d?q=80&w=1000&auto=format&fit=crop" alt="Banner Background" class="w-full h-full object-cover object-center transition-all duration-700 opacity-85">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                    
+                    <!-- Yuri Ship Badge Overlay -->
+                    <span id="shipTitleBadge" class="absolute top-3 right-3 text-[10px] uppercase font-extrabold tracking-wider px-2.5 py-1 rounded-full bg-black/60 text-white backdrop-blur-md border border-white/20">
+                        Raiden Shogun & Yae Miko
+                    </span>
+                </div>
+
+                <!-- Avatar & Core Info -->
+                <div class="px-5 pb-5 -mt-14 relative z-10 flex flex-col items-center text-center">
+                    <div class="relative group/avatar">
+                        <img id="userAvatar" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=400&auto=format&fit=crop" alt="Profile Avatar" class="w-24 h-24 rounded-full object-cover border-4 border-slate-900 shadow-2xl transition-transform duration-300 group-hover/avatar:scale-105">
+                        <div class="absolute bottom-1 right-1 w-6 h-6 rounded-full bg-sky-500 border-2 border-slate-900 flex items-center justify-center text-white text-[10px]" title="Verified Yuri Profile">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                    </div>
+
+                    <h1 id="userName" class="text-2xl font-extrabold tracking-tight mt-3 text-white">
+                        Aira Celeste
+                    </h1>
+
+                    <p id="userHandle" class="text-xs font-semibold text-pink-300/90 mb-2">@airaceleste_yuri</p>
+
+                    <!-- Age & Location Pills -->
+                    <div class="flex items-center justify-center gap-2 mt-1">
+                        <span id="userAge" class="px-3 py-1 rounded-full glass-pill text-xs font-semibold text-slate-200 flex items-center gap-1">
+                            🎂 21 Yrs Old
+                        </span>
+                        <span id="userLocation" class="px-3 py-1 rounded-full glass-pill text-xs font-semibold text-slate-200 flex items-center gap-1">
+                            📍 Manila, PH
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Owner Edit Mode Floating Action Trigger -->
+            <button id="adminEditTrigger" onclick="openEditModal()" class="w-full py-2.5 rounded-2xl themed-btn font-bold text-white text-xs shadow-lg hidden flex items-center justify-center gap-2">
+                <i class="fa-solid fa-pen-to-square"></i>
+                <span>I-edit ang Profile (Owner Mode)</span>
+            </button>
+
+            <!-- Interactive Dialogue Quote Card -->
+            <div id="quoteCard" class="glass-card p-4 rounded-2xl relative overflow-hidden transition-all duration-300">
+                <div class="flex items-start gap-3">
+                    <div class="p-2.5 rounded-xl bg-white/10 text-pink-300 text-base flex-shrink-0">
+                        <i class="fa-solid fa-quote-left"></i>
+                    </div>
+                    <div>
+                        <h4 id="quoteShipName" class="text-[11px] font-bold uppercase tracking-wider text-pink-300">EiMiko Dialogue 🌸</h4>
+                        <p id="quoteText" class="text-xs italic text-slate-200 mt-1 leading-relaxed transition-opacity duration-300">
+                            "In your eternity, I am the constant breeze that moves your sakura blossoms."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About / Bio Card -->
+            <div class="glass-card p-5 rounded-3xl space-y-3">
+                <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                    <h2 class="text-xs font-extrabold uppercase tracking-wider themed-text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-user-heart"></i>
+                        <span>Tungkol Sa Akin (About Me)</span>
+                    </h2>
+                    <span class="text-[10px] text-slate-400 font-mono">BIO</span>
+                </div>
+                <p id="userBio" class="text-xs leading-relaxed text-slate-200 font-normal">
+                    Maligayang pagdating sa aking personal page! Solid fan ng Yuri anime ships, aesthetic web designs, and gaming (Genshin, Honkai Star Rail & ZZZ). Mabait kapag tulog! ✨🌸
+                </p>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="glass-card p-5 rounded-3xl space-y-3">
+                <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                    <h2 class="text-xs font-extrabold uppercase tracking-wider themed-text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-sparkles"></i>
+                        <span>Iba pang Impormasyon (Other Info)</span>
+                    </h2>
+                    <span class="text-[10px] text-slate-400 font-mono">DETAILS</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5 pt-1 text-xs">
+                    <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-1">
+                        <span class="text-[10px] text-slate-400 font-semibold">Paboritong Ship:</span>
+                        <span id="favShipInfo" class="font-bold text-pink-300">EiMiko & KiaMei</span>
+                    </div>
+                    <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-1">
+                        <span class="text-[10px] text-slate-400 font-semibold">Hobby / Mahilig Sa:</span>
+                        <span id="hobbyInfo" class="font-bold text-purple-300">Cosplay & Gaming</span>
+                    </div>
+                    <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-1">
+                        <span class="text-[10px] text-slate-400 font-semibold">Status:</span>
+                        <span id="statusInfo" class="font-bold text-emerald-300">Online & Chilling</span>
+                    </div>
+                    <div class="p-2.5 rounded-2xl bg-white/5 border border-white/5 flex flex-col gap-1">
+                        <span class="text-[10px] text-slate-400 font-semibold">Motto:</span>
+                        <span id="mottoInfo" class="font-bold text-amber-300 truncate">Girls love supremacy 🌸</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Accounts Card -->
+            <div class="glass-card p-5 rounded-3xl space-y-3">
+                <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                    <h2 class="text-xs font-extrabold uppercase tracking-wider themed-text-accent flex items-center gap-2">
+                        <i class="fa-solid fa-share-nodes"></i>
+                        <span>Aking Socials (Social Media)</span>
+                    </h2>
+                    <span class="text-[10px] font-semibold text-emerald-400 flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span> Live Links
+                    </span>
+                </div>
+
+                <p class="text-[11px] text-slate-300">Pindutin ang buttons para awtomatikong pupunta sa aking official social accounts:</p>
+
+                <!-- Social Links Buttons List -->
+                <div class="space-y-2 pt-1">
+                    <!-- Facebook -->
+                    <a id="linkFacebook" href="https://facebook.com" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-blue-600/80 flex items-center justify-center text-white text-base group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-facebook-f"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">Facebook</div>
+                                <div id="labelFacebook" class="text-[10px] text-slate-400">facebook.com/aira_celeste</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <!-- Twitter / X -->
+                    <a id="linkX" href="https://twitter.com" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-black/80 flex items-center justify-center text-white text-base group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-x-twitter"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">Twitter / X</div>
+                                <div id="labelX" class="text-[10px] text-slate-400">@aira_celeste</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <!-- Instagram -->
+                    <a id="linkInstagram" href="https://instagram.com" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white text-base group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-instagram"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">Instagram</div>
+                                <div id="labelInstagram" class="text-[10px] text-slate-400">@aira.yuriverse</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <!-- TikTok -->
+                    <a id="linkTikTok" href="https://tiktok.com" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-slate-900 border border-cyan-400/30 flex items-center justify-center text-cyan-300 text-base group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-tiktok"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">TikTok</div>
+                                <div id="labelTikTok" class="text-[10px] text-slate-400">@yuri_edits_ph</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition-colors"></i>
+                    </a>
+
+                    <!-- Discord -->
+                    <a id="linkDiscord" href="https://discord.com" target="_blank" rel="noopener noreferrer" class="group flex items-center justify-between p-3 rounded-2xl bg-white/5 hover:bg-white/15 border border-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-xl bg-indigo-600/80 flex items-center justify-center text-white text-base group-hover:scale-110 transition-transform">
+                                <i class="fa-brands fa-discord"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs font-bold text-white">Discord Server</div>
+                                <div id="labelDiscord" class="text-[10px] text-slate-400">yuri_sanctuary</div>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-white transition-colors"></i>
+                    </a>
+                </div>
+            </div>
+
+            <footer class="text-center py-4 text-[11px] text-slate-400 space-y-1">
+                <p>Designed with ❤️ for Yuri & Anime Ship Lovers</p>
+                <p class="text-[10px] text-slate-500 font-mono">Interactive Dynamic Yuri Mobile Experience</p>
+            </footer>
+        </main>
+
+        <div id="editModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+            <div class="bg-slate-900 border border-slate-700 rounded-3xl w-full max-w-sm max-h-[85vh] overflow-y-auto p-5 space-y-4 text-left shadow-2xl">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-user-gear text-pink-400"></i>
+                        <span>Edit Profile (Gallery Upload Enabled)</span>
+                    </h3>
+                    <button onclick="closeEditModal()" class="text-slate-400 hover:text-white text-lg">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <form id="profileForm" class="space-y-3 text-xs">
+                    <!-- Gallery Upload for Profile Avatar -->
+                    <div class="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
+                        <label class="block text-pink-300 font-bold mb-1">
+                            <i class="fa-solid fa-image"></i> Profile Picture (Mula sa Phone Gallery):
+                        </label>
+                        <input type="file" id="fileAvatarInput" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-pink-600 file:text-white hover:file:bg-pink-500 cursor-pointer">
+                        <p class="text-[10px] text-slate-400">Mag-adjust nang awtomatiko sa frame nang hindi nadidistort.</p>
+                    </div>
+
+                    <!-- Gallery Upload for Banner Background -->
+                    <div class="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
+                        <label class="block text-purple-300 font-bold mb-1">
+                            <i class="fa-solid fa-panorama"></i> Background Header Image (Mula sa Phone Gallery):
+                        </label>
+                        <input type="file" id="fileBannerInput" accept="image/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-purple-600 file:text-white hover:file:bg-purple-500 cursor-pointer">
+                        <p class="text-[10px] text-slate-400">Kahit anong aspect ratio ng photo, babagay sa header!</p>
+                    </div>
+
+                    <!-- Audio File Upload Picker for BGM -->
+                    <div class="p-3 rounded-2xl bg-slate-800/80 border border-slate-700 space-y-1">
+                        <label class="block text-amber-300 font-bold mb-1">
+                            <i class="fa-solid fa-music"></i> Custom BGM Song (.mp3 / audio):
+                        </label>
+                        <input type="file" id="fileAudioInput" accept="audio/*" class="w-full text-slate-300 text-xs file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-600 file:text-white hover:file:bg-amber-500 cursor-pointer">
+                        <p class="text-[10px] text-slate-400">Pumili ng sariling kanta sa Storage o Phone Files!</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Pangalan (Name):</label>
+                        <input type="text" id="inputName" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Username Handle:</label>
+                        <input type="text" id="inputHandle" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-pink-500">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-1">Edad (Age):</label>
+                            <input type="text" id="inputAge" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-pink-500">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 font-semibold mb-1">Lokasyon:</label>
+                            <input type="text" id="inputLocation" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-pink-500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-300 font-semibold mb-1">Short Bio:</label>
+                        <textarea id="inputBio" rows="3" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-pink-500"></textarea>
+                    </div>
+
+                    <div class="border-t border-slate-800 pt-2 space-y-2">
+                        <label class="block text-pink-300 font-bold">Social Media Links:</label>
+                        <div>
+                            <label class="text-[10px] text-slate-400">Facebook Link:</label>
+                            <input type="text" id="inputFacebook" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400">Twitter/X Link:</label>
+                            <input type="text" id="inputX" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400">Instagram Link:</label>
+                            <input type="text" id="inputInstagram" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400">TikTok Link:</label>
+                            <input type="text" id="inputTikTok" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-white">
+                        </div>
+                        <div>
+                            <label class="text-[10px] text-slate-400">Discord Invite Link:</label>
+                            <input type="text" id="inputDiscord" class="w-full bg-slate-800 border border-slate-700 rounded-xl px-2.5 py-1.5 text-white">
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex gap-2">
+                        <button type="submit" class="flex-1 py-2.5 rounded-xl themed-btn font-bold text-white text-xs shadow-lg">
+                            💾 Save Profile & Media
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Yuri Ship Theme Database & Quotes
+        const shipThemes = {
+            eimiko: {
+                name: 'EiMiko Theme',
+                shipBadge: 'Raiden Shogun & Yae Miko',
+                quoteHeader: 'EiMiko Dialogue 🌸',
+                quotes: [
+                    '"In your eternity, I am the constant breeze that moves your sakura blossoms."',
+                    '"You\'ll always remain my most whimsical Fox Envoy, Miko."',
+                    '"Eternity is long, Ei... but with you, every second is worth savoring."'
+                ],
+                banner: 'https://images.unsplash.com/photo-1528164344705-47542687990d?q=80&w=1000&auto=format&fit=crop',
+                favShip: 'Raiden Shogun x Yae Miko',
+                hobby: 'Cherry Blossoms & Light Novels',
+                particleType: 'sakura'
+            },
+            kiamei: {
+                name: 'KiaMei Theme',
+                shipBadge: 'Kiana Kaslana & Raiden Mei',
+                quoteHeader: 'KiaMei Dialogue ⚡',
+                quotes: [
+                    '"If saving you is a sin, I\'d gladly become a sinner."',
+                    '"Kiana... no matter where you are in the universe, I will find you."',
+                    '"You are my light in the darkest Honkai night, Mei-senpai!"'
+                ],
+                banner: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1000&auto=format&fit=crop',
+                favShip: 'Kiana x Raiden Mei',
+                hobby: 'Space Exploration & Cooking',
+                particleType: 'lightning'
+            },
+            sanbina: {
+                name: 'SanBina Theme',
+                shipBadge: 'Sandrone & Columbina',
+                quoteHeader: 'SanBina Dialogue 🕊️',
+                quotes: [
+                    '"Sing your melancholic lullaby, Damselette. My marionettes will dance for you."',
+                    '"Your clockwork hearts beat with such gentle grace, Sandrone."',
+                    '"A symphony of gears and soft hums under the icy snows of Snezhnaya."'
+                ],
+                banner: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=1000&auto=format&fit=crop',
+                favShip: 'Sandrone x Columbina',
+                hobby: 'Clockwork & Opera Music',
+                particleType: 'feathers'
+            },
+            auguino: {
+                name: 'AugUino Theme',
+                shipBadge: 'Augusta & Uino',
+                quoteHeader: 'AugUino Dialogue ✨',
+                quotes: [
+                    '"Under the starry ceiling of our sanctuary, I hold your hand tightly."',
+                    '"Together through every golden dawn and quiet twilight."',
+                    '"Your smile shines brighter than any constellation in the sky."'
+                ],
+                banner: 'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=1000&auto=format&fit=crop',
+                favShip: 'Augusta x Uino',
+                hobby: 'Star Gazing & Starlight Tales',
+                particleType: 'stars'
+            },
+            bellevivian: {
+                name: 'BelleVivian Theme',
+                shipBadge: 'Belle x Vivian ft. Jane Doe',
+                quoteHeader: 'BelleVivian / Jane Doe 🎧',
+                quotes: [
+                    '"New Eridu night city lights... perfect beat for our urban adventure!"',
+                    '"Stay close, Belle! The proxy neon life is sweeter when shared."',
+                    '"Jane Doe watching from the shadows with a mysterious smirk..."'
+                ],
+                banner: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=1000&auto=format&fit=crop',
+                favShip: 'Belle x Vivian (ft. Jane)',
+                hobby: 'Cyber Beats & Underground Vinyl',
+                particleType: 'cyber'
+            }
+        };
+
+        let currentThemeKey = 'eimiko';
+        let currentQuoteIndex = 0;
+        let isAdminUnlocked = false;
+        const ADMIN_PIN = "aquayena99"; // Default Owner Passcode
+
+        // DOM Elements
+        const appContainer = document.getElementById('appContainer');
+        const currentShipTag = document.getElementById('currentShipTag');
+        const shipTitleBadge = document.getElementById('shipTitleBadge');
+        const bannerImg = document.getElementById('bannerImg');
+        const quoteShipName = document.getElementById('quoteShipName');
+        const quoteText = document.getElementById('quoteText');
+        const favShipInfo = document.getElementById('favShipInfo');
+        const hobbyInfo = document.getElementById('hobbyInfo');
+
+        const userName = document.getElementById('userName');
+        const userHandle = document.getElementById('userHandle');
+        const userAvatar = document.getElementById('userAvatar');
+        const userAge = document.getElementById('userAge');
+        const userLocation = document.getElementById('userLocation');
+        const userBio = document.getElementById('userBio');
+
+        // Audio Controls
+        const bgmAudio = document.getElementById('bgmAudio');
+        const bgmIcon = document.getElementById('bgmIcon');
+        const bgmStatusText = document.getElementById('bgmStatusText');
+        let isPlayingBgm = false;
+
+        function toggleAudio() {
+            if (isPlayingBgm) {
+                bgmAudio.pause();
+                isPlayingBgm = false;
+                bgmIcon.className = "fa-solid fa-music-slash text-slate-400";
+                bgmStatusText.textContent = "OFF";
+            } else {
+                bgmAudio.play().then(() => {
+                    isPlayingBgm = true;
+                    bgmIcon.className = "fa-solid fa-music text-pink-300 animate-bounce";
+                    bgmStatusText.textContent = "ON";
+                }).catch(() => {
+                    alert("Pindutin ang screen para suportahan ang Audio autoplay!");
+                });
+            }
+        }
+
+        // Dynamic Theme Switcher
+        function switchTheme(themeKey) {
+            if (!shipThemes[themeKey]) return;
+            currentThemeKey = themeKey;
+            const data = shipThemes[themeKey];
+
+            appContainer.className = `mobile-screen-container w-full relative rounded-none sm:rounded-[40px] overflow-hidden border-0 sm:border-4 border-slate-800 themed-bg theme-${themeKey} flex flex-col transition-all duration-700 shadow-2xl`;
+
+            currentShipTag.textContent = data.name;
+            shipTitleBadge.textContent = data.shipBadge;
+
+            // Update banner unless uploaded custom image
+            if (!bannerImg.dataset.custom) {
+                bannerImg.src = data.banner;
+            }
+
+            quoteShipName.textContent = data.quoteHeader;
+            currentQuoteIndex = 0;
+            quoteText.textContent = data.quotes[0];
+
+            favShipInfo.textContent = data.favShip;
+            hobbyInfo.textContent = data.hobby;
+
+            // Update Active Tab Button styling
+            document.querySelectorAll('.theme-tab-btn').forEach(btn => {
+                if (btn.getAttribute('data-theme') === themeKey) {
+                    btn.classList.add('ring-2', 'ring-white', 'scale-105');
+                } else {
+                    btn.classList.remove('ring-2', 'ring-white', 'scale-105');
+                }
+            });
+
+            if (window.confetti) {
+                confetti({
+                    particleCount: 20,
+                    spread: 50,
+                    origin: { y: 0.15 },
+                    colors: ['#f472b6', '#c084fc', '#38bdf8', '#fbbf24']
+                });
+            }
+
+            initParticles(data.particleType);
+        }
+
+        // Quote Switcher
+        document.getElementById('quoteBtn').addEventListener('click', () => {
+            const quotes = shipThemes[currentThemeKey].quotes;
+            currentQuoteIndex = (currentQuoteIndex + 1) % quotes.length;
+            quoteText.style.opacity = '0';
+            setTimeout(() => {
+                quoteText.textContent = quotes[currentQuoteIndex];
+                quoteText.style.opacity = '1';
+            }, 200);
+        });
+
+        // Admin Toggle Mode Logic
+        function toggleAdminMode() {
+            if (!isAdminUnlocked) {
+                const pin = prompt("Enter Owner Passcode to unlock Edit Mode:");
+                if (pin === ADMIN_PIN) {
+                    isAdminUnlocked = true;
+                    document.getElementById('adminLockIcon').className = "fa-solid fa-lock-open text-emerald-400";
+                    document.getElementById('adminEditTrigger').classList.remove('hidden');
+                    alert("Admin Mode Unlocked! PWEDE MO NA MA-EDIT ANG PROFILE MO AT PUMILI NG PHOTOS O MUSIC SA GALLERY.");
+                } else if (pin !== null) {
+                    alert("Maling Passcode! Direct View Mode Only.");
+                }
+            } else {
+                isAdminUnlocked = false;
+                document.getElementById('adminLockIcon').className = "fa-solid fa-lock text-amber-300";
+                document.getElementById('adminEditTrigger').classList.add('hidden');
+                alert("Admin Mode Locked.");
+            }
+        }
+
+        function openEditModal() {
+            document.getElementById('inputName').value = userName.textContent.trim();
+            document.getElementById('inputHandle').value = userHandle.textContent.trim();
+            document.getElementById('inputAge').value = userAge.textContent.replace('🎂 ', '').replace(' Yrs Old', '').trim();
+            document.getElementById('inputLocation').value = userLocation.textContent.replace('📍 ', '').trim();
+            document.getElementById('inputBio').value = userBio.textContent.trim();
+
+            document.getElementById('editModal').classList.remove('hidden');
+            setTimeout(() => document.getElementById('editModal').classList.remove('opacity-0'), 10);
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').classList.add('opacity-0');
+            setTimeout(() => document.getElementById('editModal').classList.add('hidden'), 300);
+        }
+
+        // Handle Form Submission and File Reader Loaders
+        document.getElementById('profileForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Avatar Image File Processing
+            const fileAvatar = document.getElementById('fileAvatarInput').files[0];
+            if (fileAvatar) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    userAvatar.src = evt.target.result;
+                }
+                reader.readAsDataURL(fileAvatar);
+            }
+
+            // Banner Image File Processing
+            const fileBanner = document.getElementById('fileBannerInput').files[0];
+            if (fileBanner) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    bannerImg.src = evt.target.result;
+                    bannerImg.dataset.custom = "true";
+                }
+                reader.readAsDataURL(fileBanner);
+            }
+
+            // Custom Audio BGM File Processing
+            const fileAudio = document.getElementById('fileAudioInput').files[0];
+            if (fileAudio) {
+                const audioURL = URL.createObjectURL(fileAudio);
+                bgmAudio.src = audioURL;
+                if (isPlayingBgm) {
+                    bgmAudio.play();
+                }
+            }
+
+            const newName = document.getElementById('inputName').value.trim();
+            if (newName) userName.textContent = newName;
+
+            const newHandle = document.getElementById('inputHandle').value.trim();
+            if (newHandle) userHandle.textContent = newHandle;
+
+            const newAge = document.getElementById('inputAge').value.trim();
+            if (newAge) userAge.textContent = `🎂 ${newAge} Yrs Old`;
+
+            const newLoc = document.getElementById('inputLocation').value.trim();
+            if (newLoc) userLocation.textContent = `📍 ${newLoc}`;
+
+            const newBio = document.getElementById('inputBio').value.trim();
+            if (newBio) userBio.textContent = newBio;
+
+            const valFB = document.getElementById('inputFacebook').value.trim();
+            if (valFB) { document.getElementById('linkFacebook').href = valFB; }
+
+            const valX = document.getElementById('inputX').value.trim();
+            if (valX) { document.getElementById('linkX').href = valX; }
+
+            const valIG = document.getElementById('inputInstagram').value.trim();
+            if (valIG) { document.getElementById('linkInstagram').href = valIG; }
+
+            const valTT = document.getElementById('inputTikTok').value.trim();
+            if (valTT) { document.getElementById('linkTikTok').href = valTT; }
+
+            const valDC = document.getElementById('inputDiscord').value.trim();
+            if (valDC) { document.getElementById('linkDiscord').href = valDC; }
+
+            closeEditModal();
+        });
+
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = appContainer.clientWidth;
+            canvas.height = appContainer.clientHeight;
+        }
+
+        class Particle {
+            constructor(type) {
+                this.reset(type);
+            }
+
+            reset(type) {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3.5 + 1.2;
+                this.speedY = Math.random() * 1 + 0.3;
+                this.speedX = (Math.random() - 0.5) * 0.6;
+                this.opacity = Math.random() * 0.7 + 0.3;
+                this.type = type;
+
+                if (type === 'sakura') {
+                    this.color = `rgba(244, 114, 182, ${this.opacity})`;
+                } else if (type === 'lightning') {
+                    this.color = `rgba(56, 189, 248, ${this.opacity})`;
+                } else if (type === 'feathers') {
+                    this.color = `rgba(251, 113, 133, ${this.opacity})`;
+                } else if (type === 'stars') {
+                    this.color = `rgba(251, 191, 36, ${this.opacity})`;
+                } else {
+                    this.color = `rgba(6, 182, 212, ${this.opacity})`;
+                }
+            }
+
+            update() {
+                this.y += this.speedY;
+                this.x += this.speedX;
+
+                if (this.y > canvas.height) {
+                    this.y = -10;
+                    this.x = Math.random() * canvas.width;
+                }
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles(type = 'sakura') {
+            resizeCanvas();
+            particles = [];
+            for (let i = 0; i < 35; i++) {
+                particles.push(new Particle(type));
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('resize', resizeCanvas);
+
+        window.onload = function() {
+            switchTheme('eimiko');
+            animateParticles();
+        };
+    </script>
+</body>
+</html>
