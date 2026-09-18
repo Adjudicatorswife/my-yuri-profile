@@ -457,7 +457,7 @@
           <button class="action-btn" id="btn-share" onclick="openShareModal()" title="Share Profile">
             <i class="fa-solid fa-share-nodes"></i>
           </button>
-          <button class="action-btn" id="btn-music" onclick="toggleMusic()" title="Toggle Synthesized Ambient Music">
+          <button class="action-btn" id="btn-music" onclick="toggleMusic()" title="Toggle Background Music">
             <i class="fa-solid fa-music"></i>
           </button>
           <button class="action-btn" id="btn-admin" onclick="toggleAdminLock()" title="Admin Mode Toggle">
@@ -513,9 +513,9 @@
               <div class="music-bar" style="animation-delay: 0.2s"></div>
               <div class="music-bar" style="animation-delay: 0.4s"></div>
             </div>
-            <span class="text-xs font-semibold text-[var(--primary-color)]" id="audio-track-label">Ambient Soundscape Playing...</span>
+            <span class="text-xs font-semibold text-[var(--primary-color)]" id="audio-track-label">Theme Music Playing...</span>
           </div>
-          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.3" oninput="adjustVolume(this.value)" class="w-20 accent-[var(--primary-color)]" />
+          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5" oninput="adjustVolume(this.value)" class="w-20 accent-[var(--primary-color)]" />
         </div>
 
         <!-- Admin Customization Trigger -->
@@ -652,6 +652,9 @@
 
   </div>
 
+  <!-- HTML5 Background Audio Element -->
+  <audio id="bg-audio-player" loop preload="auto"></audio>
+
   <script>
     let activeTheme = 'eimiko';
     let isAdminUnlocked = false;
@@ -659,81 +662,79 @@
     let activeGameFilter = 'all';
     const ADMIN_PIN = "aquayena99";
 
-    // Audio Context & Web Audio Synthesizer Engine
-    let audioCtx = null;
-    let synthOscillator = null;
-    let synthGain = null;
-    let synthInterval = null;
+    // PERMANENT AUDIO MAP PER THEME (Dito ilalagay ang Direct MP3 Links)
+    const themeAudioMap = {
+      eimiko: "https://archive.org/download/bleachers-merry-christmas-please-dont-call/Bleachers%20-%20Merry%20Christmas%2C%20Please%20Dont%20Call.mp3",
+      kiamei: "https://archive.org/download/fitterkarma-kalapastangan-lyrics_202609/fitterkarma%20-%20Kalapastangan%20%28Lyrics%29.mp3",
+      sanbina: "https://archive.org/download/voyaging-stars-farewell-official-english-lyrics-wuwa-aemeath/Voyaging%20Star%27s%20Farewell%20-%20Official%20English%20Lyrics%20%5Bwuwa%20Aemeath%5D.mp3",
+      augostino: "https://archive.org/download/wuthering-waves-ep-3.0-mornye-unwritten-in-the-stars/Wuthering%20Waves%20EP3.0%20%20Mornye%20-%20Unwritten%20in%20the%20Stars.mp3",
+      bellevivian: "https://archive.org/download/roll-over-and-die-ending-i-need-with-kan-rom-en/Roll%20Over%20and%20Die%20Ending%20-%20I%20need%20with%20KanRomEn.mp3"
+    };
 
     const defaultThemeAssets = {
       eimiko: {
         avatar: "https://i.ibb.co/V0MYs7q3/f23c4b56f8a2a9940d0831a4db48c9c5.jpg",
         banner: "https://i.ibb.co/KxcWthKV/5f9477ec0a0920146401e681a15adee1.jpg",
         quote: '"Eternity may be vast, but moments with you are timeless." — EiMiko',
-        scale: [261.63, 293.66, 329.63, 392.00, 440.00], // C Major Pentatonic (Ethereal)
-        trackName: "EiMiko Ambient Lofi Harmonies"
+        trackName: "EiMiko Track"
       },
       kiamei: {
         avatar: "https://i.ibb.co/JRMqGgMt/4b24f3221e1c984de4da856888d0d59e.jpg",
         banner: "https://i.ibb.co/HTVpd89c/57a26be0f777b4e1b8c72d0cd6ca0d00.jpg",
         quote: '"I will save you, no matter how many times it takes." — KiaMei',
-        scale: [220.00, 261.63, 293.66, 329.63, 392.00], // A Minor Synth Wave
-        trackName: "KiaMei Cyberpulse Synth"
+        trackName: "KiaMei Track"
       },
       sanbina: {
         avatar: "https://i.ibb.co/BKVtf2y6/d8355da2249444a54c24daf60d38d473.jpg",
         banner: "https://i.ibb.co/wrPw19yp/134ba5692b4bcc79107f5558a1063618.jpg",
         quote: '"A melody woven in silk and clockwork gears." — SanBina',
-        scale: [196.00, 220.00, 246.94, 293.66, 329.63], // Clockwork Soft Pads
-        trackName: "SanBina Clockwork Serenade"
+        trackName: "SanBina Track"
       },
       augostino: {
         avatar: "https://i.ibb.co/vx3b45kZ/b988bcd315648c74c8b21dadcacbfe60.jpg",
         banner: "https://i.ibb.co/k2qsTMKN/b1286de3e9937cbca1fd29ec4794eb0f.jpg",
         quote: '"Starbound destinies linked by radiant light." — AugUino',
-        scale: [293.66, 329.63, 369.99, 440.00, 493.88], // Celestial D Major
-        trackName: "AugUino Celestial Starlight"
+        trackName: "AugUino Track"
       },
       bellevivian: {
         avatar: "https://i.ibb.co/h1DmbFc5/7ad3b17e5e6ac7bc4cf354164af7cb99.jpg",
         banner: "https://i.ibb.co/4gWGwL4R/IMG-20260918-215450-870.jpg",
         quote: '"Neon pulses in tune with our heartbeat." — BelleVivian',
-        scale: [174.61, 196.00, 220.00, 261.63, 293.66], // Neon Bass Ambient
-        trackName: "BelleVivian Neon Beats"
+        trackName: "BelleVivian Track"
       }
     };
 
     const socialLinksData = [
-      { id: 'fb', name: 'Facebook', icon: 'fa-brands fa-facebook', url: 'https://facebook.com' },
-      { id: 'ig', name: 'Instagram', icon: 'fa-brands fa-instagram', url: 'https://instagram.com' },
-      { id: 'tt1', name: 'TikTok (Main)', icon: 'fa-brands fa-tiktok', url: 'https://tiktok.com' },
-      { id: 'tt2', name: 'TikTok (Alt)', icon: 'fa-brands fa-tiktok', url: 'https://tiktok.com' },
-      { id: 'x', name: 'X / Twitter', icon: 'fa-brands fa-x-twitter', url: 'https://twitter.com' },
-      { id: 'threads', name: 'Threads', icon: 'fa-brands fa-threads', url: 'https://threads.net' },
-      { id: 'pin', name: 'Pinterest', icon: 'fa-brands fa-pinterest', url: 'https://pinterest.com' },
-      { id: 'li', name: 'LinkedIn', icon: 'fa-brands fa-linkedin', url: 'https://linkedin.com' },
-      { id: 'red', name: 'Reddit', icon: 'fa-brands fa-reddit', url: 'https://reddit.com' },
-      { id: 'tbl', name: 'Tumblr', icon: 'fa-brands fa-tumblr', url: 'https://tumblr.com' },
-      { id: 'ao3', name: 'AO3', icon: 'fa-solid fa-book-bookmark', url: 'https://archiveofourown.org' },
-      { id: 'yt', name: 'YouTube', icon: 'fa-brands fa-youtube', url: 'https://youtube.com' },
-      { id: 'tw', name: 'Twitch', icon: 'fa-brands fa-twitch', url: 'https://twitch.tv' },
-      { id: 'wa', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: 'https://wa.me' },
-      { id: 'tg', name: 'Telegram', icon: 'fa-brands fa-telegram', url: 'https://t.me' },
-      { id: 'dc', name: 'Discord', icon: 'fa-brands fa-discord', url: 'https://discord.com' },
-      { id: 'qu', name: 'Quora', icon: 'fa-brands fa-quora', url: 'https://quora.com' },
-      { id: 'rblx_social', name: 'Roblox Profile', icon: 'fa-solid fa-cube', url: 'https://roblox.com' },
-      { id: 'bili', name: 'Bilibili', icon: 'fa-brands fa-bilibili', url: 'https://bilibili.com' },
-      { id: 'gh', name: 'GitHub', icon: 'fa-brands fa-github', url: 'https://github.com' },
-      { id: 'mail', name: 'Email Me', icon: 'fa-solid fa-envelope', url: 'mailto:yuri@example.com' },
-      { id: 'watt', name: 'Wattpad', icon: 'fa-solid fa-pen-nib', url: 'https://wattpad.com' }
+      { id: 'fb', name: 'Facebook', icon: 'fa-brands fa-facebook', url: 'https://www.facebook.com/shtth3fckupbtch83/' },
+      { id: 'ig', name: 'Instagram', icon: 'fa-brands fa-instagram', url: 'https://www.instagram.com/aesthrillkrystal99/' },
+      { id: 'tt1', name: 'TikTok (Main)', icon: 'fa-brands fa-tiktok', url: 'https://www.tiktok.com/@aesthrillkrystal99' },
+      { id: 'tt2', name: 'TikTok (Alt)', icon: 'fa-brands fa-tiktok', url: 'https://www.tiktok.com/@sapphicmcgrath99?lang=en' },
+      { id: 'x', name: 'X / Twitter', icon: 'fa-brands fa-x-twitter', url: 'https://x.com/aesthrillyena' },
+      { id: 'threads', name: 'Threads', icon: 'fa-brands fa-threads', url: 'https://www.threads.com/@aesthrillkrystal99' },
+      { id: 'pin', name: 'Pinterest', icon: 'fa-brands fa-pinterest', url: 'https://ph.pinterest.com/samcole05/_profile/' },
+      { id: 'li', name: 'LinkedIn', icon: 'fa-brands fa-linkedin', url: 'https://www.linkedin.com/in/bai-jin-xiu-204986203/' },
+      { id: 'red', name: 'Reddit', icon: 'fa-brands fa-reddit', url: 'https://www.reddit.com/user/DryZookeepergame6055/' },
+      { id: 'tbl', name: 'Tumblr', icon: 'fa-brands fa-tumblr', url: 'https://www.tumblr.com/dashboard' },
+      { id: 'ao3', name: 'AO3', icon: 'fa-solid fa-book-bookmark', url: 'https://archiveofourown.org/?view_adult=true' },
+      { id: 'yt', name: 'YouTube', icon: 'fa-brands fa-youtube', url: 'https://www.youtube.com/@EnchantressOfNPS' },
+      { id: 'tw', name: 'Twitch', icon: 'fa-brands fa-twitch', url: 'https://www.twitch.tv/krystal_ali' },
+      { id: 'wa', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: 'https://aesthrillkrystal' },
+      { id: 'tg', name: 'Telegram', icon: 'fa-brands fa-telegram', url: 'https://@Imabadbitchlikemorgana' },
+      { id: 'dc', name: 'Discord', icon: 'fa-brands fa-discord', url: 'https://discord.com/channels/@aesthrillluthor0834' },
+      { id: 'qu', name: 'Quora', icon: 'fa-brands fa-quora', url: 'https://www.quora.com/profile/Sone-Krystal' },
+      { id: 'rblx_social', name: 'Roblox Profile', icon: 'fa-solid fa-cube', url: 'https://www.roblox.com/users/3785847583/profile' },
+      { id: 'bili', name: 'Bilibili', icon: 'fa-brands fa-bilibili', url: 'https://www.bilibili.tv/en/space/1686243822' },
+      { id: 'gh', name: 'GitHub', icon: 'fa-brands fa-github', url: 'https://github.com/Adjudicatorswife' },
+      { id: 'mail', name: 'Email Me', icon: 'fa-solid fa-envelope', url: 'aesthrillkrystal@gmail.com' },
+      { id: 'watt', name: 'Wattpad', icon: 'fa-solid fa-pen-nib', url: 'https://www.wattpad.com/user/yenascandy' }
     ];
 
     const gamingAccounts = [
-      { name: 'Genshin Impact', uid: '704928104', type: 'gacha', icon: 'fa-solid fa-star' },
-      { name: 'Honkai: Star Rail', uid: '802194810', type: 'gacha', icon: 'fa-solid fa-meteor' },
-      { name: 'Zenless Zone Zero', uid: '100492812', type: 'gacha', icon: 'fa-solid fa-bolt' },
-      { name: 'Honkai Impact 3rd', uid: '20019482', type: 'gacha', icon: 'fa-solid fa-crosshairs' },
-      { name: 'Wuthering Waves', uid: '901284102', type: 'gacha', icon: 'fa-solid fa-wind' },
+      { name: 'Genshin Impact', uid: '403844452', type: 'gacha', icon: 'fa-solid fa-star' },
+      { name: 'Honkai: Star Rail', uid: '403844452', type: 'gacha', icon: 'fa-solid fa-meteor' },
+      { name: 'Zenless Zone Zero', uid: '403844452', type: 'gacha', icon: 'fa-solid fa-bolt' },
+      { name: 'Honkai Impact 3rd', uid: '403844452', type: 'gacha', icon: 'fa-solid fa-crosshairs' },
+      { name: 'Wuthering Waves', uid: '595954423', type: 'gacha', icon: 'fa-solid fa-wind' },
       { name: 'Reverse: 1999', uid: '40192841', type: 'gacha', icon: 'fa-solid fa-hourglass' },
       { name: 'Punishing: Gray Raven', uid: '30192849', type: 'gacha', icon: 'fa-solid fa-shield-halved' },
       { name: 'Arknights', uid: 'DrYuri#1284', type: 'gacha', icon: 'fa-solid fa-chess-knight' },
@@ -757,7 +758,6 @@
     ];
 
     window.onload = function() {
-      // Load saved custom links if available
       const savedCustom = localStorage.getItem('custom_links');
       if(savedCustom) {
         try { customLinks = JSON.parse(savedCustom); } catch(e){}
@@ -777,10 +777,11 @@
       if(evt) evt.currentTarget.classList.add('active');
       applyTheme(themeKey);
 
-      // Reset ambient music to theme beat if playing
+      // Palitan din ang kanta kapag nag-switch ng theme
+      const player = document.getElementById('bg-audio-player');
+      player.src = themeAudioMap[activeTheme];
       if (isBgmPlaying) {
-        stopSynthMusic();
-        startSynthMusic();
+        player.play().catch(e => console.log("Audio play blocked", e));
       }
     }
 
@@ -794,65 +795,29 @@
       document.getElementById('text-bio').innerText = localStorage.getItem('profile_bio') || "pawang kabadingan lamang >>🩷🥹 -women...";
       document.getElementById('text-quote').innerText = defaultThemeAssets[themeKey].quote;
       document.getElementById('audio-track-label').innerText = defaultThemeAssets[themeKey].trackName;
-    }
 
-    // Web Audio Procedural Soundscape Generator
-    function initAudioContext() {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      // Set audio source
+      const player = document.getElementById('bg-audio-player');
+      if (!player.src || !player.src.includes(themeAudioMap[themeKey])) {
+        player.src = themeAudioMap[themeKey];
       }
-    }
-
-    function startSynthMusic() {
-      initAudioContext();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-
-      const scale = defaultThemeAssets[activeTheme].scale;
-      let noteIdx = 0;
-
-      synthInterval = setInterval(() => {
-        if (!isBgmPlaying) return;
-
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-
-        // Soft ambient tone
-        osc.type = 'sine';
-        const freq = scale[noteIdx % scale.length];
-        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-
-        const vol = parseFloat(document.getElementById('volume-slider').value) || 0.3;
-        gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
-        gain.gain.exponentialRampToValueAtTime(vol * 0.15, audioCtx.currentTime + 0.3);
-        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
-
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
-
-        osc.start();
-        osc.stop(audioCtx.currentTime + 1.9);
-
-        noteIdx = Math.floor(Math.random() * scale.length);
-      }, 800);
-    }
-
-    function stopSynthMusic() {
-      if (synthInterval) clearInterval(synthInterval);
     }
 
     function toggleMusic() {
       const btn = document.getElementById('btn-music');
       const visualizer = document.getElementById('audio-visualizer');
+      const player = document.getElementById('bg-audio-player');
 
       if (isBgmPlaying) {
         isBgmPlaying = false;
-        stopSynthMusic();
+        player.pause();
         btn.classList.remove('active');
         visualizer.classList.add('hidden');
         visualizer.classList.remove('flex');
       } else {
         isBgmPlaying = true;
-        startSynthMusic();
+        player.volume = parseFloat(document.getElementById('volume-slider').value) || 0.5;
+        player.play().catch(e => console.log("Playback error", e));
         btn.classList.add('active');
         visualizer.classList.remove('hidden');
         visualizer.classList.add('flex');
@@ -860,12 +825,13 @@
     }
 
     function adjustVolume(val) {
-      // Adjusted dynamically in procedural audio loop
+      const player = document.getElementById('bg-audio-player');
+      player.volume = parseFloat(val);
     }
 
     function toggleAdminLock() {
       if (!isAdminUnlocked) {
-        let pin = prompt("Enter Admin PIN (Default: mamamoblue):");
+        let pin = prompt("Enter Admin PIN (Default: aquayena99):");
         if (pin === ADMIN_PIN) {
           isAdminUnlocked = true;
           document.getElementById('icon-lock').className = "fa-solid fa-lock-open";
@@ -1036,7 +1002,6 @@
       let val = parseInt(counter.innerText.replace(',', '')) || 0;
       counter.innerText = (val + 1).toLocaleString();
 
-      // Spawn floating animated heart
       const heart = document.createElement('i');
       heart.className = 'fa-solid fa-heart floating-heart';
       heart.style.left = `${evt.clientX - 10}px`;
