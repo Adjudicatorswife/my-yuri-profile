@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Yuri Mobile Profile App</title>
+  <title>Yuri Profile Experience</title>
 
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
@@ -13,11 +13,11 @@
   <style>
     :root {
       --bg-theme: radial-gradient(circle at 50% 15%, #2a0b3a 0%, #12031c 65%, #07010a 100%);
-      --card-bg: rgba(22, 8, 30, 0.75);
-      --card-border: rgba(216, 128, 255, 0.3);
+      --card-bg: rgba(22, 8, 30, 0.72);
+      --card-border: rgba(216, 128, 255, 0.25);
       --primary-color: #d880ff;
       --accent-color: #ff80c0;
-      --glow-color: rgba(216, 128, 255, 0.45);
+      --glow-color: rgba(216, 128, 255, 0.4);
       --text-main: #ffffff;
       --text-sub: #d0b8e0;
       --font-family: 'Plus Jakarta Sans', sans-serif;
@@ -25,11 +25,11 @@
 
     [data-theme="eimiko"] {
       --bg-theme: radial-gradient(circle at 50% 15%, #2a0b3a 0%, #12031c 65%, #07010a 100%);
-      --card-bg: rgba(22, 8, 30, 0.75);
-      --card-border: rgba(216, 128, 255, 0.3);
+      --card-bg: rgba(22, 8, 30, 0.72);
+      --card-border: rgba(216, 128, 255, 0.25);
       --primary-color: #d880ff;
       --accent-color: #ff80c0;
-      --glow-color: rgba(216, 128, 255, 0.45);
+      --glow-color: rgba(216, 128, 255, 0.4);
     }
 
     [data-theme="kiamei"] {
@@ -38,7 +38,7 @@
       --card-border: rgba(80, 210, 255, 0.35);
       --primary-color: #00e5ff;
       --accent-color: #ff33a8;
-      --glow-color: rgba(0, 229, 255, 0.45);
+      --glow-color: rgba(0, 229, 255, 0.4);
     }
 
     [data-theme="sanbina"] {
@@ -47,7 +47,7 @@
       --card-border: rgba(205, 175, 215, 0.32);
       --primary-color: #d4b5e8;
       --accent-color: #e85d8d;
-      --glow-color: rgba(212, 181, 232, 0.4);
+      --glow-color: rgba(212, 181, 232, 0.35);
     }
 
     [data-theme="augostino"] {
@@ -56,7 +56,7 @@
       --card-border: rgba(255, 215, 100, 0.35);
       --primary-color: #ffd700;
       --accent-color: #ff9100;
-      --glow-color: rgba(255, 215, 0, 0.45);
+      --glow-color: rgba(255, 215, 0, 0.4);
     }
 
     [data-theme="bellevivian"] {
@@ -65,7 +65,7 @@
       --card-border: rgba(255, 100, 185, 0.35);
       --primary-color: #ff3b96;
       --accent-color: #b026ff;
-      --glow-color: rgba(255, 59, 150, 0.45);
+      --glow-color: rgba(255, 59, 150, 0.4);
     }
 
     * {
@@ -76,7 +76,6 @@
       -webkit-tap-highlight-color: transparent;
     }
 
-    /* Pitch Black Outer Desktop Canvas */
     body {
       background: #0a0a0c;
       color: var(--text-main);
@@ -84,28 +83,24 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
-      overflow-x: hidden;
-      padding: 12px 0;
+      width: 100vw;
+      overflow: hidden;
     }
 
-    /* STRICT FIXED ANDROID VIEWPORT CONTAINER */
-    .android-frame {
+    .app-viewport {
       position: relative;
       width: 100%;
-      max-width: 420px;
-      height: 92vh;
-      max-height: 860px;
+      max-width: 480px;
+      height: 100vh;
       background: var(--bg-theme);
-      border-radius: 36px;
-      border: 2px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 25px var(--glow-color);
-      overflow: hidden; /* ABSOLUTELY PREVENT ANIMATIONS OUTSIDE FRAME */
+      overflow: hidden;
       display: flex;
       flex-direction: column;
-      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+      transition: background 0.4s ease;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
     }
 
-    /* Particles Canvas MUST be strictly contained inside phone container */
+    /* Particle canvas strictly inside app viewport */
     #internal-canvas {
       position: absolute;
       top: 0;
@@ -116,37 +111,18 @@
       z-index: 2;
     }
 
-    /* Android Top Notch Header Bar */
-    .status-header {
-      position: relative;
-      z-index: 10;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 18px 4px 18px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: rgba(255,255,255,0.7);
-      background: rgba(0, 0, 0, 0.25);
-    }
-
-    .status-icons {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-    }
-
-    /* Top Horizontal Theme Scroll Bar */
+    /* Top Navigation Bar */
     .theme-scroll-bar {
       position: relative;
       z-index: 10;
       display: flex;
-      gap: 6px;
+      gap: 8px;
       overflow-x: auto;
-      padding: 8px 12px 10px 12px;
+      padding: 12px 16px;
       scrollbar-width: none;
-      background: rgba(0, 0, 0, 0.35);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .theme-scroll-bar::-webkit-scrollbar {
@@ -154,18 +130,18 @@
     }
 
     .theme-chip {
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--card-border);
       color: var(--text-sub);
-      padding: 6px 12px;
+      padding: 8px 14px;
       border-radius: 20px;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       font-weight: 700;
       white-space: nowrap;
       cursor: pointer;
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       transition: all 0.25s ease;
     }
 
@@ -173,7 +149,7 @@
       background: var(--primary-color);
       color: #05020a;
       border-color: var(--primary-color);
-      box-shadow: 0 0 12px var(--glow-color);
+      box-shadow: 0 0 14px var(--glow-color);
     }
 
     /* Scrollable App Body Content */
@@ -182,7 +158,7 @@
       z-index: 5;
       flex: 1;
       overflow-y: auto;
-      padding-bottom: 24px;
+      padding-bottom: 30px;
       scrollbar-width: none;
     }
 
@@ -190,11 +166,10 @@
       display: none;
     }
 
-    /* Banner & Floating App Controls */
     .banner-wrapper {
       position: relative;
       width: 100%;
-      height: 160px;
+      height: 180px;
       overflow: hidden;
       background: #110518;
     }
@@ -204,20 +179,21 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
+      transition: opacity 0.3s ease;
     }
 
     .banner-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(10,3,15,0.85) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(10,3,15,0.85) 100%);
     }
 
     .top-actions {
       position: absolute;
-      top: 10px;
-      right: 10px;
+      top: 12px;
+      right: 12px;
       display: flex;
-      gap: 8px;
+      gap: 10px;
       z-index: 15;
     }
 
@@ -225,35 +201,36 @@
       background: rgba(0, 0, 0, 0.65);
       border: 1px solid var(--primary-color);
       color: var(--primary-color);
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
       cursor: pointer;
-      font-size: 0.85rem;
-      transition: all 0.2s ease;
+      font-size: 0.9rem;
+      transition: all 0.25s ease;
     }
 
     .action-btn.active {
       background: var(--primary-color);
       color: #000;
+      box-shadow: 0 0 12px var(--glow-color);
     }
 
-    /* Main Card Layout Inside Frame */
+    /* Profile Container */
     .profile-card {
-      padding: 0 16px;
-      margin-top: -50px;
+      padding: 0 20px;
+      margin-top: -55px;
       position: relative;
     }
 
     .avatar-wrapper {
       position: relative;
-      width: 96px;
-      height: 96px;
-      margin: 0 auto 10px auto;
+      width: 104px;
+      height: 104px;
+      margin: 0 auto 12px auto;
     }
 
     .avatar-img {
@@ -262,115 +239,113 @@
       border-radius: 50%;
       object-fit: cover;
       border: 3px solid var(--primary-color);
-      box-shadow: 0 0 20px var(--glow-color);
+      box-shadow: 0 0 24px var(--glow-color);
       background: #150820;
     }
 
     .badge-status {
       position: absolute;
-      bottom: 2px;
-      right: 2px;
+      bottom: 4px;
+      right: 4px;
       background: var(--accent-color);
       color: #fff;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.7rem;
+      font-size: 0.75rem;
       border: 2px solid #08020d;
     }
 
     .profile-header-text {
       text-align: center;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .profile-name {
-      font-size: 1.35rem;
+      font-size: 1.45rem;
       font-weight: 800;
       color: var(--text-main);
-      text-shadow: 0 0 10px var(--glow-color);
+      text-shadow: 0 0 12px var(--glow-color);
     }
 
     .profile-handle {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       color: var(--primary-color);
       font-weight: 600;
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
-    /* Tag Pills */
     .pill-container {
       display: flex;
       justify-content: center;
-      gap: 6px;
-      margin-top: 8px;
+      gap: 8px;
+      margin-top: 10px;
       flex-wrap: wrap;
     }
 
     .pill-badge {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--card-border);
-      padding: 4px 10px;
-      border-radius: 12px;
-      font-size: 0.7rem;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.72rem;
       color: var(--text-sub);
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
+      backdrop-filter: blur(8px);
     }
 
     .pill-badge i {
       color: var(--primary-color);
     }
 
-    /* Section Cards */
     .info-block {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 12px 14px;
-      margin-bottom: 12px;
-      backdrop-filter: blur(12px);
+      border-radius: 18px;
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      backdrop-filter: blur(14px);
     }
 
     .block-heading {
-      font-size: 0.72rem;
+      font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 1.2px;
       color: var(--primary-color);
       font-weight: 800;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .bio-text {
-      font-size: 0.82rem;
-      line-height: 1.4;
+      font-size: 0.85rem;
+      line-height: 1.5;
       color: var(--text-main);
       white-space: pre-line;
     }
 
     .ship-quote {
-      background: rgba(0, 0, 0, 0.4);
+      background: rgba(0, 0, 0, 0.35);
       border-left: 3px solid var(--accent-color);
-      padding: 8px 10px;
-      border-radius: 0 8px 8px 0;
-      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 0 10px 10px 0;
+      margin-top: 10px;
       font-style: italic;
-      font-size: 0.76rem;
+      font-size: 0.78rem;
       color: var(--text-sub);
     }
 
-    /* Social Links Grid */
     .social-grid {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
 
     .social-btn {
@@ -379,12 +354,12 @@
       justify-content: space-between;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--card-border);
-      padding: 8px 12px;
-      border-radius: 12px;
+      padding: 10px 14px;
+      border-radius: 14px;
       color: #fff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.8rem;
+      font-size: 0.85rem;
       transition: all 0.2s ease;
     }
 
@@ -397,40 +372,44 @@
     .social-btn-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .social-btn-left i {
-      font-size: 1rem;
+      font-size: 1.1rem;
       color: var(--primary-color);
     }
 
-    /* Admin Floating Edit Button */
     .admin-edit-btn {
       display: none;
       width: 100%;
       background: var(--primary-color);
       color: #0a0312;
       border: none;
-      padding: 10px;
-      border-radius: 12px;
+      padding: 12px;
+      border-radius: 14px;
       font-weight: 800;
       cursor: pointer;
-      margin-bottom: 12px;
-      box-shadow: 0 0 12px var(--glow-color);
+      margin-bottom: 14px;
+      box-shadow: 0 0 16px var(--glow-color);
+      transition: transform 0.2s ease;
     }
 
-    /* Edit Modal strictly contained or bounded in phone */
+    .admin-edit-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* Modal Overlay */
     .modal-overlay {
       display: none;
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.85);
+      background: rgba(0, 0, 0, 0.88);
       z-index: 50;
       justify-content: center;
       align-items: center;
-      padding: 14px;
-      backdrop-filter: blur(8px);
+      padding: 16px;
+      backdrop-filter: blur(10px);
     }
 
     .modal-content {
@@ -439,42 +418,43 @@
       width: 100%;
       max-height: 90%;
       overflow-y: auto;
-      border-radius: 16px;
-      padding: 16px;
+      border-radius: 20px;
+      padding: 18px;
       color: #fff;
+      box-shadow: 0 0 30px var(--glow-color);
     }
 
     .modal-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .modal-header h3 {
-      font-size: 0.9rem;
+      font-size: 1rem;
       color: var(--primary-color);
     }
 
     .field-box {
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .field-box label {
       display: block;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: var(--text-sub);
-      margin-bottom: 3px;
+      margin-bottom: 4px;
     }
 
     .field-box input, .field-box textarea {
       width: 100%;
-      background: rgba(255,255,255,0.07);
+      background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--card-border);
-      border-radius: 8px;
-      padding: 6px 8px;
+      border-radius: 10px;
+      padding: 8px 10px;
       color: #fff;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       outline: none;
     }
 
@@ -483,45 +463,35 @@
       background: var(--primary-color);
       color: #000;
       border: none;
-      padding: 10px;
-      border-radius: 10px;
+      padding: 12px;
+      border-radius: 12px;
       font-weight: 800;
-      margin-top: 6px;
+      margin-top: 8px;
       cursor: pointer;
     }
 
     .app-footer {
       text-align: center;
-      font-size: 0.65rem;
+      font-size: 0.7rem;
       color: var(--text-sub);
       opacity: 0.6;
-      margin-top: 4px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
 
-  <!-- FIXED ANDROID PHONE CONTAINER -->
-  <div class="android-frame" id="app-frame" data-theme="eimiko">
+  <div class="app-viewport" id="app-frame" data-theme="eimiko">
     
-    <!-- PARTICLES CANVAS CONSTRAINED STRICTLY INSIDE APP FRAME -->
+    <!-- Background Canvas Particles -->
     <canvas id="internal-canvas"></canvas>
 
-    <!-- Background Music Player -->
+    <!-- Background Music Audio Player -->
     <audio id="bgm-player" loop>
       <source id="bgm-source" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=ambient-lofi-112181.mp3" type="audio/mpeg" />
     </audio>
 
-    <!-- Top Status Bar Mock -->
-    <div class="status-header">
-      <span id="android-clock">12:00</span>
-      <div class="status-icons">
-        <i class="fa-solid fa-wifi"></i>
-        <i class="fa-solid fa-signal"></i>
-        <i class="fa-solid fa-battery-full"></i>
-      </div>
-    </div>
-
+    <!-- Top Theme Selector Bar -->
     <div class="theme-scroll-bar">
       <div class="theme-chip active" onclick="switchTheme('eimiko', event)"><i class="fa-solid fa-heart"></i> EiMiko</div>
       <div class="theme-chip" onclick="switchTheme('kiamei', event)"><i class="fa-solid fa-bolt"></i> KiaMei</div>
@@ -530,20 +500,20 @@
       <div class="theme-chip" onclick="switchTheme('bellevivian', event)"><i class="fa-solid fa-gamepad"></i> BelleVivian</div>
     </div>
 
-    <!-- Scrollable Main App Content -->
+    <!-- Scrollable Main Content -->
     <div class="app-content">
       
-      <!-- Banner Image -->
+      <!-- Profile Banner -->
       <div class="banner-wrapper">
         <img id="img-banner" class="banner-img" src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop" alt="Banner" />
         <div class="banner-overlay"></div>
 
-        <!-- Top Actions -->
+        <!-- Floating Quick Action Buttons -->
         <div class="top-actions">
-          <button class="action-btn" id="btn-music" onclick="toggleMusic()" title="Music">
+          <button class="action-btn" id="btn-music" onclick="toggleMusic()" title="Toggle Background Music">
             <i class="fa-solid fa-music"></i>
           </button>
-          <button class="action-btn" id="btn-admin" onclick="toggleAdminLock()" title="Admin Lock">
+          <button class="action-btn" id="btn-admin" onclick="toggleAdminLock()" title="Admin Mode Toggle">
             <i class="fa-solid fa-lock" id="icon-lock"></i>
           </button>
         </div>
@@ -551,13 +521,13 @@
 
       <div class="profile-card">
         
-        <!-- Avatar -->
+        <!-- Avatar Image -->
         <div class="avatar-wrapper">
           <img id="img-avatar" class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop" alt="Avatar" />
           <div class="badge-status"><i class="fa-solid fa-heart"></i></div>
         </div>
 
-        <!-- Header Info -->
+        <!-- Header Information -->
         <div class="profile-header-text">
           <h1 class="profile-name" id="text-name">Yuri Collector</h1>
           <div class="profile-handle" id="text-handle">@yuri_enjoyer</div>
@@ -569,23 +539,23 @@
           </div>
         </div>
 
-        <!-- Admin Trigger (Visible when unlocked) -->
+        <!-- Admin Customization Trigger -->
         <button class="admin-edit-btn" id="btn-open-edit" onclick="openModal()">
-          <i class="fa-solid fa-pen-to-square"></i> Customize Active Theme Profile
+          <i class="fa-solid fa-pen-to-square"></i> Customize Active Profile
         </button>
 
-        <!-- Bio Card Block -->
+        <!-- Bio Block -->
         <div class="info-block">
           <div class="block-heading"><i class="fa-solid fa-quote-left"></i> About Me</div>
           <div class="bio-text" id="text-bio">
-            Mabuhay! Welcome sa aking Yuri profile mobile app. Love listening to good lofi music and admiring sapphic couples!
+            Mabuhay! Welcome to my mobile Yuri profile web app. Enjoying relaxing ambient lofi tunes and appreciating timeless sapphic couples!
           </div>
           <div class="ship-quote" id="text-quote">
             "Eternity may be vast, but moments with you are timeless." — EiMiko
           </div>
         </div>
 
-        <!-- Links Card Block -->
+        <!-- Social Media Links -->
         <div class="info-block">
           <div class="block-heading"><i class="fa-solid fa-share-nodes"></i> Connect With Me</div>
           <div class="social-grid">
@@ -608,7 +578,7 @@
           </div>
         </div>
 
-        <div class="app-footer">Android Yuri Profile UI • 2026</div>
+        <div class="app-footer">Yuri Profile App • Modern Mobile Experience</div>
 
       </div>
     </div>
@@ -656,7 +626,7 @@
     let activeTheme = 'eimiko';
     let isAdminUnlocked = false;
     let isBgmPlaying = false;
-    const ADMIN_PIN = "1234";
+    const ADMIN_PIN = "aquayena99";
 
     const defaultThemeAssets = {
       eimiko: {
@@ -687,18 +657,9 @@
     };
 
     window.onload = function() {
-      updateClock();
-      setInterval(updateClock, 1000);
       applyTheme(activeTheme);
       initConstrainedCanvas();
     };
-
-    function updateClock() {
-      const now = new Date();
-      const hours = String(now.getHours()).padStart(2, '0');
-      const minutes = String(now.getMinutes()).padStart(2, '0');
-      document.getElementById('android-clock').innerText = `${hours}:${minutes}`;
-    }
 
     function switchTheme(themeKey, evt) {
       activeTheme = themeKey;
@@ -715,7 +676,7 @@
       document.getElementById('text-handle').innerText = localStorage.getItem('profile_handle') || "@yuri_enjoyer";
       document.getElementById('text-age').innerText = localStorage.getItem('profile_age') || "20 Y/O";
       document.getElementById('text-location').innerText = localStorage.getItem('profile_loc') || "Philippines";
-      document.getElementById('text-bio').innerText = localStorage.getItem('profile_bio') || "Mabuhay! Welcome sa aking Yuri profile mobile app.";
+      document.getElementById('text-bio').innerText = localStorage.getItem('profile_bio') || "Mabuhay! Welcome to my mobile Yuri profile web app.";
       document.getElementById('text-quote').innerText = defaultThemeAssets[themeKey].quote;
 
       document.getElementById('link-fb').href = localStorage.getItem('link_fb') || "https://facebook.com";
@@ -741,7 +702,7 @@
 
     function toggleAdminLock() {
       if (!isAdminUnlocked) {
-        let pin = prompt("Enter Admin PIN:");
+        let pin = prompt("Enter Admin PIN (Default: 1234):");
         if (pin === ADMIN_PIN) {
           isAdminUnlocked = true;
           document.getElementById('icon-lock').className = "fa-solid fa-lock-open";
@@ -812,7 +773,6 @@
       closeModal();
     }
 
-    /* INTERNAL CANVAS ANIMATION - strictly inside .android-frame bounds */
     let canvas, ctx, frameWidth, frameHeight;
 
     function initConstrainedCanvas() {
@@ -820,10 +780,16 @@
       ctx = canvas.getContext('2d');
       
       const frame = document.getElementById('app-frame');
-      frameWidth = frame.clientWidth;
-      frameHeight = frame.clientHeight;
-      canvas.width = frameWidth;
-      canvas.height = frameHeight;
+      
+      function resizeCanvas() {
+        frameWidth = frame.clientWidth;
+        frameHeight = frame.clientHeight;
+        canvas.width = frameWidth;
+        canvas.height = frameHeight;
+      }
+
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
 
       class SakuraPetal {
         constructor() { this.reset(); }
@@ -878,7 +844,7 @@
         }
       }
 
-      const petals = Array.from({ length: 22 }, () => new SakuraPetal());
+      const petals = Array.from({ length: 20 }, () => new SakuraPetal());
       const sparkles = Array.from({ length: 25 }, () => new Sparkle());
 
       function renderLoop() {
