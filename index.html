@@ -1,58 +1,58 @@
 <!DOCTYPE html>
-<html lang="tl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Yuri World - Personal Mobile Profile</title>
-  
-  <!-- FontAwesome Icons & Google Fonts -->
+  <title>Yuri Mobile Profile App</title>
+
+  <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Rozha+One&display=swap" rel="stylesheet" />
+  <!-- Google Font: Plus Jakarta Sans -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet" />
 
   <style>
-    /* Dynamic Theme Variables */
     :root {
-      --bg-gradient: linear-gradient(135deg, #1d0a2b 0%, #3a114d 50%, #12051e 100%);
-      --card-bg: rgba(35, 15, 48, 0.78);
-      --card-border: rgba(220, 150, 255, 0.28);
+      --bg-theme: radial-gradient(circle at 50% 15%, #2a0b3a 0%, #12031c 65%, #07010a 100%);
+      --card-bg: rgba(22, 8, 30, 0.75);
+      --card-border: rgba(216, 128, 255, 0.3);
       --primary-color: #d880ff;
       --accent-color: #ff80c0;
+      --glow-color: rgba(216, 128, 255, 0.45);
       --text-main: #ffffff;
       --text-sub: #d0b8e0;
-      --glow-color: rgba(216, 128, 255, 0.45);
-      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
     [data-theme="eimiko"] {
-      --bg-gradient: linear-gradient(135deg, #18082e 0%, #3d145c 50%, #120426 100%);
-      --card-bg: rgba(32, 14, 50, 0.82);
-      --card-border: rgba(215, 130, 255, 0.3);
-      --primary-color: #cd73f7;
-      --accent-color: #ff75a5;
-      --glow-color: rgba(205, 115, 247, 0.5);
+      --bg-theme: radial-gradient(circle at 50% 15%, #2a0b3a 0%, #12031c 65%, #07010a 100%);
+      --card-bg: rgba(22, 8, 30, 0.75);
+      --card-border: rgba(216, 128, 255, 0.3);
+      --primary-color: #d880ff;
+      --accent-color: #ff80c0;
+      --glow-color: rgba(216, 128, 255, 0.45);
     }
 
     [data-theme="kiamei"] {
-      --bg-gradient: linear-gradient(135deg, #06182e 0%, #10345e 50%, #040d18 100%);
-      --card-bg: rgba(10, 32, 60, 0.85);
+      --bg-theme: radial-gradient(circle at 50% 15%, #082240 0%, #061124 65%, #020712 100%);
+      --card-bg: rgba(8, 25, 48, 0.75);
       --card-border: rgba(80, 210, 255, 0.35);
       --primary-color: #00e5ff;
       --accent-color: #ff33a8;
-      --glow-color: rgba(0, 229, 255, 0.5);
+      --glow-color: rgba(0, 229, 255, 0.45);
     }
 
     [data-theme="sanbina"] {
-      --bg-gradient: linear-gradient(135deg, #120b18 0%, #2a1830 50%, #0a050d 100%);
-      --card-bg: rgba(25, 16, 32, 0.88);
-      --card-border: rgba(205, 175, 215, 0.28);
+      --bg-theme: radial-gradient(circle at 50% 15%, #241230 0%, #100818 65%, #05020a 100%);
+      --card-bg: rgba(24, 12, 32, 0.78);
+      --card-border: rgba(205, 175, 215, 0.32);
       --primary-color: #d4b5e8;
       --accent-color: #e85d8d;
       --glow-color: rgba(212, 181, 232, 0.4);
     }
 
     [data-theme="augostino"] {
-      --bg-gradient: linear-gradient(135deg, #1f180a 0%, #453610 50%, #120e04 100%);
-      --card-bg: rgba(38, 30, 14, 0.85);
+      --bg-theme: radial-gradient(circle at 50% 15%, #30240b 0%, #161003 65%, #080501 100%);
+      --card-bg: rgba(32, 24, 8, 0.78);
       --card-border: rgba(255, 215, 100, 0.35);
       --primary-color: #ffd700;
       --accent-color: #ff9100;
@@ -60,61 +60,143 @@
     }
 
     [data-theme="bellevivian"] {
-      --bg-gradient: linear-gradient(135deg, #1e071a 0%, #4d0d33 50%, #10020f 100%);
-      --card-bg: rgba(40, 12, 32, 0.85);
+      --bg-theme: radial-gradient(circle at 50% 15%, #330827 0%, #160212 65%, #080006 100%);
+      --card-bg: rgba(34, 8, 26, 0.78);
       --card-border: rgba(255, 100, 185, 0.35);
       --primary-color: #ff3b96;
-      --accent-color: #a000ff;
-      --glow-color: rgba(255, 59, 150, 0.5);
+      --accent-color: #b026ff;
+      --glow-color: rgba(255, 59, 150, 0.45);
     }
 
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
-      font-family: var(--font-body);
+      font-family: var(--font-family);
       -webkit-tap-highlight-color: transparent;
     }
 
+    /* Pitch Black Outer Desktop Canvas */
     body {
-      background: #08030c;
+      background: #0a0a0c;
       color: var(--text-main);
       display: flex;
       justify-content: center;
-      align-items: flex-start;
+      align-items: center;
       min-height: 100vh;
       overflow-x: hidden;
+      padding: 12px 0;
     }
 
-    /* Ambient Canvas */
-    #particle-canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+    /* STRICT FIXED ANDROID VIEWPORT CONTAINER */
+    .android-frame {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 92vh;
+      max-height: 860px;
+      background: var(--bg-theme);
+      border-radius: 36px;
+      border: 2px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.95), 0 0 25px var(--glow-color);
+      overflow: hidden; /* ABSOLUTELY PREVENT ANIMATIONS OUTSIDE FRAME */
+      display: flex;
+      flex-direction: column;
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    /* Particles Canvas MUST be strictly contained inside phone container */
+    #internal-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
       pointer-events: none;
-      z-index: 1;
-    }
-
-    .mobile-container {
-      width: 100%;
-      max-width: 440px;
-      min-height: 100vh;
-      background: var(--bg-gradient);
-      position: relative;
       z-index: 2;
-      overflow-y: auto;
-      box-shadow: 0 0 50px rgba(0,0,0,0.9);
-      padding-bottom: 40px;
-      transition: background 0.4s ease;
     }
 
-    /* Banner Box */
-    .banner-container {
-      width: 100%;
-      height: 210px;
+    /* Android Top Notch Header Bar */
+    .status-header {
       position: relative;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 18px 4px 18px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .status-icons {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    /* Top Horizontal Theme Scroll Bar */
+    .theme-scroll-bar {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 8px 12px 10px 12px;
+      scrollbar-width: none;
+      background: rgba(0, 0, 0, 0.35);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .theme-scroll-bar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .theme-chip {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      white-space: nowrap;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.25s ease;
+    }
+
+    .theme-chip.active {
+      background: var(--primary-color);
+      color: #05020a;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 12px var(--glow-color);
+    }
+
+    /* Scrollable App Body Content */
+    .app-content {
+      position: relative;
+      z-index: 5;
+      flex: 1;
+      overflow-y: auto;
+      padding-bottom: 24px;
+      scrollbar-width: none;
+    }
+
+    .app-content::-webkit-scrollbar {
+      display: none;
+    }
+
+    /* Banner & Floating App Controls */
+    .banner-wrapper {
+      position: relative;
+      width: 100%;
+      height: 160px;
       overflow: hidden;
-      background-color: #1a1a2e;
+      background: #110518;
     }
 
     .banner-img {
@@ -122,192 +204,187 @@
       height: 100%;
       object-fit: cover;
       object-position: center;
-      transition: all 0.3s ease;
     }
 
     .banner-overlay {
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(8,3,12,0.92) 100%);
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0.1) 0%, rgba(10,3,15,0.85) 100%);
     }
 
-    /* Controls Bar */
-    .top-controls {
+    .top-actions {
       position: absolute;
-      top: 12px; right: 12px;
-      display: flex; gap: 8px;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 8px;
       z-index: 15;
     }
 
-    .control-btn {
-      background: rgba(0, 0, 0, 0.6);
+    .action-btn {
+      background: rgba(0, 0, 0, 0.65);
       border: 1px solid var(--primary-color);
       color: var(--primary-color);
-      width: 36px; height: 36px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      backdrop-filter: blur(8px);
-      cursor: pointer; font-size: 0.9rem;
-      transition: transform 0.2s ease;
-    }
-
-    .control-btn:active { transform: scale(0.9); }
-    .control-btn.active { background: var(--primary-color); color: #000; }
-
-    /* Theme Chips Bar */
-    .theme-bar {
-      position: absolute;
-      top: 12px; left: 12px; right: 95px;
-      display: flex; gap: 6px;
-      overflow-x: auto;
-      padding-bottom: 4px;
-      z-index: 10;
-      scrollbar-width: none;
-    }
-    .theme-bar::-webkit-scrollbar { display: none; }
-
-    .theme-chip {
-      background: rgba(0,0,0,0.55);
-      border: 1px solid rgba(255,255,255,0.22);
-      color: #fff;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       backdrop-filter: blur(8px);
       cursor: pointer;
+      font-size: 0.85rem;
       transition: all 0.2s ease;
     }
 
-    .theme-chip.active {
+    .action-btn.active {
       background: var(--primary-color);
       color: #000;
-      border-color: var(--primary-color);
-      box-shadow: 0 0 12px var(--glow-color);
     }
 
-    /* Content Layout */
-    .profile-content {
-      padding: 0 20px;
-      margin-top: -65px;
+    /* Main Card Layout Inside Frame */
+    .profile-card {
+      padding: 0 16px;
+      margin-top: -50px;
       position: relative;
-      z-index: 5;
     }
 
     .avatar-wrapper {
       position: relative;
-      width: 110px; height: 110px;
-      margin: 0 auto 12px auto;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 10px auto;
     }
 
     .avatar-img {
-      width: 100%; height: 100%;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
       object-fit: cover;
-      border: 3.5px solid var(--primary-color);
-      box-shadow: 0 0 25px var(--glow-color);
-      background: #202030;
-      transition: border-color 0.3s ease;
+      border: 3px solid var(--primary-color);
+      box-shadow: 0 0 20px var(--glow-color);
+      background: #150820;
     }
 
-    .verified-badge {
+    .badge-status {
       position: absolute;
-      bottom: 4px; right: 4px;
+      bottom: 2px;
+      right: 2px;
       background: var(--accent-color);
       color: #fff;
-      width: 26px; height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem;
-      border: 2px solid #08030c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      border: 2px solid #08020d;
     }
 
-    .user-header { text-align: center; margin-bottom: 18px; }
+    .profile-header-text {
+      text-align: center;
+      margin-bottom: 14px;
+    }
 
-    .user-name {
-      font-size: 1.55rem;
+    .profile-name {
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--text-main);
-      text-shadow: 0 0 14px var(--glow-color);
-      line-height: 1.2;
+      text-shadow: 0 0 10px var(--glow-color);
     }
 
-    .user-handle {
-      font-size: 0.85rem;
+    .profile-handle {
+      font-size: 0.8rem;
       color: var(--primary-color);
-      margin-top: 3px; font-weight: 600;
+      font-weight: 600;
+      margin-top: 2px;
     }
 
+    /* Tag Pills */
     .pill-container {
-      display: flex; justify-content: center;
-      gap: 8px; margin-top: 12px; flex-wrap: wrap;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
     }
 
-    .pill {
-      background: rgba(255, 255, 255, 0.08);
+    .pill-badge {
+      background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--card-border);
-      padding: 5px 12px;
-      border-radius: 15px;
-      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.7rem;
       color: var(--text-sub);
-      display: flex; align-items: center; gap: 5px;
-      backdrop-filter: blur(5px);
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
 
-    .pill i { color: var(--primary-color); }
+    .pill-badge i {
+      color: var(--primary-color);
+    }
 
-    /* Cards */
-    .glass-card {
+    /* Section Cards */
+    .info-block {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
-      border-radius: 20px;
-      padding: 16px;
-      margin-bottom: 16px;
+      border-radius: 16px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
       backdrop-filter: blur(12px);
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
     }
 
-    .card-title {
-      font-size: 0.82rem;
+    .block-heading {
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       color: var(--primary-color);
       font-weight: 800;
-      margin-bottom: 10px;
-      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .bio-text {
-      font-size: 0.9rem;
-      line-height: 1.5;
+      font-size: 0.82rem;
+      line-height: 1.4;
       color: var(--text-main);
       white-space: pre-line;
     }
 
-    .ship-quote-box {
+    .ship-quote {
       background: rgba(0, 0, 0, 0.4);
       border-left: 3px solid var(--accent-color);
-      padding: 10px 12px;
-      border-radius: 0 10px 10px 0;
-      margin-top: 12px;
+      padding: 8px 10px;
+      border-radius: 0 8px 8px 0;
+      margin-top: 8px;
       font-style: italic;
-      font-size: 0.82rem;
+      font-size: 0.76rem;
       color: var(--text-sub);
     }
 
-    /* Social Buttons */
-    .social-grid { display: flex; flex-direction: column; gap: 10px; }
+    /* Social Links Grid */
+    .social-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
 
     .social-btn {
-      display: flex; align-items: center; justify-content: space-between;
-      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--card-border);
-      padding: 13px 16px;
-      border-radius: 14px;
+      padding: 8px 12px;
+      border-radius: 12px;
       color: #fff;
       text-decoration: none;
-      font-weight: 600; font-size: 0.9rem;
+      font-weight: 600;
+      font-size: 0.8rem;
       transition: all 0.2s ease;
     }
 
@@ -317,504 +394,501 @@
       color: #000;
     }
 
-    .social-left { display: flex; align-items: center; gap: 12px; }
-    .social-left i { font-size: 1.25rem; color: var(--primary-color); }
-    .social-btn:active .social-left i { color: #000; }
-
-    /* Admin Button */
-    .edit-btn-float {
-      display: none; width: 100%;
-      background: var(--primary-color);
-      color: #000; border: none;
-      padding: 12px; border-radius: 14px;
-      font-weight: 800; cursor: pointer;
-      margin-bottom: 16px;
-      box-shadow: 0 0 15px var(--glow-color);
+    .social-btn-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    /* Modal Form */
-    .modal {
+    .social-btn-left i {
+      font-size: 1rem;
+      color: var(--primary-color);
+    }
+
+    /* Admin Floating Edit Button */
+    .admin-edit-btn {
       display: none;
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0,0,0,0.88);
-      z-index: 100;
-      justify-content: center; align-items: center;
-      padding: 20px;
-      backdrop-filter: blur(10px);
+      width: 100%;
+      background: var(--primary-color);
+      color: #0a0312;
+      border: none;
+      padding: 10px;
+      border-radius: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-bottom: 12px;
+      box-shadow: 0 0 12px var(--glow-color);
+    }
+
+    /* Edit Modal strictly contained or bounded in phone */
+    .modal-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 50;
+      justify-content: center;
+      align-items: center;
+      padding: 14px;
+      backdrop-filter: blur(8px);
     }
 
     .modal-content {
-      background: #180b26;
+      background: #14071f;
       border: 1px solid var(--primary-color);
-      width: 100%; max-width: 400px;
-      max-height: 85vh; overflow-y: auto;
-      border-radius: 20px; padding: 20px;
+      width: 100%;
+      max-height: 90%;
+      overflow-y: auto;
+      border-radius: 16px;
+      padding: 16px;
       color: #fff;
     }
 
     .modal-header {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
     }
 
-    .modal-title { font-weight: 800; color: var(--primary-color); }
-    .form-group { margin-bottom: 12px; }
-    .form-group label {
-      display: block; font-size: 0.75rem;
-      color: var(--text-sub); margin-bottom: 4px;
+    .modal-header h3 {
+      font-size: 0.9rem;
+      color: var(--primary-color);
     }
 
-    .form-group input, .form-group textarea {
+    .field-box {
+      margin-bottom: 10px;
+    }
+
+    .field-box label {
+      display: block;
+      font-size: 0.7rem;
+      color: var(--text-sub);
+      margin-bottom: 3px;
+    }
+
+    .field-box input, .field-box textarea {
       width: 100%;
-      background: rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.07);
       border: 1px solid var(--card-border);
-      border-radius: 10px; padding: 9px 12px;
-      color: #fff; font-size: 0.85rem; outline: none;
+      border-radius: 8px;
+      padding: 6px 8px;
+      color: #fff;
+      font-size: 0.78rem;
+      outline: none;
     }
-
-    .form-group input[type="file"] { padding: 5px; }
 
     .save-btn {
-      width: 100%; background: var(--primary-color);
-      color: #000; border: none; padding: 12px;
-      border-radius: 12px; font-weight: 800;
-      margin-top: 10px; cursor: pointer;
+      width: 100%;
+      background: var(--primary-color);
+      color: #000;
+      border: none;
+      padding: 10px;
+      border-radius: 10px;
+      font-weight: 800;
+      margin-top: 6px;
+      cursor: pointer;
     }
 
-    .footer-text {
-      text-align: center; font-size: 0.72rem;
-      color: var(--text-sub); opacity: 0.7; margin-top: 10px;
+    .app-footer {
+      text-align: center;
+      font-size: 0.65rem;
+      color: var(--text-sub);
+      opacity: 0.6;
+      margin-top: 4px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Ambient Particles -->
-  <canvas id="particle-canvas"></canvas>
-
-  <!-- Background Music Element -->
-  <audio id="bgm-audio" loop>
-    <source id="bgm-source" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=ambient-lofi-112181.mp3" type="audio/mpeg" />
-  </audio>
-
-  <div class="mobile-container">
+  <!-- FIXED ANDROID PHONE CONTAINER -->
+  <div class="android-frame" id="app-frame" data-theme="eimiko">
     
-    <!-- Ship Theme Selector Chips -->
-    <div class="theme-bar">
-      <div class="theme-chip active" onclick="switchTheme('eimiko')">🌸 EiMiko</div>
-      <div class="theme-chip" onclick="switchTheme('kiamei')">⚡ KiaMei</div>
-      <div class="theme-chip" onclick="switchTheme('sanbina')">🕊️ SanBina</div>
-      <div class="theme-chip" onclick="switchTheme('augostino')">🌟 AugUino</div>
-      <div class="theme-chip" onclick="switchTheme('bellevivian')">🎮 BelleVivian</div>
+    <!-- PARTICLES CANVAS CONSTRAINED STRICTLY INSIDE APP FRAME -->
+    <canvas id="internal-canvas"></canvas>
+
+    <!-- Background Music Player -->
+    <audio id="bgm-player" loop>
+      <source id="bgm-source" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=ambient-lofi-112181.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- Top Status Bar Mock -->
+    <div class="status-header">
+      <span id="android-clock">12:00</span>
+      <div class="status-icons">
+        <i class="fa-solid fa-wifi"></i>
+        <i class="fa-solid fa-signal"></i>
+        <i class="fa-solid fa-battery-full"></i>
+      </div>
     </div>
 
-    <!-- Controls Bar -->
-    <div class="top-controls">
-      <button class="control-btn" id="music-btn" onclick="toggleMusic()" title="Background Music">
-        <i class="fa-solid fa-music"></i>
-      </button>
-      <button class="control-btn" id="admin-btn" onclick="toggleAdminPrompt()" title="Admin Edit Mode">
-        <i class="fa-solid fa-lock" id="admin-icon"></i>
-      </button>
+    <div class="theme-scroll-bar">
+      <div class="theme-chip active" onclick="switchTheme('eimiko', event)"><i class="fa-solid fa-heart"></i> EiMiko</div>
+      <div class="theme-chip" onclick="switchTheme('kiamei', event)"><i class="fa-solid fa-bolt"></i> KiaMei</div>
+      <div class="theme-chip" onclick="switchTheme('sanbina', event)"><i class="fa-solid fa-dove"></i> SanBina</div>
+      <div class="theme-chip" onclick="switchTheme('augostino', event)"><i class="fa-solid fa-star"></i> AugUino</div>
+      <div class="theme-chip" onclick="switchTheme('bellevivian', event)"><i class="fa-solid fa-gamepad"></i> BelleVivian</div>
     </div>
 
-    <!-- Header Background Banner Image -->
-    <div class="banner-container">
-      <img id="display-banner" class="banner-img" src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop" alt="Background Header" />
-      <div class="banner-overlay"></div>
-    </div>
+    <!-- Scrollable Main App Content -->
+    <div class="app-content">
+      
+      <!-- Banner Image -->
+      <div class="banner-wrapper">
+        <img id="img-banner" class="banner-img" src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop" alt="Banner" />
+        <div class="banner-overlay"></div>
 
-    <!-- Profile Content Body -->
-    <div class="profile-content">
-
-      <!-- Avatar -->
-      <div class="avatar-wrapper">
-        <img id="display-avatar" class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop" alt="Profile Picture" />
-        <div class="verified-badge"><i class="fa-solid fa-heart"></i></div>
+        <!-- Top Actions -->
+        <div class="top-actions">
+          <button class="action-btn" id="btn-music" onclick="toggleMusic()" title="Music">
+            <i class="fa-solid fa-music"></i>
+          </button>
+          <button class="action-btn" id="btn-admin" onclick="toggleAdminLock()" title="Admin Lock">
+            <i class="fa-solid fa-lock" id="icon-lock"></i>
+          </button>
+        </div>
       </div>
 
-      <!-- Header Info -->
-      <div class="user-header">
-        <h1 class="user-name" id="display-name">Yuri Collector</h1>
-        <div class="user-handle" id="display-handle">@yuri_enjoyer</div>
+      <div class="profile-card">
         
-        <div class="pill-container">
-          <div class="pill"><i class="fa-solid fa-cake-candles"></i> <span id="display-age">20 Y/O</span></div>
-          <div class="pill"><i class="fa-solid fa-location-dot"></i> <span id="display-location">Philippines</span></div>
-          <div class="pill"><i class="fa-solid fa-venus-double"></i> Yuri Enthusiast</div>
+        <!-- Avatar -->
+        <div class="avatar-wrapper">
+          <img id="img-avatar" class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop" alt="Avatar" />
+          <div class="badge-status"><i class="fa-solid fa-heart"></i></div>
         </div>
-      </div>
 
-      <!-- Edit Trigger Button -->
-      <button class="edit-btn-float" id="edit-mode-btn" onclick="openEditModal()">
-        <i class="fa-solid fa-pen-to-square"></i> Edit Profile for Current Theme
-      </button>
+        <!-- Header Info -->
+        <div class="profile-header-text">
+          <h1 class="profile-name" id="text-name">Yuri Collector</h1>
+          <div class="profile-handle" id="text-handle">@yuri_enjoyer</div>
 
-      <!-- Bio Glass Box -->
-      <div class="glass-card">
-        <div class="card-title"><i class="fa-solid fa-quote-left"></i> About Me</div>
-        <div class="bio-text" id="display-bio">
-          Mabuhay! Welcome sa aking Yuri-themed profile page. Love listening to good music and admiring sapphic couples! Feel free to visit my social accounts below.
+          <div class="pill-container">
+            <div class="pill-badge"><i class="fa-solid fa-cake-candles"></i> <span id="text-age">20 Y/O</span></div>
+            <div class="pill-badge"><i class="fa-solid fa-location-dot"></i> <span id="text-location">Philippines</span></div>
+            <div class="pill-badge"><i class="fa-solid fa-venus-double"></i> Yuri Enthusiast</div>
+          </div>
         </div>
-        <div class="ship-quote-box" id="display-quote">
-          "Eternity may be vast, but moments with you are timeless." — Raiden Shogun & Yae Miko
+
+        <!-- Admin Trigger (Visible when unlocked) -->
+        <button class="admin-edit-btn" id="btn-open-edit" onclick="openModal()">
+          <i class="fa-solid fa-pen-to-square"></i> Customize Active Theme Profile
+        </button>
+
+        <!-- Bio Card Block -->
+        <div class="info-block">
+          <div class="block-heading"><i class="fa-solid fa-quote-left"></i> About Me</div>
+          <div class="bio-text" id="text-bio">
+            Mabuhay! Welcome sa aking Yuri profile mobile app. Love listening to good lofi music and admiring sapphic couples!
+          </div>
+          <div class="ship-quote" id="text-quote">
+            "Eternity may be vast, but moments with you are timeless." — EiMiko
+          </div>
         </div>
-      </div>
 
-      <!-- Social Links -->
-      <div class="glass-card">
-        <div class="card-title"><i class="fa-solid fa-share-nodes"></i> Connect With Me</div>
-        <div class="social-grid">
-
-          <a href="https://facebook.com" target="_blank" id="link-facebook" class="social-btn">
-            <div class="social-left"><i class="fa-brands fa-facebook"></i> <span>Facebook</span></div>
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-
-          <a href="https://instagram.com" target="_blank" id="link-instagram" class="social-btn">
-            <div class="social-left"><i class="fa-brands fa-instagram"></i> <span>Instagram</span></div>
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-
-          <a href="https://tiktok.com" target="_blank" id="link-tiktok" class="social-btn">
-            <div class="social-left"><i class="fa-brands fa-tiktok"></i> <span>TikTok</span></div>
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-
-          <a href="https://twitter.com" target="_blank" id="link-x" class="social-btn">
-            <div class="social-left"><i class="fa-brands fa-x-twitter"></i> <span>X (Twitter)</span></div>
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-
-          <a href="https://discord.com" target="_blank" id="link-discord" class="social-btn">
-            <div class="social-left"><i class="fa-brands fa-discord"></i> <span>Discord</span></div>
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-
+        <!-- Links Card Block -->
+        <div class="info-block">
+          <div class="block-heading"><i class="fa-solid fa-share-nodes"></i> Connect With Me</div>
+          <div class="social-grid">
+            <a href="https://facebook.com" target="_blank" id="link-fb" class="social-btn">
+              <div class="social-btn-left"><i class="fa-brands fa-facebook"></i> <span>Facebook</span></div>
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="https://instagram.com" target="_blank" id="link-ig" class="social-btn">
+              <div class="social-btn-left"><i class="fa-brands fa-instagram"></i> <span>Instagram</span></div>
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="https://tiktok.com" target="_blank" id="link-tt" class="social-btn">
+              <div class="social-btn-left"><i class="fa-brands fa-tiktok"></i> <span>TikTok</span></div>
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+            <a href="https://twitter.com" target="_blank" id="link-x" class="social-btn">
+              <div class="social-btn-left"><i class="fa-brands fa-x-twitter"></i> <span>X (Twitter)</span></div>
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </div>
         </div>
-      </div>
 
-      <div class="footer-text">
-        Designed with Yuri Themes • 2026
-      </div>
+        <div class="app-footer">Android Yuri Profile UI • 2026</div>
 
+      </div>
     </div>
-  </div>
 
-  <!-- Edit Modal -->
-  <div class="modal" id="editModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title"><i class="fa-solid fa-sliders"></i> Edit Theme Settings</div>
-        <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="closeEditModal()"></i>
+    <div class="modal-overlay" id="modal-edit">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-sliders"></i> Edit Active Profile</h3>
+          <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="closeModal()"></i>
+        </div>
+
+        <div class="field-box">
+          <label><i class="fa-solid fa-image"></i> Avatar Image (Active Theme)</label>
+          <input type="file" accept="image/*" onchange="uploadImage(this, 'img-avatar', 'avatar')" />
+        </div>
+
+        <div class="field-box">
+          <label><i class="fa-solid fa-panorama"></i> Banner Image (Active Theme)</label>
+          <input type="file" accept="image/*" onchange="uploadImage(this, 'img-banner', 'banner')" />
+        </div>
+
+        <div class="field-box">
+          <label><i class="fa-solid fa-music"></i> Upload Audio MP3</label>
+          <input type="file" accept="audio/*" onchange="uploadAudio(this)" />
+        </div>
+
+        <div class="field-box"><label>Name</label><input type="text" id="in-name" /></div>
+        <div class="field-box"><label>Username</label><input type="text" id="in-handle" /></div>
+        <div class="field-box"><label>Age</label><input type="text" id="in-age" /></div>
+        <div class="field-box"><label>Location</label><input type="text" id="in-location" /></div>
+        <div class="field-box"><label>Bio Text</label><textarea id="in-bio" rows="3"></textarea></div>
+
+        <div class="field-box"><label>Facebook Link</label><input type="url" id="in-fb" /></div>
+        <div class="field-box"><label>Instagram Link</label><input type="url" id="in-ig" /></div>
+        <div class="field-box"><label>TikTok Link</label><input type="url" id="in-tt" /></div>
+        <div class="field-box"><label>X Link</label><input type="url" id="in-x" /></div>
+
+        <button class="save-btn" onclick="saveModalData()">Save Profile Changes</button>
       </div>
-
-      <!-- Gallery Picker Avatar -->
-      <div class="form-group">
-        <label><i class="fa-solid fa-image"></i> Profile Picture (For Active Theme)</label>
-        <input type="file" id="input-avatar-file" accept="image/*" onchange="previewGalleryImage(this, 'display-avatar', 'avatar')" />
-      </div>
-
-      <!-- Gallery Picker Banner -->
-      <div class="form-group">
-        <label><i class="fa-solid fa-panorama"></i> Background Header Image (For Active Theme)</label>
-        <input type="file" id="input-banner-file" accept="image/*" onchange="previewGalleryImage(this, 'display-banner', 'banner')" />
-      </div>
-
-      <!-- Audio Music Picker -->
-      <div class="form-group">
-        <label><i class="fa-solid fa-music"></i> Background Music (From Phone Files)</label>
-        <input type="file" id="input-audio-file" accept="audio/*" onchange="updateBackgroundAudio(this)" />
-      </div>
-
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" id="input-name" placeholder="Your Name" />
-      </div>
-
-      <div class="form-group">
-        <label>Username / Handle</label>
-        <input type="text" id="input-handle" placeholder="@username" />
-      </div>
-
-      <div class="form-group">
-        <label>Age</label>
-        <input type="text" id="input-age" placeholder="20 Y/O" />
-      </div>
-
-      <div class="form-group">
-        <label>Location</label>
-        <input type="text" id="input-location" placeholder="Philippines" />
-      </div>
-
-      <div class="form-group">
-        <label>Bio</label>
-        <textarea id="input-bio" rows="3" placeholder="Tell something about yourself..."></textarea>
-      </div>
-
-      <div class="form-group">
-        <label>Facebook Link</label>
-        <input type="url" id="input-facebook" placeholder="https://facebook.com/yourprofile" />
-      </div>
-
-      <div class="form-group">
-        <label>Instagram Link</label>
-        <input type="url" id="input-instagram" placeholder="https://instagram.com/yourprofile" />
-      </div>
-
-      <div class="form-group">
-        <label>TikTok Link</label>
-        <input type="url" id="input-tiktok" placeholder="https://tiktok.com/@yourprofile" />
-      </div>
-
-      <div class="form-group">
-        <label>X (Twitter) Link</label>
-        <input type="url" id="input-x" placeholder="https://x.com/yourprofile" />
-      </div>
-
-      <button class="save-btn" onclick="saveProfileData()">Save All Changes</button>
     </div>
+
   </div>
 
   <script>
-    let currentTheme = 'eimiko';
-    let isAdmin = false;
-    let isMusicPlaying = false;
-    
-    // PALITAN MO ANG PASSWORD SA BABA KUNG GUSTO MO NG IBANG PASSCODE:
+    let activeTheme = 'eimiko';
+    let isAdminUnlocked = false;
+    let isBgmPlaying = false;
     const ADMIN_PIN = "1234";
 
-    // Default Theme Images
-    const defaultData = {
+    const defaultThemeAssets = {
       eimiko: {
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop",
-        quote: '"Eternity may be vast, but moments with you are timeless." — EiMiko (Raiden Shogun x Yae Miko)'
+        quote: '"Eternity may be vast, but moments with you are timeless." — EiMiko'
       },
       kiamei: {
         avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop",
-        quote: '"I will save you, no matter how many times it takes." — KiaMei (Kiana x Mei)'
+        quote: '"I will save you, no matter how many times it takes." — KiaMei'
       },
       sanbina: {
         avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop",
-        quote: '"A melody woven in silk and clockwork gears." — SanBina (Sandrone x Columbina)'
+        quote: '"A melody woven in silk and clockwork gears." — SanBina'
       },
       augostino: {
         avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1464802686167-b939a6910659?w=800&auto=format&fit=crop",
-        quote: '"Starbound destinies linked by radiant light." — AugUino (Augusta x Uino)'
+        quote: '"Starbound destinies linked by radiant light." — AugUino'
       },
       bellevivian: {
         avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&auto=format&fit=crop",
-        quote: '"Neon pulses in tune with our heartbeat." — BelleVivian ft. Jane Doe'
+        quote: '"Neon pulses in tune with our heartbeat." — BelleVivian'
       }
     };
 
-    // Load saved preferences on startup
     window.onload = function() {
-      loadThemeData(currentTheme);
+      updateClock();
+      setInterval(updateClock, 1000);
+      applyTheme(activeTheme);
+      initConstrainedCanvas();
     };
 
-    // Switch Ship Theme
-    function switchTheme(themeName) {
-      currentTheme = themeName;
-      document.body.setAttribute('data-theme', themeName);
-      
-      const chips = document.querySelectorAll('.theme-chip');
-      chips.forEach(chip => chip.classList.remove('active'));
-      event.target.classList.add('active');
-
-      loadThemeData(themeName);
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      document.getElementById('android-clock').innerText = `${hours}:${minutes}`;
     }
 
-    function loadThemeData(theme) {
-      const savedAvatar = localStorage.getItem(`avatar_${theme}`) || defaultData[theme].avatar;
-      const savedBanner = localStorage.getItem(`banner_${theme}`) || defaultData[theme].banner;
-      const savedName = localStorage.getItem('profile_name') || "Yuri Collector";
-      const savedHandle = localStorage.getItem('profile_handle') || "@yuri_enjoyer";
-      const savedAge = localStorage.getItem('profile_age') || "20 Y/O";
-      const savedLocation = localStorage.getItem('profile_loc') || "Philippines";
-      const savedBio = localStorage.getItem('profile_bio') || "Mabuhay! Welcome sa aking Yuri-themed profile page.";
+    function switchTheme(themeKey, evt) {
+      activeTheme = themeKey;
+      document.getElementById('app-frame').setAttribute('data-theme', themeKey);
+      document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('active'));
+      if(evt) evt.currentTarget.classList.add('active');
+      applyTheme(themeKey);
+    }
 
-      document.getElementById('display-avatar').src = savedAvatar;
-      document.getElementById('display-banner').src = savedBanner;
-      document.getElementById('display-name').innerText = savedName;
-      document.getElementById('display-handle').innerText = savedHandle;
-      document.getElementById('display-age').innerText = savedAge;
-      document.getElementById('display-location').innerText = savedLocation;
-      document.getElementById('display-bio').innerText = savedBio;
-      document.getElementById('display-quote').innerText = defaultData[theme].quote;
+    function applyTheme(themeKey) {
+      document.getElementById('img-avatar').src = localStorage.getItem(`avatar_${themeKey}`) || defaultThemeAssets[themeKey].avatar;
+      document.getElementById('img-banner').src = localStorage.getItem(`banner_${themeKey}`) || defaultThemeAssets[themeKey].banner;
+      document.getElementById('text-name').innerText = localStorage.getItem('profile_name') || "Yuri Collector";
+      document.getElementById('text-handle').innerText = localStorage.getItem('profile_handle') || "@yuri_enjoyer";
+      document.getElementById('text-age').innerText = localStorage.getItem('profile_age') || "20 Y/O";
+      document.getElementById('text-location').innerText = localStorage.getItem('profile_loc') || "Philippines";
+      document.getElementById('text-bio').innerText = localStorage.getItem('profile_bio') || "Mabuhay! Welcome sa aking Yuri profile mobile app.";
+      document.getElementById('text-quote').innerText = defaultThemeAssets[themeKey].quote;
 
-      // Load links
-      document.getElementById('link-facebook').href = localStorage.getItem('link_fb') || "https://facebook.com";
-      document.getElementById('link-instagram').href = localStorage.getItem('link_ig') || "https://instagram.com";
-      document.getElementById('link-tiktok').href = localStorage.getItem('link_tt') || "https://tiktok.com";
+      document.getElementById('link-fb').href = localStorage.getItem('link_fb') || "https://facebook.com";
+      document.getElementById('link-ig').href = localStorage.getItem('link_ig') || "https://instagram.com";
+      document.getElementById('link-tt').href = localStorage.getItem('link_tt') || "https://tiktok.com";
       document.getElementById('link-x').href = localStorage.getItem('link_x') || "https://twitter.com";
     }
 
-    // Toggle Music Play/Pause
     function toggleMusic() {
-      const audio = document.getElementById('bgm-audio');
-      const btn = document.getElementById('music-btn');
-      if (isMusicPlaying) {
+      const audio = document.getElementById('bgm-player');
+      const btn = document.getElementById('btn-music');
+      if (isBgmPlaying) {
         audio.pause();
-        isMusicPlaying = false;
+        isBgmPlaying = false;
         btn.classList.remove('active');
       } else {
         audio.play().then(() => {
-          isMusicPlaying = true;
+          isBgmPlaying = true;
           btn.classList.add('active');
-        }).catch(e => console.log("Audio block:", e));
+        }).catch(err => console.log(err));
       }
     }
 
-    // Passcode Admin Protection
-    function toggleAdminPrompt() {
-      if (!isAdmin) {
-        let pin = prompt("Enter Admin Passcode to enable Edit Mode:");
+    function toggleAdminLock() {
+      if (!isAdminUnlocked) {
+        let pin = prompt("Enter Admin PIN:");
         if (pin === ADMIN_PIN) {
-          isAdmin = true;
-          document.getElementById('admin-icon').className = "fa-solid fa-lock-open";
-          document.getElementById('edit-mode-btn').style.display = "block";
-          alert("Admin Mode Unlocked!");
+          isAdminUnlocked = true;
+          document.getElementById('icon-lock').className = "fa-solid fa-lock-open";
+          document.getElementById('btn-open-edit').style.display = "block";
         } else if (pin !== null) {
-          alert("Maling Passcode!");
+          alert("Incorrect PIN!");
         }
       } else {
-        isAdmin = false;
-        document.getElementById('admin-icon').className = "fa-solid fa-lock";
-        document.getElementById('edit-mode-btn').style.display = "none";
-        alert("Admin Mode Locked.");
+        isAdminUnlocked = false;
+        document.getElementById('icon-lock').className = "fa-solid fa-lock";
+        document.getElementById('btn-open-edit').style.display = "none";
       }
     }
 
-    // Modal Control
-    function openEditModal() {
-      document.getElementById('input-name').value = document.getElementById('display-name').innerText;
-      document.getElementById('input-handle').value = document.getElementById('display-handle').innerText;
-      document.getElementById('input-age').value = document.getElementById('display-age').innerText;
-      document.getElementById('input-location').value = document.getElementById('display-location').innerText;
-      document.getElementById('input-bio').value = document.getElementById('display-bio').innerText;
+    function openModal() {
+      document.getElementById('in-name').value = document.getElementById('text-name').innerText;
+      document.getElementById('in-handle').value = document.getElementById('text-handle').innerText;
+      document.getElementById('in-age').value = document.getElementById('text-age').innerText;
+      document.getElementById('in-location').value = document.getElementById('text-location').innerText;
+      document.getElementById('in-bio').value = document.getElementById('text-bio').innerText;
 
-      document.getElementById('input-facebook').value = document.getElementById('link-facebook').href;
-      document.getElementById('input-instagram').value = document.getElementById('link-instagram').href;
-      document.getElementById('input-tiktok').value = document.getElementById('link-tiktok').href;
-      document.getElementById('input-x').value = document.getElementById('link-x').href;
+      document.getElementById('in-fb').value = document.getElementById('link-fb').href;
+      document.getElementById('in-ig').value = document.getElementById('link-ig').href;
+      document.getElementById('in-tt').value = document.getElementById('link-tt').href;
+      document.getElementById('in-x').value = document.getElementById('link-x').href;
 
-      document.getElementById('editModal').style.display = 'flex';
+      document.getElementById('modal-edit').style.display = 'flex';
     }
 
-    function closeEditModal() {
-      document.getElementById('editModal').style.display = 'none';
+    function closeModal() {
+      document.getElementById('modal-edit').style.display = 'none';
     }
 
-    // Convert Selected Image File & Save Per Theme
-    function previewGalleryImage(input, targetElementId, type) {
+    function uploadImage(input, targetId, type) {
       if (input.files && input.files[0]) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          const base64Data = e.target.result;
-          document.getElementById(targetElementId).src = base64Data;
-          localStorage.setItem(`${type}_${currentTheme}`, base64Data);
+          const base64 = e.target.result;
+          document.getElementById(targetId).src = base64;
+          localStorage.setItem(`${type}_${activeTheme}`, base64);
         };
         reader.readAsDataURL(input.files[0]);
       }
     }
 
-    // Change Music from File Manager
-    function updateBackgroundAudio(input) {
+    function uploadAudio(input) {
       if (input.files && input.files[0]) {
-        const file = input.files[0];
-        const audioURL = URL.createObjectURL(file);
-        const audio = document.getElementById('bgm-audio');
-        const source = document.getElementById('bgm-source');
-
-        source.src = audioURL;
+        const audio = document.getElementById('bgm-player');
+        document.getElementById('bgm-source').src = URL.createObjectURL(input.files[0]);
         audio.load();
-        if (isMusicPlaying) audio.play();
-        alert("Bagong kanta ang na-load!");
+        if (isBgmPlaying) audio.play();
       }
     }
 
-    // Save All Edits Permanently
-    function saveProfileData() {
-      const name = document.getElementById('input-name').value || "Your Name";
-      const handle = document.getElementById('input-handle').value || "@handle";
-      const age = document.getElementById('input-age').value || "N/A";
-      const loc = document.getElementById('input-location').value || "PH";
-      const bio = document.getElementById('input-bio').value || "";
+    function saveModalData() {
+      localStorage.setItem('profile_name', document.getElementById('in-name').value || "Your Name");
+      localStorage.setItem('profile_handle', document.getElementById('in-handle').value || "@handle");
+      localStorage.setItem('profile_age', document.getElementById('in-age').value || "N/A");
+      localStorage.setItem('profile_loc', document.getElementById('in-location').value || "PH");
+      localStorage.setItem('profile_bio', document.getElementById('in-bio').value || "");
 
-      const fb = document.getElementById('input-facebook').value || "#";
-      const ig = document.getElementById('input-instagram').value || "#";
-      const tt = document.getElementById('input-tiktok').value || "#";
-      const x = document.getElementById('input-x').value || "#";
+      localStorage.setItem('link_fb', document.getElementById('in-fb').value || "#");
+      localStorage.setItem('link_ig', document.getElementById('in-ig').value || "#");
+      localStorage.setItem('link_tt', document.getElementById('in-tt').value || "#");
+      localStorage.setItem('link_x', document.getElementById('in-x').value || "#");
 
-      localStorage.setItem('profile_name', name);
-      localStorage.setItem('profile_handle', handle);
-      localStorage.setItem('profile_age', age);
-      localStorage.setItem('profile_loc', loc);
-      localStorage.setItem('profile_bio', bio);
-
-      localStorage.setItem('link_fb', fb);
-      localStorage.setItem('link_ig', ig);
-      localStorage.setItem('link_tt', tt);
-      localStorage.setItem('link_x', x);
-
-      loadThemeData(currentTheme);
-      closeEditModal();
-      alert("Permanenteng nai-save ang lahat sa phone mo!");
+      applyTheme(activeTheme);
+      closeModal();
     }
 
-    /* Ambient Particle Effect */
-    const canvas = document.getElementById('particle-canvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
+    /* INTERNAL CANVAS ANIMATION - strictly inside .android-frame bounds */
+    let canvas, ctx, frameWidth, frameHeight;
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
+    function initConstrainedCanvas() {
+      canvas = document.getElementById('internal-canvas');
+      ctx = canvas.getContext('2d');
+      
+      const frame = document.getElementById('app-frame');
+      frameWidth = frame.clientWidth;
+      frameHeight = frame.clientHeight;
+      canvas.width = frameWidth;
+      canvas.height = frameHeight;
 
-    class Particle {
-      constructor() { this.reset(); }
-      reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 3 + 1;
-        this.speedX = (Math.random() - 0.5) * 0.8;
-        this.speedY = Math.random() * 0.8 + 0.3;
-        this.opacity = Math.random() * 0.6 + 0.2;
-      }
-      update() {
-        this.x += this.speedX;
-        this.y += this.speedY;
-        if (this.y > canvas.height || this.x < 0 || this.x > canvas.width) {
-          this.y = -10;
-          this.x = Math.random() * canvas.width;
+      class SakuraPetal {
+        constructor() { this.reset(); }
+        reset() {
+          this.x = Math.random() * frameWidth;
+          this.y = -15;
+          this.size = Math.random() * 6 + 4;
+          this.speedY = Math.random() * 1.0 + 0.5;
+          this.speedX = Math.random() * 0.6 - 0.3;
+          this.rotation = Math.random() * 360;
+          this.rotSpeed = (Math.random() - 0.5) * 1.2;
+          this.opacity = Math.random() * 0.5 + 0.3;
+        }
+        update() {
+          this.y += this.speedY;
+          this.x += Math.sin(this.y * 0.02) + this.speedX;
+          this.rotation += this.rotSpeed;
+          if (this.y > frameHeight + 15) this.reset();
+        }
+        draw() {
+          ctx.save();
+          ctx.translate(this.x, this.y);
+          ctx.rotate((this.rotation * Math.PI) / 180);
+          ctx.fillStyle = `rgba(255, 182, 213, ${this.opacity})`;
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.bezierCurveTo(-this.size, -this.size / 2, -this.size, this.size, 0, this.size * 1.4);
+          ctx.bezierCurveTo(this.size, this.size, this.size, -this.size / 2, 0, 0);
+          ctx.fill();
+          ctx.restore();
         }
       }
-      draw() {
-        ctx.fillStyle = `rgba(216, 128, 255, ${this.opacity})`;
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fill();
+
+      class Sparkle {
+        constructor() { this.reset(); }
+        reset() {
+          this.x = Math.random() * frameWidth;
+          this.y = Math.random() * frameHeight;
+          this.size = Math.random() * 1.8 + 0.4;
+          this.speedY = -(Math.random() * 0.2 + 0.1);
+          this.opacity = Math.random() * 0.6 + 0.2;
+        }
+        update() {
+          this.y += this.speedY;
+          if (this.y < 0) this.y = frameHeight;
+        }
+        draw() {
+          ctx.fillStyle = `rgba(220, 180, 255, ${this.opacity})`;
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
-    }
 
-    for (let i = 0; i < 40; i++) particles.push(new Particle());
+      const petals = Array.from({ length: 22 }, () => new SakuraPetal());
+      const sparkles = Array.from({ length: 25 }, () => new Sparkle());
 
-    function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      particles.forEach(p => { p.update(); p.draw(); });
-      requestAnimationFrame(animateParticles);
+      function renderLoop() {
+        ctx.clearRect(0, 0, frameWidth, frameHeight);
+        sparkles.forEach(s => { s.update(); s.draw(); });
+        petals.forEach(p => { p.update(); p.draw(); });
+        requestAnimationFrame(renderLoop);
+      }
+      renderLoop();
     }
-    animateParticles();
   </script>
 </body>
 </html>
