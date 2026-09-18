@@ -786,8 +786,12 @@
     }
 
     function applyTheme(themeKey) {
-      document.getElementById('img-avatar').src = localStorage.getItem(`avatar_${themeKey}`) || defaultThemeAssets[themeKey].avatar;
-      document.getElementById('img-banner').src = localStorage.getItem(`banner_${themeKey}`) || defaultThemeAssets[themeKey].banner;
+      const savedAvatar = localStorage.getItem(`avatar_${themeKey}`);
+      const savedBanner = localStorage.getItem(`banner_${themeKey}`);
+
+      document.getElementById('img-avatar').src = savedAvatar || defaultThemeAssets[themeKey].avatar;
+      document.getElementById('img-banner').src = savedBanner || defaultThemeAssets[themeKey].banner;
+
       document.getElementById('text-name').innerText = localStorage.getItem('profile_name') || "Krys Ali";
       document.getElementById('text-handle').innerText = localStorage.getItem('profile_handle') || "@yuri_enjoyer";
       document.getElementById('text-age').innerText = localStorage.getItem('profile_age') || "21 Y/O";
