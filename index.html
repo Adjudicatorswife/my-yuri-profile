@@ -25,7 +25,7 @@
       --font-family: 'Plus Jakarta Sans', sans-serif;
     }
 
-    [data-theme="eimiko"] {
+       [data-theme="eimiko"] {
       --bg-theme: radial-gradient(circle at 50% 15%, #2a0b3a 0%, #12031c 65%, #07010a 100%);
       --card-bg: rgba(22, 8, 30, 0.75);
       --card-border: rgba(216, 128, 255, 0.25);
@@ -261,7 +261,7 @@
       transition: transform 0.2s ease, border-color 0.3s ease;
     }
 
-    .block-heading {
+       .block-heading {
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 1.2px;
@@ -400,7 +400,7 @@
       font-size: 0.8rem;
       outline: none;
     }
-
+    
     /* Floating Heart Animation */
     @keyframes floatUp {
       0% { transform: translateY(0) scale(1); opacity: 1; }
@@ -449,7 +449,7 @@
       
       <!-- Banner Section -->
       <div class="banner-wrapper">
-        <img id="img-banner" class="banner-img"  alt="Banner" />
+        <img id="img-banner" class="banner-img" alt="Banner" />
         <div class="banner-overlay"></div>
 
         <!-- Floating Quick Header Controls -->
@@ -652,7 +652,7 @@
 
   </div>
 
-  <!-- HTML5 Background Audio Element -->
+    <!-- HTML5 Background Audio Element -->
   <audio id="bg-audio-player" loop preload="auto"></audio>
 
   <script>
@@ -662,7 +662,6 @@
     let activeGameFilter = 'all';
     const ADMIN_PIN = "aquayena99";
 
-    // PERMANENT AUDIO MAP PER THEME (Dito ilalagay ang Direct MP3 Links)
     const themeAudioMap = {
       eimiko: "https://archive.org/download/bleachers-merry-christmas-please-dont-call/Bleachers%20-%20Merry%20Christmas%2C%20Please%20Dont%20Call.mp3",
       kiamei: "https://archive.org/download/fitterkarma-kalapastangan-lyrics_202609/fitterkarma%20-%20Kalapastangan%20%28Lyrics%29.mp3",
@@ -718,14 +717,14 @@
       { id: 'ao3', name: 'AO3', icon: 'fa-solid fa-book-bookmark', url: 'https://archiveofourown.org/?view_adult=true' },
       { id: 'yt', name: 'YouTube', icon: 'fa-brands fa-youtube', url: 'https://www.youtube.com/@EnchantressOfNPS' },
       { id: 'tw', name: 'Twitch', icon: 'fa-brands fa-twitch', url: 'https://www.twitch.tv/krystal_ali' },
-      { id: 'wa', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: 'https://aesthrillkrystal' },
-      { id: 'tg', name: 'Telegram', icon: 'fa-brands fa-telegram', url: 'https://@Imabadbitchlikemorgana' },
+      { id: 'wa', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: 'https://wa.me/aesthrillkrystal' },
+      { id: 'tg', name: 'Telegram', icon: 'fa-brands fa-telegram', url: 'https://t.me/Imabadbitchlikemorgana' },
       { id: 'dc', name: 'Discord', icon: 'fa-brands fa-discord', url: 'https://discord.com/channels/@aesthrillluthor0834' },
       { id: 'qu', name: 'Quora', icon: 'fa-brands fa-quora', url: 'https://www.quora.com/profile/Sone-Krystal' },
       { id: 'rblx_social', name: 'Roblox Profile', icon: 'fa-solid fa-cube', url: 'https://www.roblox.com/users/3785847583/profile' },
       { id: 'bili', name: 'Bilibili', icon: 'fa-brands fa-bilibili', url: 'https://www.bilibili.tv/en/space/1686243822' },
       { id: 'gh', name: 'GitHub', icon: 'fa-brands fa-github', url: 'https://github.com/Adjudicatorswife' },
-      { id: 'mail', name: 'Email Me', icon: 'fa-solid fa-envelope', url: 'aesthrillkrystal@gmail.com' },
+      { id: 'mail', name: 'Email Me', icon: 'fa-solid fa-envelope', url: 'mailto:aesthrillkrystal@gmail.com' },
       { id: 'watt', name: 'Wattpad', icon: 'fa-solid fa-pen-nib', url: 'https://www.wattpad.com/user/yenascandy' }
     ];
 
@@ -777,7 +776,6 @@
       if(evt) evt.currentTarget.classList.add('active');
       applyTheme(themeKey);
 
-      // Palitan din ang kanta kapag nag-switch ng theme
       const player = document.getElementById('bg-audio-player');
       player.src = themeAudioMap[activeTheme];
       if (isBgmPlaying) {
@@ -800,7 +798,6 @@
       document.getElementById('text-quote').innerText = defaultThemeAssets[themeKey].quote;
       document.getElementById('audio-track-label').innerText = defaultThemeAssets[themeKey].trackName;
 
-      // Set audio source
       const player = document.getElementById('bg-audio-player');
       if (!player.src || !player.src.includes(themeAudioMap[themeKey])) {
         player.src = themeAudioMap[themeKey];
@@ -1027,7 +1024,6 @@
       alert("Profile URL copied to clipboard!");
     }
 
-    // Canvas Background FX Particle Animation
     let canvas, ctx, frameWidth, frameHeight;
 
     function initConstrainedCanvas() {
@@ -1039,9 +1035,9 @@
         frameHeight = window.innerHeight;
         canvas.width = frameWidth;
         canvas.height = frameHeight;
-      }
+                 }
 
-      resizeCanvas();
+    resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
       class Particle {
