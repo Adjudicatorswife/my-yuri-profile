@@ -787,11 +787,11 @@
     function applyTheme(themeKey) {
       document.getElementById('img-avatar').src = localStorage.getItem(`avatar_${themeKey}`) || defaultThemeAssets[themeKey].avatar;
       document.getElementById('img-banner').src = localStorage.getItem(`banner_${themeKey}`) || defaultThemeAssets[themeKey].banner;
-      document.getElementById('text-name').innerText = localStorage.getItem('profile_name') || "Yuri Collector";
+      document.getElementById('text-name').innerText = localStorage.getItem('profile_name') || "Krys Ali";
       document.getElementById('text-handle').innerText = localStorage.getItem('profile_handle') || "@yuri_enjoyer";
-      document.getElementById('text-age').innerText = localStorage.getItem('profile_age') || "20 Y/O";
+      document.getElementById('text-age').innerText = localStorage.getItem('profile_age') || "21 Y/O";
       document.getElementById('text-location').innerText = localStorage.getItem('profile_loc') || "Philippines";
-      document.getElementById('text-bio').innerText = localStorage.getItem('profile_bio') || "Mabuhay! Welcome to my mobile Yuri profile web app.";
+      document.getElementById('text-bio').innerText = localStorage.getItem('profile_bio') || "pawang kabadingan lamang >>🩷🥹 -women...";
       document.getElementById('text-quote').innerText = defaultThemeAssets[themeKey].quote;
       document.getElementById('audio-track-label').innerText = defaultThemeAssets[themeKey].trackName;
     }
