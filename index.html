@@ -3,8 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Yuri Profile Experience</title>
+  <title>Yuri Profile Experience & Interactive Hub</title>
 
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <!-- Google Font: Plus Jakarta Sans -->
@@ -13,7 +15,7 @@
   <style>
     :root {
       --bg-theme: radial-gradient(circle at 50% 15%, #2a0b3a 0%, #12031c 65%, #07010a 100%);
-      --card-bg: rgba(22, 8, 30, 0.72);
+      --card-bg: rgba(22, 8, 30, 0.75);
       --card-border: rgba(216, 128, 255, 0.25);
       --primary-color: #d880ff;
       --accent-color: #ff80c0;
@@ -25,7 +27,7 @@
 
     [data-theme="eimiko"] {
       --bg-theme: radial-gradient(circle at 50% 15%, #2a0b3a 0%, #12031c 65%, #07010a 100%);
-      --card-bg: rgba(22, 8, 30, 0.72);
+      --card-bg: rgba(22, 8, 30, 0.75);
       --card-border: rgba(216, 128, 255, 0.25);
       --primary-color: #d880ff;
       --accent-color: #ff80c0;
@@ -34,7 +36,7 @@
 
     [data-theme="kiamei"] {
       --bg-theme: radial-gradient(circle at 50% 15%, #082240 0%, #061124 65%, #020712 100%);
-      --card-bg: rgba(8, 25, 48, 0.75);
+      --card-bg: rgba(8, 25, 48, 0.78);
       --card-border: rgba(80, 210, 255, 0.35);
       --primary-color: #00e5ff;
       --accent-color: #ff33a8;
@@ -43,7 +45,7 @@
 
     [data-theme="sanbina"] {
       --bg-theme: radial-gradient(circle at 50% 15%, #241230 0%, #100818 65%, #05020a 100%);
-      --card-bg: rgba(24, 12, 32, 0.78);
+      --card-bg: rgba(24, 12, 32, 0.8);
       --card-border: rgba(205, 175, 215, 0.32);
       --primary-color: #d4b5e8;
       --accent-color: #e85d8d;
@@ -52,7 +54,7 @@
 
     [data-theme="augostino"] {
       --bg-theme: radial-gradient(circle at 50% 15%, #30240b 0%, #161003 65%, #080501 100%);
-      --card-bg: rgba(32, 24, 8, 0.78);
+      --card-bg: rgba(32, 24, 8, 0.8);
       --card-border: rgba(255, 215, 100, 0.35);
       --primary-color: #ffd700;
       --accent-color: #ff9100;
@@ -61,7 +63,7 @@
 
     [data-theme="bellevivian"] {
       --bg-theme: radial-gradient(circle at 50% 15%, #330827 0%, #160212 65%, #080006 100%);
-      --card-bg: rgba(34, 8, 26, 0.78);
+      --card-bg: rgba(34, 8, 26, 0.8);
       --card-border: rgba(255, 100, 185, 0.35);
       --primary-color: #ff3b96;
       --accent-color: #b026ff;
@@ -77,32 +79,33 @@
     }
 
     body {
-      background: #0a0a0c;
+      background: #060309;
       color: var(--text-main);
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       width: 100vw;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
+    /* Container setup */
     .app-viewport {
       position: relative;
       width: 100%;
       max-width: 480px;
-      height: 100vh;
+      min-height: 100vh;
       background: var(--bg-theme);
-      overflow: hidden;
+      overflow-y: auto;
+      overflow-x: hidden;
       display: flex;
       flex-direction: column;
       transition: background 0.4s ease;
-      box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.9);
     }
 
-    /* Particle canvas strictly inside app viewport */
     #internal-canvas {
-      position: absolute;
+      position: fixed;
       top: 0;
       left: 0;
       width: 100%;
@@ -111,26 +114,23 @@
       z-index: 2;
     }
 
-    /* Top Navigation Bar */
     .theme-scroll-bar {
-      position: relative;
-      z-index: 10;
+      position: sticky;
+      top: 0;
+      z-index: 30;
       display: flex;
       gap: 8px;
       overflow-x: auto;
       padding: 12px 16px;
       scrollbar-width: none;
-      background: rgba(0, 0, 0, 0.4);
-      backdrop-filter: blur(12px);
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     }
-
-    .theme-scroll-bar::-webkit-scrollbar {
-      display: none;
-    }
+    .theme-scroll-bar::-webkit-scrollbar { display: none; }
 
     .theme-chip {
-      background: rgba(255, 255, 255, 0.05);
+      background: rgba(255, 255, 255, 0.06);
       border: 1px solid var(--card-border);
       color: var(--text-sub);
       padding: 8px 14px;
@@ -152,18 +152,11 @@
       box-shadow: 0 0 14px var(--glow-color);
     }
 
-    /* Scrollable App Body Content */
     .app-content {
       position: relative;
       z-index: 5;
       flex: 1;
-      overflow-y: auto;
-      padding-bottom: 30px;
-      scrollbar-width: none;
-    }
-
-    .app-content::-webkit-scrollbar {
-      display: none;
+      padding-bottom: 40px;
     }
 
     .banner-wrapper {
@@ -193,7 +186,7 @@
       top: 12px;
       right: 12px;
       display: flex;
-      gap: 10px;
+      gap: 8px;
       z-index: 15;
     }
 
@@ -201,15 +194,15 @@
       background: rgba(0, 0, 0, 0.65);
       border: 1px solid var(--primary-color);
       color: var(--primary-color);
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       backdrop-filter: blur(10px);
       cursor: pointer;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       transition: all 0.25s ease;
     }
 
@@ -219,9 +212,8 @@
       box-shadow: 0 0 12px var(--glow-color);
     }
 
-    /* Profile Container */
     .profile-card {
-      padding: 0 20px;
+      padding: 0 18px;
       margin-top: -55px;
       position: relative;
     }
@@ -259,57 +251,14 @@
       border: 2px solid #08020d;
     }
 
-    .profile-header-text {
-      text-align: center;
-      margin-bottom: 16px;
-    }
-
-    .profile-name {
-      font-size: 1.45rem;
-      font-weight: 800;
-      color: var(--text-main);
-      text-shadow: 0 0 12px var(--glow-color);
-    }
-
-    .profile-handle {
-      font-size: 0.85rem;
-      color: var(--primary-color);
-      font-weight: 600;
-      margin-top: 3px;
-    }
-
-    .pill-container {
-      display: flex;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 10px;
-      flex-wrap: wrap;
-    }
-
-    .pill-badge {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid var(--card-border);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 0.72rem;
-      color: var(--text-sub);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      backdrop-filter: blur(8px);
-    }
-
-    .pill-badge i {
-      color: var(--primary-color);
-    }
-
     .info-block {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 18px;
-      padding: 14px 16px;
+      padding: 16px;
       margin-bottom: 14px;
       backdrop-filter: blur(14px);
+      transition: transform 0.2s ease, border-color 0.3s ease;
     }
 
     .block-heading {
@@ -318,33 +267,16 @@
       letter-spacing: 1.2px;
       color: var(--primary-color);
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 8px;
+      justify-content: space-between;
     }
 
-    .bio-text {
-      font-size: 0.85rem;
-      line-height: 1.5;
-      color: var(--text-main);
-      white-space: pre-line;
-    }
-
-    .ship-quote {
-      background: rgba(0, 0, 0, 0.35);
-      border-left: 3px solid var(--accent-color);
-      padding: 10px 12px;
-      border-radius: 0 10px 10px 0;
-      margin-top: 10px;
-      font-style: italic;
-      font-size: 0.78rem;
-      color: var(--text-sub);
-    }
-
-    .social-grid {
-      display: flex;
-      flex-direction: column;
+    /* Social and gaming buttons grid */
+    .link-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
     }
 
@@ -354,58 +286,81 @@
       justify-content: space-between;
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--card-border);
-      padding: 10px 14px;
-      border-radius: 14px;
+      padding: 10px 12px;
+      border-radius: 12px;
       color: #fff;
       text-decoration: none;
       font-weight: 600;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .social-btn:hover, .social-btn:active {
+      transform: translateY(-2px);
+      border-color: var(--primary-color);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .game-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       transition: all 0.2s ease;
     }
 
-    .social-btn:active {
-      transform: scale(0.98);
-      background: var(--primary-color);
-      color: #000;
+    .game-card:hover {
+      border-color: var(--primary-color);
     }
 
-    .social-btn-left {
+    .custom-link-card {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .social-btn-left i {
-      font-size: 1.1rem;
-      color: var(--primary-color);
-    }
-
-    .admin-edit-btn {
-      display: none;
-      width: 100%;
-      background: var(--primary-color);
-      color: #0a0312;
-      border: none;
-      padding: 12px;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
       border-radius: 14px;
-      font-weight: 800;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: #fff;
+      transition: all 0.25s ease;
+    }
+    .custom-link-card:hover {
+      transform: scale(1.01);
+      border-color: var(--primary-color);
+      box-shadow: 0 0 15px var(--glow-color);
+    }
+
+    /* Tab switcher for genres */
+    .tab-btn {
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: var(--text-sub);
       cursor: pointer;
-      margin-bottom: 14px;
-      box-shadow: 0 0 16px var(--glow-color);
-      transition: transform 0.2s ease;
+      transition: all 0.2s ease;
+    }
+    .tab-btn.active {
+      background: var(--primary-color);
+      color: #000;
+      border-color: var(--primary-color);
     }
 
-    .admin-edit-btn:active {
-      transform: scale(0.98);
-    }
-
-    /* Modal Overlay */
+    /* Modals */
     .modal-overlay {
       display: none;
-      position: absolute;
+      position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, 0.88);
-      z-index: 50;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 100;
       justify-content: center;
       align-items: center;
       padding: 16px;
@@ -416,38 +371,26 @@
       background: #14071f;
       border: 1px solid var(--primary-color);
       width: 100%;
-      max-height: 90%;
+      max-width: 440px;
+      max-height: 85vh;
       overflow-y: auto;
       border-radius: 20px;
-      padding: 18px;
+      padding: 20px;
       color: #fff;
       box-shadow: 0 0 30px var(--glow-color);
-    }
-
-    .modal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .modal-header h3 {
-      font-size: 1rem;
-      color: var(--primary-color);
     }
 
     .field-box {
       margin-bottom: 12px;
     }
-
     .field-box label {
       display: block;
       font-size: 0.72rem;
       color: var(--text-sub);
       margin-bottom: 4px;
+      font-weight: 600;
     }
-
-    .field-box input, .field-box textarea {
+    .field-box input, .field-box textarea, .field-box select {
       width: 100%;
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid var(--card-border);
@@ -458,24 +401,30 @@
       outline: none;
     }
 
-    .save-btn {
-      width: 100%;
-      background: var(--primary-color);
-      color: #000;
-      border: none;
-      padding: 12px;
-      border-radius: 12px;
-      font-weight: 800;
-      margin-top: 8px;
-      cursor: pointer;
+    /* Floating Heart Animation */
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-80px) scale(1.4); opacity: 0; }
+    }
+    .floating-heart {
+      position: absolute;
+      pointer-events: none;
+      animation: floatUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+      color: var(--accent-color);
+      font-size: 1.2rem;
     }
 
-    .app-footer {
-      text-align: center;
-      font-size: 0.7rem;
-      color: var(--text-sub);
-      opacity: 0.6;
-      margin-top: 10px;
+    /* Audio visualizer bar animation */
+    .music-bar {
+      width: 3px;
+      height: 12px;
+      background: var(--primary-color);
+      border-radius: 3px;
+      animation: pulseBar 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes pulseBar {
+      0% { height: 4px; }
+      100% { height: 16px; }
     }
   </style>
 </head>
@@ -483,15 +432,10 @@
 
   <div class="app-viewport" id="app-frame" data-theme="eimiko">
     
-    <!-- Background Canvas Particles -->
+    <!-- Background Canvas for Sakura/Stars FX -->
     <canvas id="internal-canvas"></canvas>
 
-    <!-- Background Music Audio Player -->
-    <audio id="bgm-player" loop>
-      <source id="bgm-source" src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=ambient-lofi-112181.mp3" type="audio/mpeg" />
-    </audio>
-
-    <!-- Top Theme Selector Bar -->
+    <!-- Top Navigation Theme Switcher -->
     <div class="theme-scroll-bar">
       <div class="theme-chip active" onclick="switchTheme('eimiko', event)"><i class="fa-solid fa-heart"></i> EiMiko</div>
       <div class="theme-chip" onclick="switchTheme('kiamei', event)"><i class="fa-solid fa-bolt"></i> KiaMei</div>
@@ -500,17 +444,20 @@
       <div class="theme-chip" onclick="switchTheme('bellevivian', event)"><i class="fa-solid fa-gamepad"></i> BelleVivian</div>
     </div>
 
-    <!-- Scrollable Main Content -->
+    <!-- Scrollable Main Content Frame -->
     <div class="app-content">
       
-      <!-- Profile Banner -->
+      <!-- Banner Section -->
       <div class="banner-wrapper">
         <img id="img-banner" class="banner-img" src="https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop" alt="Banner" />
         <div class="banner-overlay"></div>
 
-        <!-- Floating Quick Action Buttons -->
+        <!-- Floating Quick Header Controls -->
         <div class="top-actions">
-          <button class="action-btn" id="btn-music" onclick="toggleMusic()" title="Toggle Background Music">
+          <button class="action-btn" id="btn-share" onclick="openShareModal()" title="Share Profile">
+            <i class="fa-solid fa-share-nodes"></i>
+          </button>
+          <button class="action-btn" id="btn-music" onclick="toggleMusic()" title="Toggle Synthesized Ambient Music">
             <i class="fa-solid fa-music"></i>
           </button>
           <button class="action-btn" id="btn-admin" onclick="toggleAdminLock()" title="Admin Mode Toggle">
@@ -519,104 +466,186 @@
         </div>
       </div>
 
+      <!-- Profile Header Details -->
       <div class="profile-card">
         
-        <!-- Avatar Image -->
         <div class="avatar-wrapper">
           <img id="img-avatar" class="avatar-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop" alt="Avatar" />
-          <div class="badge-status"><i class="fa-solid fa-heart"></i></div>
+          <div class="badge-status"><i class="fa-solid fa-check"></i></div>
         </div>
 
-        <!-- Header Information -->
-        <div class="profile-header-text">
-          <h1 class="profile-name" id="text-name">Yuri Collector</h1>
-          <div class="profile-handle" id="text-handle">@yuri_enjoyer</div>
+        <div class="text-center mb-4">
+          <h1 class="text-2xl font-extrabold text-white tracking-wide" id="text-name">Yuri Collector</h1>
+          <div class="text-sm font-semibold text-[var(--primary-color)] mt-1" id="text-handle">@yuri_enjoyer</div>
 
-          <div class="pill-container">
-            <div class="pill-badge"><i class="fa-solid fa-cake-candles"></i> <span id="text-age">20 Y/O</span></div>
-            <div class="pill-badge"><i class="fa-solid fa-location-dot"></i> <span id="text-location">Philippines</span></div>
-            <div class="pill-badge"><i class="fa-solid fa-venus-double"></i> Yuri Enthusiast</div>
+          <!-- Interactive Counters (Views & Likes) -->
+          <div class="flex justify-center items-center gap-3 mt-3">
+            <div class="bg-[rgba(255,255,255,0.06)] border border-[var(--card-border)] px-3 py-1 rounded-full text-xs text-[var(--text-sub)] flex items-center gap-1.5">
+              <i class="fa-solid fa-eye text-[var(--primary-color)]"></i>
+              <span id="counter-views">1,248</span> Views
+            </div>
+
+            <button onclick="handleLike(event)" class="bg-[rgba(255,255,255,0.06)] hover:bg-[rgba(255,255,255,0.12)] border border-[var(--card-border)] px-3 py-1 rounded-full text-xs text-white flex items-center gap-1.5 transition cursor-pointer relative active:scale-95">
+              <i class="fa-solid fa-heart text-[var(--accent-color)]"></i>
+              <span id="counter-likes">352</span>
+            </button>
           </div>
+
+          <div class="flex flex-wrap justify-center gap-2 mt-3">
+            <div class="bg-[rgba(255,255,255,0.05)] border border-[var(--card-border)] px-3 py-1 rounded-full text-[0.7rem] text-[var(--text-sub)] flex items-center gap-1.5">
+              <i class="fa-solid fa-cake-candles text-[var(--primary-color)]"></i> <span id="text-age">20 Y/O</span>
+            </div>
+            <div class="bg-[rgba(255,255,255,0.05)] border border-[var(--card-border)] px-3 py-1 rounded-full text-[0.7rem] text-[var(--text-sub)] flex items-center gap-1.5">
+              <i class="fa-solid fa-location-dot text-[var(--primary-color)]"></i> <span id="text-location">Philippines</span>
+            </div>
+            <div class="bg-[rgba(255,255,255,0.05)] border border-[var(--card-border)] px-3 py-1 rounded-full text-[0.7rem] text-[var(--text-sub)] flex items-center gap-1.5">
+              <i class="fa-solid fa-venus-double text-[var(--primary-color)]"></i> Yuri Enthusiast
+            </div>
+          </div>
+        </div>
+
+        <!-- Ambient Audio Visualizer Indicator -->
+        <div id="audio-visualizer" class="hidden bg-[rgba(0,0,0,0.4)] border border-[var(--card-border)] rounded-xl p-2.5 mb-4 items-center justify-between">
+          <div class="flex items-center gap-2">
+            <div class="flex items-end gap-1 h-4 px-1">
+              <div class="music-bar" style="animation-delay: 0.1s"></div>
+              <div class="music-bar" style="animation-delay: 0.3s"></div>
+              <div class="music-bar" style="animation-delay: 0.2s"></div>
+              <div class="music-bar" style="animation-delay: 0.4s"></div>
+            </div>
+            <span class="text-xs font-semibold text-[var(--primary-color)]" id="audio-track-label">Ambient Soundscape Playing...</span>
+          </div>
+          <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.3" oninput="adjustVolume(this.value)" class="w-20 accent-[var(--primary-color)]" />
         </div>
 
         <!-- Admin Customization Trigger -->
-        <button class="admin-edit-btn" id="btn-open-edit" onclick="openModal()">
-          <i class="fa-solid fa-pen-to-square"></i> Customize Active Profile
+        <button id="btn-open-edit" onclick="openAdminModal()" class="hidden w-full bg-[var(--primary-color)] text-[#0a0312] font-extrabold py-2.5 rounded-xl text-xs mb-4 shadow-[0_0_15px_var(--glow-color)] transition active:scale-95 cursor-pointer">
+          <i class="fa-solid fa-pen-to-square"></i> Open Admin Editor
         </button>
 
-        <!-- Bio Block -->
+        <!-- About / Bio Block -->
         <div class="info-block">
           <div class="block-heading"><i class="fa-solid fa-quote-left"></i> About Me</div>
-          <div class="bio-text" id="text-bio">
+          <div class="text-xs leading-relaxed text-[var(--text-main)] whitespace-pre-line" id="text-bio">
             Mabuhay! Welcome to my mobile Yuri profile web app. Enjoying relaxing ambient lofi tunes and appreciating timeless sapphic couples!
           </div>
-          <div class="ship-quote" id="text-quote">
+          <div class="bg-[rgba(0,0,0,0.35)] border-l-2 border-[var(--accent-color)] p-2.5 rounded-r-lg mt-2.5 italic text-[0.75rem] text-[var(--text-sub)]" id="text-quote">
             "Eternity may be vast, but moments with you are timeless." — EiMiko
           </div>
         </div>
 
-        <!-- Social Media Links -->
-        <div class="info-block">
-          <div class="block-heading"><i class="fa-solid fa-share-nodes"></i> Connect With Me</div>
-          <div class="social-grid">
-            <a href="https://facebook.com" target="_blank" id="link-fb" class="social-btn">
-              <div class="social-btn-left"><i class="fa-brands fa-facebook"></i> <span>Facebook</span></div>
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
-            <a href="https://instagram.com" target="_blank" id="link-ig" class="social-btn">
-              <div class="social-btn-left"><i class="fa-brands fa-instagram"></i> <span>Instagram</span></div>
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
-            <a href="https://tiktok.com" target="_blank" id="link-tt" class="social-btn">
-              <div class="social-btn-left"><i class="fa-brands fa-tiktok"></i> <span>TikTok</span></div>
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
-            <a href="https://twitter.com" target="_blank" id="link-x" class="social-btn">
-              <div class="social-btn-left"><i class="fa-brands fa-x-twitter"></i> <span>X (Twitter)</span></div>
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
+        <!-- Custom Links Section -->
+        <div class="info-block" id="custom-links-wrapper">
+          <div class="block-heading">
+            <span><i class="fa-solid fa-star"></i> Featured Links</span>
+            <button id="btn-add-custom-link" onclick="openAddLinkModal()" class="hidden text-[0.68rem] bg-[var(--primary-color)] text-black font-bold px-2 py-0.5 rounded cursor-pointer">+ Add Link</button>
+          </div>
+          <div id="custom-links-container">
+            <!-- Dynamic Custom Links Inserted Here -->
           </div>
         </div>
 
-        <div class="app-footer">Yuri Profile App • Modern Mobile Experience</div>
+        <!-- Social Media Hub -->
+        <div class="info-block">
+          <div class="block-heading">
+            <span><i class="fa-solid fa-share-nodes"></i> Social Networks</span>
+            <span class="text-[0.65rem] text-[var(--text-sub)] font-normal">Expanded Channels</span>
+          </div>
+          
+          <div class="link-grid" id="social-grid-container">
+            <!-- Populated via JS -->
+          </div>
+        </div>
+
+        <!-- Gaming Profiles & Accounts -->
+        <div class="info-block">
+          <div class="block-heading">
+            <span><i class="fa-solid fa-gamepad"></i> Gaming Hub</span>
+            <div class="flex gap-1">
+              <button class="tab-btn active" onclick="switchGameTab('all', event)">All</button>
+              <button class="tab-btn" onclick="switchGameTab('gacha', event)">Gacha</button>
+              <button class="tab-btn" onclick="switchGameTab('moba', event)">MOBA/FPS</button>
+            </div>
+          </div>
+          
+          <div class="space-y-2 mt-2" id="gaming-grid-container">
+            <!-- Gaming accounts rendered dynamically -->
+          </div>
+        </div>
+
+        <div class="text-center text-[0.68rem] text-[var(--text-sub)] opacity-60 mt-4">
+          Yuri Profile Experience • Interactive Personal Hub
+        </div>
 
       </div>
     </div>
 
+    <!-- Admin Edit Modal -->
     <div class="modal-overlay" id="modal-edit">
       <div class="modal-content">
-        <div class="modal-header">
-          <h3><i class="fa-solid fa-sliders"></i> Edit Active Profile</h3>
-          <i class="fa-solid fa-xmark" style="cursor:pointer" onclick="closeModal()"></i>
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-sm font-bold text-[var(--primary-color)]"><i class="fa-solid fa-sliders"></i> Edit Active Profile & Content</h3>
+          <i class="fa-solid fa-xmark cursor-pointer" onclick="closeModal('modal-edit')"></i>
         </div>
 
         <div class="field-box">
-          <label><i class="fa-solid fa-image"></i> Avatar Image (Active Theme)</label>
-          <input type="file" accept="image/*" onchange="uploadImage(this, 'img-avatar', 'avatar')" />
+          <label><i class="fa-solid fa-image"></i> Avatar Image (URL or Upload)</label>
+          <input type="text" id="in-avatar-url" placeholder="https://..." class="mb-1" />
+          <input type="file" accept="image/*" onchange="uploadImage(this, 'avatar')" />
         </div>
 
         <div class="field-box">
-          <label><i class="fa-solid fa-panorama"></i> Banner Image (Active Theme)</label>
-          <input type="file" accept="image/*" onchange="uploadImage(this, 'img-banner', 'banner')" />
+          <label><i class="fa-solid fa-panorama"></i> Banner Image (URL or Upload)</label>
+          <input type="text" id="in-banner-url" placeholder="https://..." class="mb-1" />
+          <input type="file" accept="image/*" onchange="uploadImage(this, 'banner')" />
         </div>
 
-        <div class="field-box">
-          <label><i class="fa-solid fa-music"></i> Upload Audio MP3</label>
-          <input type="file" accept="audio/*" onchange="uploadAudio(this)" />
-        </div>
-
-        <div class="field-box"><label>Name</label><input type="text" id="in-name" /></div>
-        <div class="field-box"><label>Username</label><input type="text" id="in-handle" /></div>
+        <div class="field-box"><label>Display Name</label><input type="text" id="in-name" /></div>
+        <div class="field-box"><label>Username Handle</label><input type="text" id="in-handle" /></div>
         <div class="field-box"><label>Age</label><input type="text" id="in-age" /></div>
         <div class="field-box"><label>Location</label><input type="text" id="in-location" /></div>
-        <div class="field-box"><label>Bio Text</label><textarea id="in-bio" rows="3"></textarea></div>
+        <div class="field-box"><label>About Bio</label><textarea id="in-bio" rows="3"></textarea></div>
 
-        <div class="field-box"><label>Facebook Link</label><input type="url" id="in-fb" /></div>
-        <div class="field-box"><label>Instagram Link</label><input type="url" id="in-ig" /></div>
-        <div class="field-box"><label>TikTok Link</label><input type="url" id="in-tt" /></div>
-        <div class="field-box"><label>X Link</label><input type="url" id="in-x" /></div>
+        <button class="w-full bg-[var(--primary-color)] text-black font-extrabold py-2.5 rounded-xl text-xs mt-2 cursor-pointer" onclick="saveAdminData()">Save Profile Changes</button>
+      </div>
+    </div>
 
-        <button class="save-btn" onclick="saveModalData()">Save Profile Changes</button>
+    <!-- Custom Link Add/Edit Modal -->
+    <div class="modal-overlay" id="modal-custom-link">
+      <div class="modal-content">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-sm font-bold text-[var(--primary-color)]"><i class="fa-solid fa-plus"></i> Add Custom Link Button</h3>
+          <i class="fa-solid fa-xmark cursor-pointer" onclick="closeModal('modal-custom-link')"></i>
+        </div>
+
+        <div class="field-box"><label>Button Title</label><input type="text" id="in-link-title" placeholder="My Portfolio, Store, etc." /></div>
+        <div class="field-box"><label>Subtitle / Description</label><input type="text" id="in-link-sub" placeholder="Check out my latest work" /></div>
+        <div class="field-box"><label>Target URL</label><input type="url" id="in-link-url" placeholder="https://..." /></div>
+        <div class="field-box"><label>FontAwesome Icon Class</label><input type="text" id="in-link-icon" placeholder="fa-solid fa-globe" /></div>
+        <div class="field-box"><label>Badge Tag (Optional)</label><input type="text" id="in-link-tag" placeholder="NEW, HOT, PINNED" /></div>
+
+        <button class="w-full bg-[var(--primary-color)] text-black font-extrabold py-2.5 rounded-xl text-xs mt-2 cursor-pointer" onclick="saveCustomLink()">Add Custom Button</button>
+      </div>
+    </div>
+
+    <!-- Share / QR Code Modal -->
+    <div class="modal-overlay" id="modal-share">
+      <div class="modal-content text-center">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-sm font-bold text-[var(--primary-color)]"><i class="fa-solid fa-qrcode"></i> Share Profile Hub</h3>
+          <i class="fa-solid fa-xmark cursor-pointer" onclick="closeModal('modal-share')"></i>
+        </div>
+
+        <div class="p-4 bg-white rounded-2xl inline-block my-2 shadow-lg">
+          <img id="qr-code-img" src="https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=https://yuri-profile.app" alt="QR Code" class="w-40 h-40" />
+        </div>
+
+        <p class="text-xs text-[var(--text-sub)] mt-2">Scan or copy link below to share your personal hub</p>
+        
+        <div class="flex items-center gap-2 mt-4">
+          <input type="text" id="share-url-input" readonly value="https://yuri-profile.app" class="bg-[rgba(255,255,255,0.1)] border border-[var(--card-border)] rounded-xl px-3 py-2 text-xs text-white flex-1 outline-none" />
+          <button onclick="copyShareUrl()" class="bg-[var(--primary-color)] text-black font-bold px-3 py-2 rounded-xl text-xs cursor-pointer">Copy</button>
+        </div>
       </div>
     </div>
 
@@ -626,38 +655,117 @@
     let activeTheme = 'eimiko';
     let isAdminUnlocked = false;
     let isBgmPlaying = false;
+    let activeGameFilter = 'all';
     const ADMIN_PIN = "aquayena99";
+
+    // Audio Context & Web Audio Synthesizer Engine
+    let audioCtx = null;
+    let synthOscillator = null;
+    let synthGain = null;
+    let synthInterval = null;
 
     const defaultThemeAssets = {
       eimiko: {
         avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1579546929518-9e396f3cc809?w=800&auto=format&fit=crop",
-        quote: '"Eternity may be vast, but moments with you are timeless." — EiMiko'
+        quote: '"Eternity may be vast, but moments with you are timeless." — EiMiko',
+        scale: [261.63, 293.66, 329.63, 392.00, 440.00], // C Major Pentatonic (Ethereal)
+        trackName: "EiMiko Ambient Lofi Harmonies"
       },
       kiamei: {
         avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&auto=format&fit=crop",
-        quote: '"I will save you, no matter how many times it takes." — KiaMei'
+        quote: '"I will save you, no matter how many times it takes." — KiaMei',
+        scale: [220.00, 261.63, 293.66, 329.63, 392.00], // A Minor Synth Wave
+        trackName: "KiaMei Cyberpulse Synth"
       },
       sanbina: {
         avatar: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&auto=format&fit=crop",
-        quote: '"A melody woven in silk and clockwork gears." — SanBina'
+        quote: '"A melody woven in silk and clockwork gears." — SanBina',
+        scale: [196.00, 220.00, 246.94, 293.66, 329.63], // Clockwork Soft Pads
+        trackName: "SanBina Clockwork Serenade"
       },
       augostino: {
         avatar: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1464802686167-b939a6910659?w=800&auto=format&fit=crop",
-        quote: '"Starbound destinies linked by radiant light." — AugUino'
+        quote: '"Starbound destinies linked by radiant light." — AugUino',
+        scale: [293.66, 329.63, 369.99, 440.00, 493.88], // Celestial D Major
+        trackName: "AugUino Celestial Starlight"
       },
       bellevivian: {
         avatar: "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=400&auto=format&fit=crop",
         banner: "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=800&auto=format&fit=crop",
-        quote: '"Neon pulses in tune with our heartbeat." — BelleVivian'
+        quote: '"Neon pulses in tune with our heartbeat." — BelleVivian',
+        scale: [174.61, 196.00, 220.00, 261.63, 293.66], // Neon Bass Ambient
+        trackName: "BelleVivian Neon Beats"
       }
     };
 
+    const socialLinksData = [
+      { id: 'fb', name: 'Facebook', icon: 'fa-brands fa-facebook', url: 'https://facebook.com' },
+      { id: 'ig', name: 'Instagram', icon: 'fa-brands fa-instagram', url: 'https://instagram.com' },
+      { id: 'tt1', name: 'TikTok (Main)', icon: 'fa-brands fa-tiktok', url: 'https://tiktok.com' },
+      { id: 'tt2', name: 'TikTok (Alt)', icon: 'fa-brands fa-tiktok', url: 'https://tiktok.com' },
+      { id: 'x', name: 'X / Twitter', icon: 'fa-brands fa-x-twitter', url: 'https://twitter.com' },
+      { id: 'threads', name: 'Threads', icon: 'fa-brands fa-threads', url: 'https://threads.net' },
+      { id: 'pin', name: 'Pinterest', icon: 'fa-brands fa-pinterest', url: 'https://pinterest.com' },
+      { id: 'li', name: 'LinkedIn', icon: 'fa-brands fa-linkedin', url: 'https://linkedin.com' },
+      { id: 'red', name: 'Reddit', icon: 'fa-brands fa-reddit', url: 'https://reddit.com' },
+      { id: 'tbl', name: 'Tumblr', icon: 'fa-brands fa-tumblr', url: 'https://tumblr.com' },
+      { id: 'ao3', name: 'AO3', icon: 'fa-solid fa-book-bookmark', url: 'https://archiveofourown.org' },
+      { id: 'yt', name: 'YouTube', icon: 'fa-brands fa-youtube', url: 'https://youtube.com' },
+      { id: 'tw', name: 'Twitch', icon: 'fa-brands fa-twitch', url: 'https://twitch.tv' },
+      { id: 'wa', name: 'WhatsApp', icon: 'fa-brands fa-whatsapp', url: 'https://wa.me' },
+      { id: 'tg', name: 'Telegram', icon: 'fa-brands fa-telegram', url: 'https://t.me' },
+      { id: 'dc', name: 'Discord', icon: 'fa-brands fa-discord', url: 'https://discord.com' },
+      { id: 'qu', name: 'Quora', icon: 'fa-brands fa-quora', url: 'https://quora.com' },
+      { id: 'rblx_social', name: 'Roblox Profile', icon: 'fa-solid fa-cube', url: 'https://roblox.com' },
+      { id: 'bili', name: 'Bilibili', icon: 'fa-brands fa-bilibili', url: 'https://bilibili.com' },
+      { id: 'gh', name: 'GitHub', icon: 'fa-brands fa-github', url: 'https://github.com' },
+      { id: 'mail', name: 'Email Me', icon: 'fa-solid fa-envelope', url: 'mailto:yuri@example.com' },
+      { id: 'watt', name: 'Wattpad', icon: 'fa-solid fa-pen-nib', url: 'https://wattpad.com' }
+    ];
+
+    const gamingAccounts = [
+      { name: 'Genshin Impact', uid: '704928104', type: 'gacha', icon: 'fa-solid fa-star' },
+      { name: 'Honkai: Star Rail', uid: '802194810', type: 'gacha', icon: 'fa-solid fa-meteor' },
+      { name: 'Zenless Zone Zero', uid: '100492812', type: 'gacha', icon: 'fa-solid fa-bolt' },
+      { name: 'Honkai Impact 3rd', uid: '20019482', type: 'gacha', icon: 'fa-solid fa-crosshairs' },
+      { name: 'Wuthering Waves', uid: '901284102', type: 'gacha', icon: 'fa-solid fa-wind' },
+      { name: 'Reverse: 1999', uid: '40192841', type: 'gacha', icon: 'fa-solid fa-hourglass' },
+      { name: 'Punishing: Gray Raven', uid: '30192849', type: 'gacha', icon: 'fa-solid fa-shield-halved' },
+      { name: 'Arknights', uid: 'DrYuri#1284', type: 'gacha', icon: 'fa-solid fa-chess-knight' },
+      { name: 'Path to Nowhere', uid: '60192841', type: 'gacha', icon: 'fa-solid fa-lock' },
+      { name: 'NIKKE', uid: '04928192', type: 'gacha', icon: 'fa-solid fa-gun' },
+      { name: 'Honor of Kings', uid: 'HOK_Yuri_99', type: 'moba', icon: 'fa-solid fa-crown' },
+      { name: 'Mobile Legends', uid: '98412841 (2014)', type: 'moba', icon: 'fa-solid fa-shield' },
+      { name: 'League of Legends / Riot', uid: 'YuriMain#PH1', type: 'moba', icon: 'fa-solid fa-gamepad' },
+      { name: 'Valorant', uid: 'YuriRadiant#SEA', type: 'moba', icon: 'fa-solid fa-crosshairs' },
+      { name: 'COD Mobile', uid: '681029481029', type: 'moba', icon: 'fa-solid fa-person-rifle' },
+      { name: 'PUBG Mobile', uid: '510294810', type: 'moba', icon: 'fa-solid fa-parachute-box' },
+      { name: 'Free Fire', uid: '401928491', type: 'moba', icon: 'fa-solid fa-fire' },
+      { name: 'Steam ID', uid: '76561198012345678', type: 'all', icon: 'fa-brands fa-steam' },
+      { name: 'PlayStation Network', uid: 'Yuri_Sapphic_PH', type: 'all', icon: 'fa-brands fa-playstation' },
+      { name: 'Xbox Live GamerTag', uid: 'YuriGamer99', type: 'all', icon: 'fa-brands fa-xbox' },
+      { name: 'Roblox Username', uid: 'YuriCollector_PH', type: 'all', icon: 'fa-solid fa-cube' }
+    ];
+
+    let customLinks = [
+      { id: '1', title: 'My Yuri Manga Reading List', sub: 'Curated sapphic recommendations', url: 'https://example.com', icon: 'fa-solid fa-book-open', tag: 'MUST READ' }
+    ];
+
     window.onload = function() {
+      // Load saved custom links if available
+      const savedCustom = localStorage.getItem('custom_links');
+      if(savedCustom) {
+        try { customLinks = JSON.parse(savedCustom); } catch(e){}
+      }
+
       applyTheme(activeTheme);
+      renderSocialGrid();
+      renderGamingGrid();
+      renderCustomLinks();
       initConstrainedCanvas();
     };
 
@@ -667,6 +775,12 @@
       document.querySelectorAll('.theme-chip').forEach(c => c.classList.remove('active'));
       if(evt) evt.currentTarget.classList.add('active');
       applyTheme(themeKey);
+
+      // Reset ambient music to theme beat if playing
+      if (isBgmPlaying) {
+        stopSynthMusic();
+        startSynthMusic();
+      }
     }
 
     function applyTheme(themeKey) {
@@ -678,112 +792,281 @@
       document.getElementById('text-location').innerText = localStorage.getItem('profile_loc') || "Philippines";
       document.getElementById('text-bio').innerText = localStorage.getItem('profile_bio') || "Mabuhay! Welcome to my mobile Yuri profile web app.";
       document.getElementById('text-quote').innerText = defaultThemeAssets[themeKey].quote;
+      document.getElementById('audio-track-label').innerText = defaultThemeAssets[themeKey].trackName;
+    }
 
-      document.getElementById('link-fb').href = localStorage.getItem('link_fb') || "https://facebook.com";
-      document.getElementById('link-ig').href = localStorage.getItem('link_ig') || "https://instagram.com";
-      document.getElementById('link-tt').href = localStorage.getItem('link_tt') || "https://tiktok.com";
-      document.getElementById('link-x').href = localStorage.getItem('link_x') || "https://twitter.com";
+    // Web Audio Procedural Soundscape Generator
+    function initAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+    }
+
+    function startSynthMusic() {
+      initAudioContext();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const scale = defaultThemeAssets[activeTheme].scale;
+      let noteIdx = 0;
+
+      synthInterval = setInterval(() => {
+        if (!isBgmPlaying) return;
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        // Soft ambient tone
+        osc.type = 'sine';
+        const freq = scale[noteIdx % scale.length];
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        const vol = parseFloat(document.getElementById('volume-slider').value) || 0.3;
+        gain.gain.setValueAtTime(0.001, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(vol * 0.15, audioCtx.currentTime + 0.3);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + 1.9);
+
+        noteIdx = Math.floor(Math.random() * scale.length);
+      }, 800);
+    }
+
+    function stopSynthMusic() {
+      if (synthInterval) clearInterval(synthInterval);
     }
 
     function toggleMusic() {
-      const audio = document.getElementById('bgm-player');
       const btn = document.getElementById('btn-music');
+      const visualizer = document.getElementById('audio-visualizer');
+
       if (isBgmPlaying) {
-        audio.pause();
         isBgmPlaying = false;
+        stopSynthMusic();
         btn.classList.remove('active');
+        visualizer.classList.add('hidden');
+        visualizer.classList.remove('flex');
       } else {
-        audio.play().then(() => {
-          isBgmPlaying = true;
-          btn.classList.add('active');
-        }).catch(err => console.log(err));
+        isBgmPlaying = true;
+        startSynthMusic();
+        btn.classList.add('active');
+        visualizer.classList.remove('hidden');
+        visualizer.classList.add('flex');
       }
+    }
+
+    function adjustVolume(val) {
+      // Adjusted dynamically in procedural audio loop
     }
 
     function toggleAdminLock() {
       if (!isAdminUnlocked) {
-        let pin = prompt("Enter Admin PIN (Default: 1234):");
+        let pin = prompt("Enter Admin PIN (Default: aquayena99):");
         if (pin === ADMIN_PIN) {
           isAdminUnlocked = true;
           document.getElementById('icon-lock').className = "fa-solid fa-lock-open";
-          document.getElementById('btn-open-edit').style.display = "block";
+          document.getElementById('btn-open-edit').classList.remove('hidden');
+          document.getElementById('btn-add-custom-link').classList.remove('hidden');
+          renderCustomLinks();
         } else if (pin !== null) {
           alert("Incorrect PIN!");
         }
       } else {
         isAdminUnlocked = false;
         document.getElementById('icon-lock').className = "fa-solid fa-lock";
-        document.getElementById('btn-open-edit').style.display = "none";
+        document.getElementById('btn-open-edit').classList.add('hidden');
+        document.getElementById('btn-add-custom-link').classList.add('hidden');
+        renderCustomLinks();
       }
     }
 
-    function openModal() {
+    function renderSocialGrid() {
+      const container = document.getElementById('social-grid-container');
+      container.innerHTML = socialLinksData.map(item => {
+        const savedUrl = localStorage.getItem(`link_${item.id}`) || item.url;
+        return `
+          <a href="${savedUrl}" target="_blank" class="social-btn">
+            <div class="flex items-center gap-2 overflow-hidden">
+              <i class="${item.icon} text-[var(--primary-color)] text-sm"></i>
+              <span class="truncate">${item.name}</span>
+            </div>
+            <i class="fa-solid fa-arrow-up-right-from-square text-[0.65rem] opacity-60"></i>
+          </a>
+        `;
+      }).join('');
+    }
+
+    function switchGameTab(type, evt) {
+      activeGameFilter = type;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      evt.currentTarget.classList.add('active');
+      renderGamingGrid();
+    }
+
+    function renderGamingGrid() {
+      const container = document.getElementById('gaming-grid-container');
+      const filtered = gamingAccounts.filter(g => activeGameFilter === 'all' || g.type === activeGameFilter || g.type === 'all');
+      
+      container.innerHTML = filtered.map(g => `
+        <div class="game-card">
+          <div class="flex items-center gap-2.5">
+            <i class="${g.icon} text-[var(--primary-color)] text-base"></i>
+            <div>
+              <div class="text-xs font-bold text-white">${g.name}</div>
+              <div class="text-[0.68rem] text-[var(--text-sub)]">${g.uid}</div>
+            </div>
+          </div>
+          <button onclick="copyGameUid('${g.uid}', event)" class="text-[0.65rem] bg-[rgba(255,255,255,0.08)] border border-[var(--card-border)] hover:bg-[var(--primary-color)] hover:text-black font-semibold px-2.5 py-1 rounded-lg transition cursor-pointer">
+            Copy ID
+          </button>
+        </div>
+      `).join('');
+    }
+
+    function copyGameUid(uid, evt) {
+      navigator.clipboard.writeText(uid);
+      const btn = evt.currentTarget;
+      const orig = btn.innerText;
+      btn.innerText = "Copied!";
+      setTimeout(() => btn.innerText = orig, 1500);
+    }
+
+    function renderCustomLinks() {
+      const container = document.getElementById('custom-links-container');
+      if (customLinks.length === 0) {
+        container.innerHTML = `<div class="text-center text-xs text-[var(--text-sub)] py-2">No custom links added yet.</div>`;
+        return;
+      }
+
+      container.innerHTML = customLinks.map((item, index) => `
+        <a href="${item.url}" target="_blank" class="custom-link-card relative group">
+          <div class="flex items-center gap-3">
+            <i class="${item.icon || 'fa-solid fa-link'} text-[var(--primary-color)] text-lg"></i>
+            <div>
+              <div class="text-xs font-extrabold text-white flex items-center gap-2">
+                ${item.title}
+                ${item.tag ? `<span class="bg-[var(--primary-color)] text-black text-[0.6rem] font-bold px-1.5 py-0.2 rounded">${item.tag}</span>` : ''}
+              </div>
+              <div class="text-[0.68rem] text-[var(--text-sub)]">${item.sub || ''}</div>
+            </div>
+          </div>
+          <div class="flex items-center gap-2">
+            ${isAdminUnlocked ? `<button onclick="deleteCustomLink(${index}, event)" class="text-red-400 hover:text-red-200 text-xs px-1 cursor-pointer"><i class="fa-solid fa-trash"></i></button>` : ''}
+            <i class="fa-solid fa-chevron-right text-xs text-[var(--primary-color)]"></i>
+          </div>
+        </a>
+      `).join('');
+    }
+
+    function openAddLinkModal() {
+      document.getElementById('modal-custom-link').style.display = 'flex';
+    }
+
+    function saveCustomLink() {
+      const title = document.getElementById('in-link-title').value;
+      const sub = document.getElementById('in-link-sub').value;
+      const url = document.getElementById('in-link-url').value;
+      const icon = document.getElementById('in-link-icon').value;
+      const tag = document.getElementById('in-link-tag').value;
+
+      if(!title || !url) { alert("Please provide title and URL."); return; }
+
+      customLinks.push({ id: Date.now().toString(), title, sub, url, icon, tag });
+      localStorage.setItem('custom_links', JSON.stringify(customLinks));
+      renderCustomLinks();
+      closeModal('modal-custom-link');
+    }
+
+    function deleteCustomLink(idx, evt) {
+      evt.preventDefault();
+      evt.stopPropagation();
+      customLinks.splice(idx, 1);
+      localStorage.setItem('custom_links', JSON.stringify(customLinks));
+      renderCustomLinks();
+    }
+
+    function openAdminModal() {
       document.getElementById('in-name').value = document.getElementById('text-name').innerText;
       document.getElementById('in-handle').value = document.getElementById('text-handle').innerText;
       document.getElementById('in-age').value = document.getElementById('text-age').innerText;
       document.getElementById('in-location').value = document.getElementById('text-location').innerText;
       document.getElementById('in-bio').value = document.getElementById('text-bio').innerText;
-
-      document.getElementById('in-fb').value = document.getElementById('link-fb').href;
-      document.getElementById('in-ig').value = document.getElementById('link-ig').href;
-      document.getElementById('in-tt').value = document.getElementById('link-tt').href;
-      document.getElementById('in-x').value = document.getElementById('link-x').href;
-
       document.getElementById('modal-edit').style.display = 'flex';
     }
 
-    function closeModal() {
-      document.getElementById('modal-edit').style.display = 'none';
+    function closeModal(modalId) {
+      document.getElementById(modalId).style.display = 'none';
     }
 
-    function uploadImage(input, targetId, type) {
-      if (input.files && input.files[0]) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-          const base64 = e.target.result;
-          document.getElementById(targetId).src = base64;
-          localStorage.setItem(`${type}_${activeTheme}`, base64);
-        };
-        reader.readAsDataURL(input.files[0]);
-      }
-    }
+    function saveAdminData() {
+      const avatarUrl = document.getElementById('in-avatar-url').value;
+      const bannerUrl = document.getElementById('in-banner-url').value;
 
-    function uploadAudio(input) {
-      if (input.files && input.files[0]) {
-        const audio = document.getElementById('bgm-player');
-        document.getElementById('bgm-source').src = URL.createObjectURL(input.files[0]);
-        audio.load();
-        if (isBgmPlaying) audio.play();
-      }
-    }
+      if(avatarUrl) localStorage.setItem(`avatar_${activeTheme}`, avatarUrl);
+      if(bannerUrl) localStorage.setItem(`banner_${activeTheme}`, bannerUrl);
 
-    function saveModalData() {
       localStorage.setItem('profile_name', document.getElementById('in-name').value || "Your Name");
       localStorage.setItem('profile_handle', document.getElementById('in-handle').value || "@handle");
       localStorage.setItem('profile_age', document.getElementById('in-age').value || "N/A");
       localStorage.setItem('profile_loc', document.getElementById('in-location').value || "PH");
       localStorage.setItem('profile_bio', document.getElementById('in-bio').value || "");
 
-      localStorage.setItem('link_fb', document.getElementById('in-fb').value || "#");
-      localStorage.setItem('link_ig', document.getElementById('in-ig').value || "#");
-      localStorage.setItem('link_tt', document.getElementById('in-tt').value || "#");
-      localStorage.setItem('link_x', document.getElementById('in-x').value || "#");
-
       applyTheme(activeTheme);
-      closeModal();
+      closeModal('modal-edit');
     }
 
+    function uploadImage(input, type) {
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const base64 = e.target.result;
+          localStorage.setItem(`${type}_${activeTheme}`, base64);
+          applyTheme(activeTheme);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    }
+
+    function handleLike(evt) {
+      const counter = document.getElementById('counter-likes');
+      let val = parseInt(counter.innerText.replace(',', '')) || 0;
+      counter.innerText = (val + 1).toLocaleString();
+
+      // Spawn floating animated heart
+      const heart = document.createElement('i');
+      heart.className = 'fa-solid fa-heart floating-heart';
+      heart.style.left = `${evt.clientX - 10}px`;
+      heart.style.top = `${evt.clientY - 20}px`;
+      document.body.appendChild(heart);
+
+      setTimeout(() => heart.remove(), 1200);
+    }
+
+    function openShareModal() {
+      document.getElementById('modal-share').style.display = 'flex';
+      document.getElementById('share-url-input').value = window.location.href;
+      document.getElementById('qr-code-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(window.location.href)}`;
+    }
+
+    function copyShareUrl() {
+      const input = document.getElementById('share-url-input');
+      navigator.clipboard.writeText(input.value);
+      alert("Profile URL copied to clipboard!");
+    }
+
+    // Canvas Background FX Particle Animation
     let canvas, ctx, frameWidth, frameHeight;
 
     function initConstrainedCanvas() {
       canvas = document.getElementById('internal-canvas');
       ctx = canvas.getContext('2d');
       
-      const frame = document.getElementById('app-frame');
-      
       function resizeCanvas() {
-        frameWidth = frame.clientWidth;
-        frameHeight = frame.clientHeight;
+        frameWidth = window.innerWidth;
+        frameHeight = window.innerHeight;
         canvas.width = frameWidth;
         canvas.height = frameHeight;
       }
@@ -791,16 +1074,16 @@
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
 
-      class SakuraPetal {
+      class Particle {
         constructor() { this.reset(); }
         reset() {
           this.x = Math.random() * frameWidth;
           this.y = -15;
-          this.size = Math.random() * 6 + 4;
-          this.speedY = Math.random() * 1.0 + 0.5;
-          this.speedX = Math.random() * 0.6 - 0.3;
+          this.size = Math.random() * 5 + 3;
+          this.speedY = Math.random() * 1.2 + 0.6;
+          this.speedX = Math.random() * 0.8 - 0.4;
           this.rotation = Math.random() * 360;
-          this.rotSpeed = (Math.random() - 0.5) * 1.2;
+          this.rotSpeed = (Math.random() - 0.5) * 1.5;
           this.opacity = Math.random() * 0.5 + 0.3;
         }
         update() {
@@ -813,44 +1096,19 @@
           ctx.save();
           ctx.translate(this.x, this.y);
           ctx.rotate((this.rotation * Math.PI) / 180);
-          ctx.fillStyle = `rgba(255, 182, 213, ${this.opacity})`;
+          ctx.fillStyle = `rgba(216, 128, 255, ${this.opacity})`;
           ctx.beginPath();
-          ctx.moveTo(0, 0);
-          ctx.bezierCurveTo(-this.size, -this.size / 2, -this.size, this.size, 0, this.size * 1.4);
-          ctx.bezierCurveTo(this.size, this.size, this.size, -this.size / 2, 0, 0);
+          ctx.arc(0, 0, this.size, 0, Math.PI * 2);
           ctx.fill();
           ctx.restore();
         }
       }
 
-      class Sparkle {
-        constructor() { this.reset(); }
-        reset() {
-          this.x = Math.random() * frameWidth;
-          this.y = Math.random() * frameHeight;
-          this.size = Math.random() * 1.8 + 0.4;
-          this.speedY = -(Math.random() * 0.2 + 0.1);
-          this.opacity = Math.random() * 0.6 + 0.2;
-        }
-        update() {
-          this.y += this.speedY;
-          if (this.y < 0) this.y = frameHeight;
-        }
-        draw() {
-          ctx.fillStyle = `rgba(220, 180, 255, ${this.opacity})`;
-          ctx.beginPath();
-          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-
-      const petals = Array.from({ length: 20 }, () => new SakuraPetal());
-      const sparkles = Array.from({ length: 25 }, () => new Sparkle());
+      const particles = Array.from({ length: 30 }, () => new Particle());
 
       function renderLoop() {
         ctx.clearRect(0, 0, frameWidth, frameHeight);
-        sparkles.forEach(s => { s.update(); s.draw(); });
-        petals.forEach(p => { p.update(); p.draw(); });
+        particles.forEach(p => { p.update(); p.draw(); });
         requestAnimationFrame(renderLoop);
       }
       renderLoop();
